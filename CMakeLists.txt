@@ -1,24 +1,39 @@
 cmake_minimum_required(VERSION 3.12)
 project(ArnoldEngine VERSION 0.0.1 LANGUAGES C CXX)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Entt
-set(ENTT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/entt)
-include_directories(${ENTT_PATH})
+# External dependencies base directory
+set(EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
 
+# ============================
+# EnTT (Header-only library)
+# ============================
+set(ENTT_PATH ${EXTERNAL_DIR}/entt)
+add_library(entt INTERFACE)
+target_include_directories(entt INTERFACE ${ENTT_PATH})
+
+# ============================
 # GLFW
-add_subdirectory(external/glfw)
+# ============================
+set(GLFW_PATH ${EXTERNAL_DIR}/glfw)
+add_subdirectory(${GLFW_PATH})
 
+# ============================
 # GLAD
-set(GLAD_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/glad)
+# ============================
+set(GLAD_PATH ${EXTERNAL_DIR}/glad)
 add_library(glad STATIC ${GLAD_PATH}/src/glad.c)
 target_include_directories(glad PUBLIC ${GLAD_PATH}/include)
 
+# ============================
 # ImGui
-set(IMGUI_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/imgui)
+# ============================
+set(IMGUI_PATH ${EXTERNAL_DIR}/imgui)
+set(IMGUI_BACKENDS ${IMGUI_PATH}/backends)
 
 set(IMGUI_SOURCES
     ${IMGUI_PATH}/imgui.cpp
@@ -26,20 +41,24 @@ set(IMGUI_SOURCES
     ${IMGUI_PATH}/imgui_draw.cpp
     ${IMGUI_PATH}/imgui_tables.cpp
     ${IMGUI_PATH}/imgui_widgets.cpp
-    ${IMGUI_PATH}/backends/imgui_impl_glfw.cpp
-    ${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp
+    ${IMGUI_BACKENDS}/imgui_impl_glfw.cpp
+    ${IMGUI_BACKENDS}/imgui_impl_opengl3.cpp
 )
 
 add_library(imgui STATIC ${IMGUI_SOURCES})
 target_include_directories(imgui PUBLIC
     ${IMGUI_PATH}
-    ${IMGUI_PATH}/backends
+    ${IMGUI_BACKENDS}
 )
-target_link_libraries(imgui PRIVATE glfw)
+target_link_libraries(imgui PUBLIC glfw glad)
 
+# ============================
 # ArnoldEngine
+# ============================
 add_library(${PROJECT_NAME}
     src/Application.cpp
+    src/Window.cpp
+    include/EntryPoint.h
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -47,8 +66,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    glfw
-    imgui
-    glad
+target_link_libraries(${PROJECT_NAME}
+    PUBLIC glfw
+    PUBLIC glad
+    PUBLIC entt
+    PUBLIC imgui
 )
