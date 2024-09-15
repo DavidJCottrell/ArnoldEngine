@@ -14,13 +14,7 @@ namespace AE
     }
 
     void AE::Application::Run()
-    {
-        WindowResizeEvent e(960, 540); 
-
-        if(e.IsInCategory(EventCategoryApplication)){
-            AE_INFO(e);
-        }
-        
-        Window window;
+    {        
+        Window window; // Main loop
     }
 } // namespace AE

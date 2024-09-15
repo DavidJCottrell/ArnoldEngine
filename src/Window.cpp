@@ -1,6 +1,8 @@
 #include "aepch.h"
 #include "Window.h"
 
+#include "Log.h"
+
 namespace AE
 {
     const char *Window::setGlfwPlatformSpecifics()
@@ -27,6 +29,8 @@ namespace AE
 
         const char *glsl_version = setGlfwPlatformSpecifics();
 
+        AE_CORE_INFO("GLFW Initialized. GLSL version: {0}", glsl_version);
+
         window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
         if (!window)
         {
@@ -41,6 +45,8 @@ namespace AE
             std::runtime_error("failed to initialize GLAD");
         }
 
+        AE_CORE_INFO("OpenGL Initialized.");
+
         int screenWidth, screenHeight;
         glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
         glViewport(0, 0, screenWidth, screenHeight);
@@ -48,6 +54,7 @@ namespace AE
         bool show_demo_window = true;
         bool show_another_window = false;
 
+        AE_INFO("Application running...");
         while (!glfwWindowShouldClose(window))
         {
             glfwPollEvents();
@@ -59,6 +66,8 @@ namespace AE
 
             glfwSwapBuffers(window);
         }
+
+        AE_CORE_INFO("Closing GLFW...");
 
         glfwDestroyWindow(window);
         glfwTerminate();
