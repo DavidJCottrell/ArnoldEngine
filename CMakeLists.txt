@@ -64,7 +64,7 @@ add_subdirectory(${SPDLOG_PATH})
 add_library(${PROJECT_NAME}
     src/Application.cpp
     src/Window.cpp
-    include/EntryPoint.h
+    src/Log.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC

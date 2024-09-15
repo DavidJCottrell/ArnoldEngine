@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Application.h"
+#include "../src/Application.h"
+#include "../src/Log.h"
 
 // ---- Entry Point ----
-#include "EntryPoint.h"
+#include "../src/EntryPoint.h"
 // ---------------------

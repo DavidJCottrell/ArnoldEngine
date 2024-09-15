@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Window.h"
+#include "Core.h"
 
 namespace AE
 {
-    class Application
+    class ARNOLD_API Application
     {
     public:
         Application();
