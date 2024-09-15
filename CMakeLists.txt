@@ -5,6 +5,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Entt
+set(ENTT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/entt)
+include_directories(${ENTT_PATH})
+
 # GLFW
 add_subdirectory(external/glfw)
 
