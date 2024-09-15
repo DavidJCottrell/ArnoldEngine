@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace AE
 {    
     class ARNOLD_API WindowResizeEvent : public Event
