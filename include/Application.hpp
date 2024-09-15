@@ -1,7 +1,8 @@
-class Application
+namespace AE
 {
-public:
-    Application();
-    ~Application();
-    void DoWindow();
-};
+    class Application
+    {
+    public:
+        void DoWindow();
+    };
+}
