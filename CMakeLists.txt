@@ -53,6 +53,12 @@ target_include_directories(imgui PUBLIC
 target_link_libraries(imgui PUBLIC glfw glad)
 
 # ============================
+# SPDLOG
+# ============================
+set(SPDLOG_PATH ${EXTERNAL_DIR}/spdlog)
+add_subdirectory(${SPDLOG_PATH})
+
+# ============================
 # ArnoldEngine
 # ============================
 add_library(${PROJECT_NAME}
@@ -71,4 +77,5 @@ target_link_libraries(${PROJECT_NAME}
     PUBLIC glad
     PUBLIC entt
     PUBLIC imgui
+    PUBLIC spdlog::spdlog
 )

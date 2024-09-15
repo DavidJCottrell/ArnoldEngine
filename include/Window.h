@@ -17,6 +17,6 @@ namespace AE
         GLFWwindow *window;
 
     private:
-        const char *getGLVersion();
+        const char *setGlfwPlatformSpecifics();
     };
 }
