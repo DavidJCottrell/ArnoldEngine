@@ -53,7 +53,7 @@ void Application::DoWindow()
     // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
-    GLFWwindow *window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(640, 480, "Arnold Engine", nullptr, nullptr);
     if (!window)
     {
         glfwTerminate();
