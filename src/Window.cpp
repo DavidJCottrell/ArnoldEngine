@@ -24,12 +24,12 @@ namespace AE
 
     void onKeyPress(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
-        if (action == GLFW_PRESS)
+        if (action == GLFW_PRESS || action == GLFW_REPEAT)
         {
-            KeyPressedEvent event(key, 0);
+            KeyPressedEvent event(key);
             AE_INFO(event);
         }
-        else
+        else if (action == GLFW_RELEASE)
         {
             KeyReleasedEvent event(key);
             AE_INFO(event);
@@ -39,6 +39,19 @@ namespace AE
     void onMouseButton(GLFWwindow *window, int button, int action, int mods)
     {
         if (button == GLFW_MOUSE_BUTTON_LEFT)
+        {
+            if (action == GLFW_PRESS)
+            {
+                MouseButtonPressedEvent event(button);
+                AE_INFO(event);
+            }
+            else
+            {
+                MouseButtonReleasedEvent event(button);
+                AE_INFO(event);
+            }
+        }
+        if (button == GLFW_MOUSE_BUTTON_RIGHT)
         {
             if (action == GLFW_PRESS)
             {
@@ -69,7 +82,7 @@ namespace AE
             glfwTerminate();
         }
         glfwMakeContextCurrent(window);
-        glfwSwapInterval(1); // Enable vsync
+        glfwSwapInterval(1);
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
@@ -81,9 +94,6 @@ namespace AE
         int screenWidth, screenHeight;
         glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
         glViewport(0, 0, screenWidth, screenHeight);
-
-        bool show_demo_window = true;
-        bool show_another_window = false;
 
         AE_INFO("Application running...");
         while (!glfwWindowShouldClose(window))

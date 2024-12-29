@@ -22,21 +22,16 @@ namespace AE
     class ARNOLD_API KeyPressedEvent : public KeyEvent
     {
     public:
-        KeyPressedEvent(int keyCode, int repeatCount)
-            : KeyEvent(keyCode), m_RepeatCount(repeatCount) {}
-
-        inline int GetRepeatCount() const { return m_RepeatCount; }
+        KeyPressedEvent(int keyCode) : KeyEvent(keyCode) {}
 
         std::string ToString() const override
         {
             std::stringstream ss;
-            ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
+            ss << "KeyPressedEvent: " << m_KeyCode;
             return ss.str();
         }
 
         EVENT_CLASS_TYPE(KeyPressed)
-    private:
-        int m_RepeatCount;
     };
 
     class ARNOLD_API KeyReleasedEvent : public KeyEvent
