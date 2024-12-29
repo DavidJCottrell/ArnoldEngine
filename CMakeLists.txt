@@ -61,10 +61,14 @@ add_subdirectory(${SPDLOG_PATH})
 # ============================
 # ArnoldEngine
 # ============================
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
     src/Application.cpp
     src/Window.cpp
     src/Log.cpp
+)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    ARNOLDENGINE_BUILD_DLL
 )
 
 target_precompile_headers(ArnoldEngine PRIVATE src/aepch.h)

@@ -2,30 +2,61 @@
 #include "Window.h"
 
 #include "Log.h"
+#include "events/KeyEvent.h"
+#include "events/MouseEvent.h"
 
 namespace AE
 {
     const char *Window::setGlfwPlatformSpecifics()
     {
 #if defined(__APPLE__)
-        // GL 3.2 + GLSL 150
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // Required on Mac
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         return "#version 150";
 #else
-        // GL 3.0 + GLSL 130
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
         return "#version 130";
 #endif
     }
 
+    void onKeyPress(GLFWwindow *window, int key, int scancode, int action, int mods)
+    {
+        if (action == GLFW_PRESS)
+        {
+            KeyPressedEvent event(key, 0);
+            AE_INFO(event);
+        }
+        else
+        {
+            KeyReleasedEvent event(key);
+            AE_INFO(event);
+        }
+    }
+
+    void onMouseButton(GLFWwindow *window, int button, int action, int mods)
+    {
+        if (button == GLFW_MOUSE_BUTTON_LEFT)
+        {
+            if (action == GLFW_PRESS)
+            {
+                MouseButtonPressedEvent event(button);
+                AE_INFO(event);
+            }
+            else
+            {
+                MouseButtonReleasedEvent event(button);
+                AE_INFO(event);
+            }
+        }
+    }
+
     Window::Window()
     {
         if (!glfwInit())
-            std::runtime_error("Failed to initialize GLFW");
+            throw std::runtime_error("Failed to initialize GLFW");
 
         const char *glsl_version = setGlfwPlatformSpecifics();
 
@@ -34,7 +65,7 @@ namespace AE
         window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
         if (!window)
         {
-            std::runtime_error("Failed to create GLFW window");
+            throw std::runtime_error("Failed to create GLFW window");
             glfwTerminate();
         }
         glfwMakeContextCurrent(window);
@@ -42,7 +73,7 @@ namespace AE
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
-            std::runtime_error("failed to initialize GLAD");
+            throw std::runtime_error("failed to initialize GLAD");
         }
 
         AE_CORE_INFO("OpenGL Initialized.");
@@ -58,6 +89,8 @@ namespace AE
         while (!glfwWindowShouldClose(window))
         {
             glfwPollEvents();
+            glfwSetKeyCallback(window, onKeyPress);
+            glfwSetMouseButtonCallback(window, onMouseButton);
 
             int display_w, display_h;
             glfwGetFramebufferSize(window, &display_w, &display_h);
@@ -73,8 +106,5 @@ namespace AE
         glfwTerminate();
     }
 
-    Window::~Window()
-    {
-    }
-
+    Window::~Window() = default;
 }

@@ -1,20 +1,15 @@
 #include "aepch.h"
 #include "Application.h"
-#include "events/ApplicationEvent.h"
-#include "Log.h"
+#include "Window.h"
 
 namespace AE
 {
-    AE::Application::Application()
-    {
-    }
+    Application::Application() = default;
 
-    AE::Application::~Application()
-    {
-    }
+    Application::~Application() = default;
 
-    void AE::Application::Run()
-    {        
+    void Application::Run()
+    {
         Window window; // Main loop
     }
 } // namespace AE

@@ -1,3 +1,5 @@
+#pragma once
+
 #ifdef _WIN32
     #ifdef ARNOLDENGINE_BUILD_DLL
         #define ARNOLD_API __declspec(dllexport)
@@ -15,3 +17,4 @@
 #endif
 
 #define BIT(x) (1 << x)
+
