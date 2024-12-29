@@ -7,7 +7,7 @@
 
 namespace AE
 {
-    const char *Window::setGlfwPlatformSpecifics()
+    const char *Window::getGlfwPlatformSpecifics()
     {
 #if defined(__APPLE__)
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -24,6 +24,12 @@ namespace AE
 
     void onKeyPress(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
+        ImGuiIO &io = ImGui::GetIO();
+        if (ImGui::IsAnyItemActive() || ImGui::IsAnyItemFocused()) // Block events if ImGui is active
+        {
+            return;
+        }
+
         if (action == GLFW_PRESS || action == GLFW_REPEAT)
         {
             KeyPressedEvent event(key);
@@ -38,32 +44,30 @@ namespace AE
 
     void onMouseButton(GLFWwindow *window, int button, int action, int mods)
     {
-        if (button == GLFW_MOUSE_BUTTON_LEFT)
+        ImGuiIO &io = ImGui::GetIO();
+        if (io.WantCaptureMouse) // Allow ImGui to consume mouse events
         {
-            if (action == GLFW_PRESS)
-            {
-                MouseButtonPressedEvent event(button);
-                AE_INFO(event);
-            }
-            else
-            {
-                MouseButtonReleasedEvent event(button);
-                AE_INFO(event);
-            }
+            ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+            return;
         }
-        if (button == GLFW_MOUSE_BUTTON_RIGHT)
+
+        if (action == GLFW_PRESS)
         {
-            if (action == GLFW_PRESS)
-            {
-                MouseButtonPressedEvent event(button);
-                AE_INFO(event);
-            }
-            else
-            {
-                MouseButtonReleasedEvent event(button);
-                AE_INFO(event);
-            }
+            ImGui::SetWindowFocus(nullptr);
+            MouseButtonPressedEvent event(button);
+            AE_INFO(event);
         }
+        else
+        {
+            MouseButtonReleasedEvent event(button);
+            AE_INFO(event);
+        }
+    }
+
+    void onCharacterInput(GLFWwindow *window, unsigned int codepoint)
+    {
+        // ImGui consumes character input
+        ImGui_ImplGlfw_CharCallback(window, codepoint);
     }
 
     Window::Window()
@@ -71,7 +75,7 @@ namespace AE
         if (!glfwInit())
             throw std::runtime_error("Failed to initialize GLFW");
 
-        const char *glsl_version = setGlfwPlatformSpecifics();
+        const char *glsl_version = getGlfwPlatformSpecifics();
 
         AE_CORE_INFO("GLFW Initialized. GLSL version: {0}", glsl_version);
 
@@ -95,17 +99,26 @@ namespace AE
         glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
         glViewport(0, 0, screenWidth, screenHeight);
 
+        m_GUI = std::make_unique<GUI>(window, glsl_version);
+
+        // ---- Event Callbacks ----
+        glfwSetKeyCallback(window, onKeyPress);
+        glfwSetMouseButtonCallback(window, onMouseButton);
+        glfwSetCharCallback(window, onCharacterInput);
+
         AE_INFO("Application running...");
         while (!glfwWindowShouldClose(window))
         {
             glfwPollEvents();
-            glfwSetKeyCallback(window, onKeyPress);
-            glfwSetMouseButtonCallback(window, onMouseButton);
 
             int display_w, display_h;
             glfwGetFramebufferSize(window, &display_w, &display_h);
             glViewport(0, 0, display_w, display_h);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            m_GUI->Begin();
+            m_GUI->OnImGuiRender();
+            m_GUI->End();
 
             glfwSwapBuffers(window);
         }

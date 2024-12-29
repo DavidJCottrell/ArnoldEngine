@@ -3,6 +3,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include "GUI.h"
 
 namespace AE
 {
@@ -15,6 +16,7 @@ namespace AE
         GLFWwindow *window;
 
     private:
-        const char *setGlfwPlatformSpecifics();
+        std::unique_ptr<GUI> m_GUI;
+        const char *getGlfwPlatformSpecifics();
     };
 }

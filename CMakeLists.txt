@@ -65,6 +65,7 @@ add_library(${PROJECT_NAME} SHARED
     src/Application.cpp
     src/Window.cpp
     src/Log.cpp
+    src/GUI.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
