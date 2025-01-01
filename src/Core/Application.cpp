@@ -2,14 +2,13 @@
 #include "Application.h"
 #include "Window.h"
 
-namespace AE
+namespace AE::Core
 {
-    Application::Application() = default;
-
     Application::~Application() = default;
 
     void Application::Run()
     {
-        Window window; // Main loop
+        Window window(m_Title); // Main loop
     }
-} // namespace AE
+
+}

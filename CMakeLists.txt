@@ -62,10 +62,10 @@ add_subdirectory(${SPDLOG_PATH})
 # ArnoldEngine
 # ============================
 add_library(${PROJECT_NAME} SHARED
-    src/Application.cpp
-    src/Window.cpp
-    src/Log.cpp
-    src/GUI.cpp
+    src/Core/Application.cpp
+    src/Core/Window.cpp
+    src/Core/Log.cpp
+    src/Graphics/UI/GUI.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
@@ -76,6 +76,7 @@ target_precompile_headers(ArnoldEngine PRIVATE src/aepch.h)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
     $<INSTALL_INTERFACE:include>
 )
 

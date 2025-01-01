@@ -2,10 +2,10 @@
 #include "Window.h"
 
 #include "Log.h"
-#include "events/KeyEvent.h"
-#include "events/MouseEvent.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
 
-namespace AE
+namespace AE::Core
 {
     const char *Window::getGlfwPlatformSpecifics()
     {
@@ -24,12 +24,12 @@ namespace AE
 
     void onKeyPress(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
-        ImGuiIO &io = ImGui::GetIO();
-        if (ImGui::IsAnyItemActive() || ImGui::IsAnyItemFocused()) // Block events if ImGui is active
-        {
+        // ImGui input handling
+        ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
+        if (ImGui::GetIO().WantCaptureKeyboard)
             return;
-        }
 
+        // Engine event handling
         if (action == GLFW_PRESS || action == GLFW_REPEAT)
         {
             KeyPressedEvent event(key);
@@ -44,20 +44,18 @@ namespace AE
 
     void onMouseButton(GLFWwindow *window, int button, int action, int mods)
     {
-        ImGuiIO &io = ImGui::GetIO();
-        if (io.WantCaptureMouse) // Allow ImGui to consume mouse events
-        {
-            ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+        // ImGui input handling
+        ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+        if (ImGui::GetIO().WantCaptureMouse)
             return;
-        }
 
+        // Engine event handling
         if (action == GLFW_PRESS)
         {
-            ImGui::SetWindowFocus(nullptr);
             MouseButtonPressedEvent event(button);
             AE_INFO(event);
         }
-        else
+        else if (action == GLFW_RELEASE)
         {
             MouseButtonReleasedEvent event(button);
             AE_INFO(event);
@@ -66,11 +64,10 @@ namespace AE
 
     void onCharacterInput(GLFWwindow *window, unsigned int codepoint)
     {
-        // ImGui consumes character input
         ImGui_ImplGlfw_CharCallback(window, codepoint);
     }
 
-    Window::Window()
+    Window::Window(const char *title)
     {
         if (!glfwInit())
             throw std::runtime_error("Failed to initialize GLFW");
@@ -79,7 +76,7 @@ namespace AE
 
         AE_CORE_INFO("GLFW Initialized. GLSL version: {0}", glsl_version);
 
-        window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
+        window = glfwCreateWindow(640, 480, title, nullptr, nullptr);
         if (!window)
         {
             throw std::runtime_error("Failed to create GLFW window");
@@ -99,7 +96,7 @@ namespace AE
         glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
         glViewport(0, 0, screenWidth, screenHeight);
 
-        m_GUI = std::make_unique<GUI>(window, glsl_version);
+        m_GUI = std::make_unique<AE::Graphics::UI::GUI>(window, glsl_version);
 
         // ---- Event Callbacks ----
         glfwSetKeyCallback(window, onKeyPress);

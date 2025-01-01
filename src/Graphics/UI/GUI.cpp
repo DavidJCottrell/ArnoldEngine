@@ -1,10 +1,10 @@
 #include "aepch.h"
 #include "GUI.h"
-#include "Log.h"
-#include "Core.h"
-#include "Window.h"
+#include "Core/Log.h"
+#include "Core/Core.h"
+#include "Core/Window.h"
 
-namespace AE
+namespace AE::Graphics::UI
 {
     GUI::GUI(GLFWwindow *window, const char *glsl_version)
         : m_Window(window)

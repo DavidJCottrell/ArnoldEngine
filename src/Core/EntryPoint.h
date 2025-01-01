@@ -3,14 +3,14 @@
 #include "Application.h"
 #include "Log.h"
 
-extern AE::Application *AE::CreateApplication();
+extern AE::Core::Application *AE::Core::CreateApplication();
 
 int main()
 {
     // Move to engine initialization function
-    AE::Log::init();
+    AE::Core::Log::init();
 
-    auto app = AE::CreateApplication();
+    auto app = AE::Core::CreateApplication();
     app->Run();
     delete app;
 

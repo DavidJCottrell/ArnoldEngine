@@ -2,14 +2,17 @@
 
 #include "Core.h"
 
-namespace AE
+namespace AE::Core
 {
+
     class ARNOLD_API Application
     {
     public:
-        Application();
+        Application(const char *windowTitle) : m_Title(windowTitle) {};
         virtual ~Application();
         void Run();
+
+        const char *m_Title;
     };
 
     // To be defined in client
