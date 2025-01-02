@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Core.h"
+#include "aepch.h"
 
 namespace AE
 {
