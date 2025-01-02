@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-namespace AE
+namespace AE::Events
 {
 
     class ARNOLD_API KeyEvent : public Event
@@ -48,5 +48,20 @@ namespace AE
         }
 
         EVENT_CLASS_TYPE(KeyReleased)
+    };
+
+    class ARNOLD_API KeyTypedEvent : public KeyEvent
+    {
+    public:
+        KeyTypedEvent(int keyCode) : KeyEvent(keyCode) {}
+
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << "KeyTypedEvent: " << m_KeyCode;
+            return ss.str();
+        }
+
+        EVENT_CLASS_TYPE(KeyTyped)
     };
 }

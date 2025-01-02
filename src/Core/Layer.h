@@ -4,17 +4,20 @@
 
 namespace AE::Core
 {
-    class Layer
+    class ARNOLD_API Layer
     {
     public:
-        Layer();
+        Layer(const std::string &debugName = "Layer");
         ~Layer();
 
         virtual void OnAttach() {}
         virtual void OnDetach() {}
         virtual void OnUpdate() {}
-        virtual void OnEvent(Event &event) {}
+        virtual void OnEvent(AE::Events::Event &event) {}
 
-    private:
+        inline const std::string &GetName() const { return m_DebugName; }
+
+    protected:
+        std::string m_DebugName;
     };
 }

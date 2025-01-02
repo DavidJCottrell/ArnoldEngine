@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-namespace AE
+namespace AE::Events
 {
     class ARNOLD_API WindowResizeEvent : public Event
     {

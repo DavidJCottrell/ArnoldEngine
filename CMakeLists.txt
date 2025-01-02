@@ -63,13 +63,17 @@ add_subdirectory(${SPDLOG_PATH})
 # ============================
 add_library(${PROJECT_NAME} SHARED
     src/Core/Application.cpp
-    src/Core/Window.cpp
     src/Core/Log.cpp
-    src/Graphics/UI/GUI.cpp
+    src/Core/Window.cpp
+    src/Core/Layer.cpp
+    src/Core/LayerStack.cpp
+    src/Graphics/UI/ImGuiLayer.cpp
+    src/Platform/Mac/MacWindow.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     ARNOLDENGINE_BUILD_DLL
+    AE_ENABLE_ASSERTS
 )
 
 target_precompile_headers(ArnoldEngine PRIVATE src/aepch.h)
@@ -79,6 +83,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
     $<INSTALL_INTERFACE:include>
 )
+
+target_link_options(${PROJECT_NAME} PRIVATE LINKER:-no_warn_duplicate_libraries)
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC glfw
