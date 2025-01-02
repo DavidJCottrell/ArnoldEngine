@@ -21,7 +21,7 @@ namespace AE::Core
 
         Window &GetWindow() { return *m_Window; }
 
-        inline static Application &Get() { return *s_Instance; }
+        static Application &Get() { return *s_Instance; }
 
         const char *m_Title;
 

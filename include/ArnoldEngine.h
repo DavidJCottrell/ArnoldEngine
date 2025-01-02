@@ -5,6 +5,7 @@
 #include "Graphics/UI/ImGuiLayer.h"
 #include "Core/Log.h"
 
-// ---- Entry Point ----
+// Only include entry point in the main application file
+#ifdef AE_MAIN
 #include "Core/EntryPoint.h"
-// ---------------------
+#endif

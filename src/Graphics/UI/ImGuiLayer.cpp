@@ -25,6 +25,8 @@ namespace AE::Graphics::UI
         io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
+        io.IniFilename = nullptr;
+
         ImGui_ImplOpenGL3_Init("#version 150");
     }
 

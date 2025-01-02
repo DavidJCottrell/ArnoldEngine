@@ -41,12 +41,10 @@ namespace AE::Core
 
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
         {
-            (*--it)->OnEvent(e);
+            (*--it)->OnEvent(e); // Call OnEvent for each layer until it has been handled / consumed
             if (e.Handled)
                 break;
         }
-
-        // AE_CORE_TRACE("{0}", e);
     }
 
     void Application::PushLayer(Layer *layer)
