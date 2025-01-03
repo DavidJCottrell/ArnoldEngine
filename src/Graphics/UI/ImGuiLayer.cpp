@@ -1,8 +1,13 @@
 #include "aepch.h"
 #include "ImGuiLayer.h"
+
+#include <imgui_impl_opengl3.h>
+#include "GLFW/glfw3.h"
+
 #include "Core/Core.h"
 #include "Core/Window.h"
 #include "Core/Application.h"
+
 
 namespace AE::Graphics::UI
 {
@@ -38,10 +43,10 @@ namespace AE::Graphics::UI
         using namespace AE::Core;
 
         ImGuiIO &io = ImGui::GetIO();
-        Application &app = Application::Get();
+        const Application &app = Application::Get();
 
-        const float width = app.GetWindow().GetWidth();
-        const float height = app.GetWindow().GetHeight();
+        const auto width = app.GetWindow().GetWidth();
+        const auto height = app.GetWindow().GetHeight();
 
         io.DisplaySize = ImVec2(width, height);
         io.DisplayFramebufferScale = ImVec2(2.0f, 2.0f);
@@ -49,7 +54,7 @@ namespace AE::Graphics::UI
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
 
-        float time = (float)glfwGetTime();
+        auto const time = static_cast<float>(glfwGetTime());
         io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
         m_Time = time;
 
@@ -62,9 +67,9 @@ namespace AE::Graphics::UI
 
     void ImGuiLayer::OnDetach() {}
 
-    void ImGuiLayer::OnEvent(AE::Events::Event &event)
+    void ImGuiLayer::OnEvent(Events::Event &event)
     {
-        AE::Events::EventDispatcher dispatcher(event);
+        Events::EventDispatcher dispatcher(event);
         dispatcher.Dispatch<Events::MouseButtonPressedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
         dispatcher.Dispatch<Events::MouseButtonReleasedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
         dispatcher.Dispatch<Events::MouseMovedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
@@ -76,7 +81,7 @@ namespace AE::Graphics::UI
     }
 
     bool ImGuiLayer::OnMouseButtonPressedEvent(
-        AE::Events::MouseButtonPressedEvent &event)
+        const Events::MouseButtonPressedEvent &event)
     {
         ImGuiIO &io = ImGui::GetIO();
         io.MouseDown[event.GetMouseButton()] = true;
@@ -85,7 +90,7 @@ namespace AE::Graphics::UI
     }
 
     bool ImGuiLayer::OnMouseButtonReleasedEvent(
-        AE::Events::MouseButtonReleasedEvent &event)
+        const Events::MouseButtonReleasedEvent &event)
     {
         ImGuiIO &io = ImGui::GetIO();
         io.MouseDown[event.GetMouseButton()] = false;
@@ -93,7 +98,7 @@ namespace AE::Graphics::UI
         return false;
     }
 
-    bool ImGuiLayer::OnMouseMovedEvent(AE::Events::MouseMovedEvent &event)
+    bool ImGuiLayer::OnMouseMovedEvent(const Events::MouseMovedEvent &event)
     {
         ImGuiIO &io = ImGui::GetIO();
         io.MousePos = ImVec2(event.GetX(), event.GetY());
@@ -101,7 +106,7 @@ namespace AE::Graphics::UI
         return false;
     }
 
-    bool ImGuiLayer::OnMouseScrolledEvent(AE::Events::MouseScrolledEvent &event)
+    bool ImGuiLayer::OnMouseScrolledEvent(const Events::MouseScrolledEvent &event)
     {
         ImGuiIO &io = ImGui::GetIO();
         io.MouseWheelH += event.GetXOffset();
@@ -110,7 +115,7 @@ namespace AE::Graphics::UI
         return false;
     }
 
-    bool ImGuiLayer::OnKeyPressedEvent(AE::Events::KeyPressedEvent &event)
+    bool ImGuiLayer::OnKeyPressedEvent(const Events::KeyPressedEvent &event)
     {
         ImGuiIO &io = ImGui::GetIO();
         io.KeysDown[event.GetKeyCode()] = true;
@@ -123,7 +128,7 @@ namespace AE::Graphics::UI
         return false;
     }
 
-    bool ImGuiLayer::OnKeyReleasedEvent(AE::Events::KeyReleasedEvent &event)
+    bool ImGuiLayer::OnKeyReleasedEvent(const Events::KeyReleasedEvent &event)
     {
         ImGuiIO &io = ImGui::GetIO();
         io.KeysDown[event.GetKeyCode()] = false;
@@ -131,7 +136,7 @@ namespace AE::Graphics::UI
         return false;
     }
 
-    bool ImGuiLayer::OnKeyTypedEvent(AE::Events::KeyTypedEvent &event)
+    bool ImGuiLayer::OnKeyTypedEvent(const Events::KeyTypedEvent &event)
     {
         ImGuiIO &io = ImGui::GetIO();
         int c = event.GetKeyCode();
@@ -142,7 +147,7 @@ namespace AE::Graphics::UI
         return false;
     }
 
-    bool ImGuiLayer::OnWindowResizeEvent(AE::Events::WindowResizeEvent &event)
+    bool ImGuiLayer::OnWindowResizeEvent(const Events::WindowResizeEvent &event)
     {
         ImGuiIO &io = ImGui::GetIO();
         io.DisplaySize = ImVec2(event.GetWidth(), event.GetHeight());

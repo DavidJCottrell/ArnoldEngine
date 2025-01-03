@@ -1,4 +1,3 @@
-#include "aepch.h"
 #include "Core/Window.h"
 #include "Platform/Mac/MacWindow.h"
 

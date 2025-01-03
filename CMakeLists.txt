@@ -87,6 +87,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_link_options(${PROJECT_NAME} PRIVATE LINKER:-no_warn_duplicate_libraries)
 
+if(APPLE)
+    find_package(OpenGL REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PRIVATE "-framework OpenGL")
+endif()
+
 target_link_libraries(${PROJECT_NAME}
     PUBLIC glfw
     PUBLIC glad

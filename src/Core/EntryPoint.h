@@ -10,7 +10,7 @@ int main()
     // Move to engine initialization function
     AE::Core::Log::init();
 
-    auto app = AE::Core::CreateApplication();
+    const auto app = AE::Core::CreateApplication();
     app->Run();
     delete app;
 

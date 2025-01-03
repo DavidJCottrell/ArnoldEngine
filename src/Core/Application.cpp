@@ -1,5 +1,8 @@
 #include "aepch.h"
 #include "Application.h"
+
+#include <glad/glad.h>
+
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
 
