@@ -165,4 +165,5 @@ namespace AE::Platform::Mac
     }
 
     bool MacWindow::IsVSync() const { return m_Data.VSync; }
+
 }

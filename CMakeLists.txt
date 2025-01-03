@@ -69,6 +69,7 @@ add_library(${PROJECT_NAME} SHARED
     src/Core/LayerStack.cpp
     src/Graphics/UI/ImGuiLayer.cpp
     src/Platform/Mac/MacWindow.cpp
+    src/Platform/Mac/MacInput.cpp
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE

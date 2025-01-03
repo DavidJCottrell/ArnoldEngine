@@ -14,19 +14,17 @@ namespace AE::Core
         virtual ~Application();
         void Run();
 
-        void OnEvent(AE::Events::Event &e);
+        void OnEvent(Events::Event &e);
 
         void PushLayer(Layer *layer);
         void PushOverlay(Layer *overlay);
 
-        Window &GetWindow() { return *m_Window; }
+        [[nodiscard]] Window &GetWindow() const { return *m_Window; }
 
         static Application &Get() { return *s_Instance; }
 
-        const char *m_Title;
-
     private:
-        bool OnWindowClose(AE::Events::WindowCloseEvent &e);
+        bool OnWindowClose(Events::WindowCloseEvent &e);
 
         std::unique_ptr<Window> m_Window;
         bool m_Running = true;

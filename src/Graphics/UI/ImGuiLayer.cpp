@@ -11,9 +11,12 @@ namespace AE::Graphics::UI
 
     ImGuiLayer::~ImGuiLayer()
     {
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
+        if (ImGui::GetCurrentContext() != nullptr)
+        {
+            ImGui_ImplOpenGL3_Shutdown();
+            ImGui_ImplGlfw_Shutdown();
+            ImGui::DestroyContext();
+        }
     }
 
     void ImGuiLayer::OnAttach()
