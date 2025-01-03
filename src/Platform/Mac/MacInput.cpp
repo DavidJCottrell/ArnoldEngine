@@ -3,7 +3,7 @@
 #include "Core/Application.h"
 #include "GLFW/glfw3.h"
 
-AE::Core::Input *AE::Core::Input::s_Instance = new Platform::Mac::MacInput();
+AE::Core::Input* AE::Core::Input::s_Instance = new Platform::Mac::MacInput();
 
 namespace AE::Platform::Mac
 {
@@ -13,29 +13,33 @@ namespace AE::Platform::Mac
 
     bool MacInput::IsKeyPressedImpl(const int keycode)
     {
-        const auto window = static_cast<GLFWwindow *>(Core::Application::Get().GetWindow().GetNativeWindow());
+        const auto window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
         const auto state = glfwGetKey(window, keycode);
         return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
+
     bool MacInput::IsMouseButtonPressedImpl(const int button)
     {
-        const auto window = static_cast<GLFWwindow *>(Core::Application::Get().GetWindow().GetNativeWindow());
+        const auto window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
         const auto state = glfwGetMouseButton(window, button);
         return state == GLFW_PRESS;
     }
+
     float MacInput::GetMouseXImpl()
     {
         auto [x, y] = GetMousePositionImpl();
         return x;
     }
+
     float MacInput::GetMouseYImpl()
     {
         auto [x, y] = GetMousePositionImpl();
         return y;
     }
+
     std::pair<float, float> MacInput::GetMousePositionImpl()
     {
-        const auto window = static_cast<GLFWwindow *>(Core::Application::Get().GetWindow().GetNativeWindow());
+        const auto window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
         double xpos, ypos;
         glfwGetCursorPos(window, &xpos, &ypos);
         return {xpos, ypos};
