@@ -82,13 +82,13 @@ namespace AE::Platform::Mac
 
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *window)
                                    {
-                                    WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+                                    const WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
                                     Events::WindowCloseEvent event;
                                     data.EventCallback(event); });
 
         glfwSetKeyCallback(m_Window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
                            {
-                                        WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+                                        const WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
                                         switch (action)
                                         {
                                         case GLFW_PRESS:

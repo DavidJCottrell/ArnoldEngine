@@ -45,11 +45,11 @@ namespace AE::Events
 
     class ARNOLD_API Event
     {
-        friend class EventDispatcher;
+        friend class EventHandler;
 
     public:
         virtual EventType GetEventType() const = 0;
-        virtual const char *GetName() const = 0;
+        virtual const char* GetName() const = 0;
         virtual int GetCategoryFlags() const = 0;
         virtual std::string ToString() const { return GetName(); }
 
@@ -61,33 +61,76 @@ namespace AE::Events
         bool Handled = false;
     };
 
-    class EventDispatcher
+    /**
+     * @brief A utility class that safely routes events to type-specific handler functions.
+     *
+     * The EventHandler provides a type-safe way to handle different types of events by:
+     * 1. Checking if an incoming event matches a specific type
+     * 2. If matched, converting the event to its specific type safely
+     * 3. Routing it to the appropriate handler function
+     *
+     * Example usage:
+     * @code
+     * void OnEvent(Event& e) {
+     *     EventHandler handler(e);
+     *
+     *     // Try to handle a window close event
+     *     if (handler.TryHandle<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose))) {
+     *         return; // Event was successfully handled
+     *     }
+     *
+     *     // Event wasn't a window close event, try other handlers...
+     * }
+     *
+     * bool OnWindowClose(WindowCloseEvent& e) {
+     *     // Handle window close...
+     *     return true;  // Mark event as handled
+     * }
+     * @endcode
+     *
+     * @note Handler functions should return true if they've handled the event and false
+     * if the event should continue propagating to other handlers.
+     */
+    class EventHandler
     {
+        // Define a template alias for our event handler function type
         template <typename T>
-        using EventFn = std::function<bool(T &)>;
+        using HandlerFn = std::function<bool(T&)>;
 
     public:
-        EventDispatcher(Event &event)
+        /**
+         * @brief Constructs an EventHandler for a specific event.
+         * @param event The event to potentially handle.
+         */
+        EventHandler(Event& event)
             : m_Event(event)
         {
         }
 
+        /**
+         * @brief Attempts to handle an event if it matches the specified type.
+         *
+         * @tparam T The specific event type to check for.
+         * @param handler The function to handle the event if types match.
+         * @return true if the event type matched and the handler was called,
+         *         false if the event was of a different type.
+         */
         template <typename T>
-        bool Dispatch(EventFn<T> func)
+        bool TryHandle(HandlerFn<T> handler)
         {
             if (m_Event.GetEventType() == T::GetStaticType())
             {
-                m_Event.Handled = func(*(T *)&m_Event);
+                m_Event.Handled = handler(*(T*)&m_Event);
                 return true;
             }
             return false;
         }
 
     private:
-        Event &m_Event;
+        Event& m_Event; // Reference to the event being handled
     };
 
-    inline std::string format_as(const Event &e)
+    inline std::string format_as(const Event& e)
     {
         return e.ToString();
     }

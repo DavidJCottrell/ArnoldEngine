@@ -12,7 +12,9 @@
 namespace AE::Graphics::UI
 {
     ImGuiLayer::ImGuiLayer()
-        : Layer("ImGuiLayer") {}
+        : Layer("ImGuiLayer")
+    {
+    }
 
     ImGuiLayer::~ImGuiLayer()
     {
@@ -29,7 +31,7 @@ namespace AE::Graphics::UI
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
 
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
@@ -42,8 +44,8 @@ namespace AE::Graphics::UI
     {
         using namespace AE::Core;
 
-        ImGuiIO &io = ImGui::GetIO();
-        const Application &app = Application::Get();
+        ImGuiIO& io = ImGui::GetIO();
+        const Application& app = Application::Get();
 
         const auto width = app.GetWindow().GetWidth();
         const auto height = app.GetWindow().GetHeight();
@@ -65,59 +67,62 @@ namespace AE::Graphics::UI
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void ImGuiLayer::OnDetach() {}
-
-    void ImGuiLayer::OnEvent(Events::Event &event)
+    void ImGuiLayer::OnDetach()
     {
-        Events::EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<Events::MouseButtonPressedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
-        dispatcher.Dispatch<Events::MouseButtonReleasedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
-        dispatcher.Dispatch<Events::MouseMovedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
-        dispatcher.Dispatch<Events::MouseScrolledEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
-        dispatcher.Dispatch<Events::KeyPressedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
-        dispatcher.Dispatch<Events::KeyReleasedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
-        dispatcher.Dispatch<Events::KeyTypedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
-        dispatcher.Dispatch<Events::WindowResizeEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
+        AE_CORE_INFO("ImGuiLayer detached");
+    }
+
+    void ImGuiLayer::OnEvent(Events::Event& event)
+    {
+        Events::EventHandler handler(event);
+        handler.TryHandle<Events::MouseButtonPressedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
+        handler.TryHandle<Events::MouseButtonReleasedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
+        handler.TryHandle<Events::MouseMovedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
+        handler.TryHandle<Events::MouseScrolledEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
+        handler.TryHandle<Events::KeyPressedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
+        handler.TryHandle<Events::KeyReleasedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+        handler.TryHandle<Events::KeyTypedEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
+        handler.TryHandle<Events::WindowResizeEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
     }
 
     bool ImGuiLayer::OnMouseButtonPressedEvent(
-        const Events::MouseButtonPressedEvent &event)
+        const Events::MouseButtonPressedEvent& event)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         io.MouseDown[event.GetMouseButton()] = true;
 
         return false; // Allow other layers to handle the event
     }
 
     bool ImGuiLayer::OnMouseButtonReleasedEvent(
-        const Events::MouseButtonReleasedEvent &event)
+        const Events::MouseButtonReleasedEvent& event)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         io.MouseDown[event.GetMouseButton()] = false;
 
         return false;
     }
 
-    bool ImGuiLayer::OnMouseMovedEvent(const Events::MouseMovedEvent &event)
+    bool ImGuiLayer::OnMouseMovedEvent(const Events::MouseMovedEvent& event)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         io.MousePos = ImVec2(event.GetX(), event.GetY());
 
         return false;
     }
 
-    bool ImGuiLayer::OnMouseScrolledEvent(const Events::MouseScrolledEvent &event)
+    bool ImGuiLayer::OnMouseScrolledEvent(const Events::MouseScrolledEvent& event)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         io.MouseWheelH += event.GetXOffset();
         io.MouseWheel += event.GetYOffset();
 
         return false;
     }
 
-    bool ImGuiLayer::OnKeyPressedEvent(const Events::KeyPressedEvent &event)
+    bool ImGuiLayer::OnKeyPressedEvent(const Events::KeyPressedEvent& event)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         io.KeysDown[event.GetKeyCode()] = true;
 
         io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
@@ -128,17 +133,17 @@ namespace AE::Graphics::UI
         return false;
     }
 
-    bool ImGuiLayer::OnKeyReleasedEvent(const Events::KeyReleasedEvent &event)
+    bool ImGuiLayer::OnKeyReleasedEvent(const Events::KeyReleasedEvent& event)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         io.KeysDown[event.GetKeyCode()] = false;
 
         return false;
     }
 
-    bool ImGuiLayer::OnKeyTypedEvent(const Events::KeyTypedEvent &event)
+    bool ImGuiLayer::OnKeyTypedEvent(const Events::KeyTypedEvent& event)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         int c = event.GetKeyCode();
 
         if (c > 0 && c < 0x10000)
@@ -147,9 +152,9 @@ namespace AE::Graphics::UI
         return false;
     }
 
-    bool ImGuiLayer::OnWindowResizeEvent(const Events::WindowResizeEvent &event)
+    bool ImGuiLayer::OnWindowResizeEvent(const Events::WindowResizeEvent& event)
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
         io.DisplaySize = ImVec2(event.GetWidth(), event.GetHeight());
         io.DisplayFramebufferScale = ImVec2(2.0f, 2.0f);
         glViewport(0, 0, event.GetWidth(), event.GetHeight());

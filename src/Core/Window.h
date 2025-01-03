@@ -23,7 +23,7 @@ namespace AE::Core
     public:
         virtual ~Window();
 
-        using EventCallbackFn = std::function<void(AE::Events::Event &)>; // Ask claude
+        using EventCallbackFn = std::function<void(Events::Event &)>; // Ask claude
 
         virtual void OnUpdate() = 0;
 
