@@ -1,4 +1,4 @@
-# Arnold Engine
+# Æ
 
 <img align="right" src="./assets/ArnoldEngineLogo.png" width="200" height="200"/>
 
