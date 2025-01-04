@@ -36,19 +36,19 @@ set(IMGUI_PATH ${EXTERNAL_DIR}/imgui)
 set(IMGUI_BACKENDS ${IMGUI_PATH}/backends)
 
 set(IMGUI_SOURCES
-    ${IMGUI_PATH}/imgui.cpp
-    ${IMGUI_PATH}/imgui_demo.cpp
-    ${IMGUI_PATH}/imgui_draw.cpp
-    ${IMGUI_PATH}/imgui_tables.cpp
-    ${IMGUI_PATH}/imgui_widgets.cpp
-    ${IMGUI_BACKENDS}/imgui_impl_glfw.cpp
-    ${IMGUI_BACKENDS}/imgui_impl_opengl3.cpp
+        ${IMGUI_PATH}/imgui.cpp
+        ${IMGUI_PATH}/imgui_demo.cpp
+        ${IMGUI_PATH}/imgui_draw.cpp
+        ${IMGUI_PATH}/imgui_tables.cpp
+        ${IMGUI_PATH}/imgui_widgets.cpp
+        ${IMGUI_BACKENDS}/imgui_impl_glfw.cpp
+        ${IMGUI_BACKENDS}/imgui_impl_opengl3.cpp
 )
 
 add_library(imgui STATIC ${IMGUI_SOURCES})
 target_include_directories(imgui PUBLIC
-    ${IMGUI_PATH}
-    ${IMGUI_BACKENDS}
+        ${IMGUI_PATH}
+        ${IMGUI_BACKENDS}
 )
 target_link_libraries(imgui PUBLIC glfw glad)
 
@@ -59,43 +59,47 @@ set(SPDLOG_PATH ${EXTERNAL_DIR}/spdlog)
 add_subdirectory(${SPDLOG_PATH})
 
 # ============================
+# Sentinel
+# ============================
+set(SENTINEL_PATH ${EXTERNAL_DIR}/sentinel)
+add_subdirectory(${SENTINEL_PATH})
+
+# ============================
 # ArnoldEngine
 # ============================
 add_library(${PROJECT_NAME} SHARED
-    src/Core/Application.cpp
-    src/Core/Log.cpp
-    src/Core/Window.cpp
-    src/Core/Layer.cpp
-    src/Core/LayerStack.cpp
-    src/Graphics/UI/ImGuiLayer.cpp
-    src/Platform/Mac/MacWindow.cpp
-    src/Platform/Mac/MacInput.cpp
+        src/Core/Application.cpp
+        src/Core/Log.cpp
+        src/Core/Window.cpp
+        src/Core/Layer.cpp
+        src/Core/LayerStack.cpp
+        src/Graphics/UI/ImGuiLayer.cpp
+        src/Platform/Mac/MacWindow.cpp
+        src/Platform/Mac/MacInput.cpp
 )
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-    ARNOLDENGINE_BUILD_DLL
-    AE_ENABLE_ASSERTS
-)
+target_compile_definitions(${PROJECT_NAME} PRIVATE ARNOLDENGINE_BUILD_DLL)
 
 target_precompile_headers(ArnoldEngine PRIVATE src/aepch.h)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
-    $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_options(${PROJECT_NAME} PRIVATE LINKER:-no_warn_duplicate_libraries)
 
-if(APPLE)
+if (APPLE)
     find_package(OpenGL REQUIRED)
     target_link_libraries(${PROJECT_NAME} PRIVATE "-framework OpenGL")
-endif()
+endif ()
 
 target_link_libraries(${PROJECT_NAME}
-    PUBLIC glfw
-    PUBLIC glad
-    PUBLIC entt
-    PUBLIC imgui
-    PUBLIC spdlog::spdlog
+        PUBLIC glfw
+        PUBLIC glad
+        PUBLIC entt
+        PUBLIC imgui
+        PUBLIC spdlog::spdlog
+        PUBLIC Sentinel
 )

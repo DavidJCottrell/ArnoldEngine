@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 
 #include "Window.h"
+#include "../../external/sentinel/src/ConfigurationManager.h"
 #include "Events/ApplicationEvent.h"
 
 namespace AE::Core
@@ -15,8 +16,20 @@ namespace AE::Core
         s_Instance = this;
 
         m_Window = std::unique_ptr<Window>(Window::Create());
-        m_Window->SetEventCallback(AE_BIND_EVENT_FN(Application::OnEvent));
         // Set event callback for platform-specific window
+        m_Window->SetEventCallback(AE_BIND_EVENT_FN(Application::OnEvent));
+
+        using namespace Sentinel;
+        constexpr ConfigurationParameters params =
+        {
+            .enableHotReload = true,
+            .validateOnLoad = true,
+            .fileReaderType = SENTINEL
+        };
+        ConfigurationManager::Initialize("config.sen", params);
+        const auto* config = ConfigurationManager::Get();
+
+        AE_CORE_INFO("Configuration value: {0}", config->GetConfigValue());
     }
 
     Application::~Application() = default;
