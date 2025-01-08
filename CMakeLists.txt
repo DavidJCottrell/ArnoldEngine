@@ -59,10 +59,10 @@ set(SPDLOG_PATH ${EXTERNAL_DIR}/spdlog)
 add_subdirectory(${SPDLOG_PATH})
 
 # ============================
-# Sentinel
+# CCM
 # ============================
-set(SENTINEL_PATH ${EXTERNAL_DIR}/sentinel)
-add_subdirectory(${SENTINEL_PATH})
+set(CCM_PATH ${EXTERNAL_DIR}/ccm)
+add_subdirectory(${CCM_PATH})
 
 # ============================
 # ArnoldEngine
@@ -101,5 +101,5 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC entt
         PUBLIC imgui
         PUBLIC spdlog::spdlog
-        PUBLIC Sentinel
+        PUBLIC ccm
 )
