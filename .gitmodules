@@ -7,6 +7,6 @@
 [submodule "external/spdlog"]
 	path = external/spdlog
 	url = https://github.com/gabime/spdlog.git
-[submodule "external/sentinel"]
-	path = external/sentinel
-	url = https://github.com/DavidJCottrell/Sentinel.git
+[submodule "external/ccm"]
+	path = external/ccm
+	url = https://github.com/DavidJCottrell/ccm.git
