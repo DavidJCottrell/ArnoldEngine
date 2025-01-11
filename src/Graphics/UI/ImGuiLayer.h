@@ -20,6 +20,9 @@ namespace AE::Graphics::UI
         void OnUpdate() override;
         void OnEvent(Events::Event &event) override;
 
+        void GetWindowProperties(unsigned int* width, unsigned int* height,
+            float* xScale, float* yScale);
+
     private:
         // Mouse events
         bool OnMouseButtonPressedEvent(const Events::MouseButtonPressedEvent &event);
@@ -36,7 +39,7 @@ namespace AE::Graphics::UI
         bool OnWindowResizeEvent(const Events::WindowResizeEvent &event);
 
     private:
-        GLFWwindow *m_Window;
+        GLFWwindow *m_Window{};
         float m_Time = 0.0f;
     };
 }

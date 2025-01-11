@@ -2,6 +2,8 @@
 #include "ImGuiLayer.h"
 
 #include <imgui_impl_opengl3.h>
+#include <imgui_impl_opengl3_loader.h>
+
 #include "GLFW/glfw3.h"
 
 #include "Core/Core.h"
@@ -42,16 +44,15 @@ namespace AE::Graphics::UI
 
     void ImGuiLayer::OnUpdate()
     {
-        using namespace AE::Core;
-
         ImGuiIO& io = ImGui::GetIO();
-        const Application& app = Application::Get();
 
-        const auto width = app.GetWindow().GetWidth();
-        const auto height = app.GetWindow().GetHeight();
+        float xScale, yScale;
+        unsigned int width, height;
+        GetWindowProperties(&width, &height, &xScale, &yScale);
 
         io.DisplaySize = ImVec2(width, height);
-        io.DisplayFramebufferScale = ImVec2(2.0f, 2.0f);
+        io.DisplayFramebufferScale = ImVec2(xScale, yScale);
+
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
@@ -65,6 +66,19 @@ namespace AE::Graphics::UI
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    }
+
+    void ImGuiLayer::GetWindowProperties(unsigned int* width, unsigned int* height,
+        float* xScale, float* yScale)
+    {
+        using namespace AE::Core;
+        const Application& app = Application::Get();
+
+        *width = app.GetWindow().GetWidth();
+        *height = app.GetWindow().GetHeight();
+
+        auto* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+        glfwGetWindowContentScale(window, xScale, yScale);
     }
 
     void ImGuiLayer::OnDetach()
@@ -155,8 +169,13 @@ namespace AE::Graphics::UI
     bool ImGuiLayer::OnWindowResizeEvent(const Events::WindowResizeEvent& event)
     {
         ImGuiIO& io = ImGui::GetIO();
-        io.DisplaySize = ImVec2(event.GetWidth(), event.GetHeight());
-        io.DisplayFramebufferScale = ImVec2(2.0f, 2.0f);
+
+        float xscale, yscale;
+        unsigned int width, height;
+        GetWindowProperties(&width, &height, &xscale, &yscale);
+
+        io.DisplaySize = ImVec2(width, height);
+        io.DisplayFramebufferScale = ImVec2(xscale, yscale);
         glViewport(0, 0, event.GetWidth(), event.GetHeight());
 
         return false;
