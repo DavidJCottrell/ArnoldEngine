@@ -3,6 +3,7 @@
 
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_opengl3_loader.h>
+#include <Core/KeyCodes.h>
 
 #include "GLFW/glfw3.h"
 
@@ -48,7 +49,7 @@ namespace AE::Graphics::UI
 
         float xScale, yScale;
         unsigned int width, height;
-        GetWindowProperties(&width, &height, &xScale, &yScale);
+        Core::Window::GetWindowProperties(&width, &height, &xScale, &yScale);
 
         io.DisplaySize = ImVec2(width, height);
         io.DisplayFramebufferScale = ImVec2(xScale, yScale);
@@ -68,17 +69,19 @@ namespace AE::Graphics::UI
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void ImGuiLayer::GetWindowProperties(unsigned int* width, unsigned int* height,
-        float* xScale, float* yScale)
+    ImGuiKey ImGuiLayer::MapSpecialKeys(const int keyCode)
     {
-        using namespace AE::Core;
-        const Application& app = Application::Get();
-
-        *width = app.GetWindow().GetWidth();
-        *height = app.GetWindow().GetHeight();
-
-        auto* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
-        glfwGetWindowContentScale(window, xScale, yScale);
+        switch (keyCode)
+        {
+        case AE_KEY_TAB: return ImGuiKey_Tab;
+        case AE_KEY_LEFT: return ImGuiKey_LeftArrow;
+        case AE_KEY_RIGHT: return ImGuiKey_RightArrow;
+        case AE_KEY_UP: return ImGuiKey_UpArrow;
+        case AE_KEY_DOWN: return ImGuiKey_DownArrow;
+        case AE_KEY_ENTER: return ImGuiKey_Enter;
+        case AE_KEY_BACKSPACE: return ImGuiKey_Backspace;
+        default: return ImGuiKey_None;
+        }
     }
 
     void ImGuiLayer::OnDetach()
@@ -137,12 +140,16 @@ namespace AE::Graphics::UI
     bool ImGuiLayer::OnKeyPressedEvent(const Events::KeyPressedEvent& event)
     {
         ImGuiIO& io = ImGui::GetIO();
-        io.KeysDown[event.GetKeyCode()] = true;
 
-        io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-        io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-        io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-        io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+        io.AddKeyEvent(ImGuiMod_Ctrl, io.KeyCtrl);
+        io.AddKeyEvent(ImGuiMod_Shift, io.KeyShift);
+        io.AddKeyEvent(ImGuiMod_Alt, io.KeyAlt);
+        io.AddKeyEvent(ImGuiMod_Super, io.KeySuper);
+
+        const ImGuiKey imgui_key = MapSpecialKeys(event.GetKeyCode());
+
+        if (imgui_key != ImGuiKey_None)
+            io.AddKeyEvent(imgui_key, true);
 
         return false;
     }
@@ -150,7 +157,11 @@ namespace AE::Graphics::UI
     bool ImGuiLayer::OnKeyReleasedEvent(const Events::KeyReleasedEvent& event)
     {
         ImGuiIO& io = ImGui::GetIO();
-        io.KeysDown[event.GetKeyCode()] = false;
+
+        const ImGuiKey imgui_key = MapSpecialKeys(event.GetKeyCode());
+
+        if (imgui_key != ImGuiKey_None)
+            io.AddKeyEvent(imgui_key, false);
 
         return false;
     }
@@ -158,10 +169,10 @@ namespace AE::Graphics::UI
     bool ImGuiLayer::OnKeyTypedEvent(const Events::KeyTypedEvent& event)
     {
         ImGuiIO& io = ImGui::GetIO();
-        int c = event.GetKeyCode();
+        const int typedChar = event.GetKeyCode();
 
-        if (c > 0 && c < 0x10000)
-            io.AddInputCharacter((unsigned short)c);
+        if (typedChar > 0 && typedChar < 0x10000)
+            io.AddInputCharacter(static_cast<unsigned short>(typedChar));
 
         return false;
     }
@@ -172,7 +183,7 @@ namespace AE::Graphics::UI
 
         float xscale, yscale;
         unsigned int width, height;
-        GetWindowProperties(&width, &height, &xscale, &yscale);
+        Core::Window::GetWindowProperties(&width, &height, &xscale, &yscale);
 
         io.DisplaySize = ImVec2(width, height);
         io.DisplayFramebufferScale = ImVec2(xscale, yscale);
@@ -180,4 +191,4 @@ namespace AE::Graphics::UI
 
         return false;
     }
-} // namespace AE::Graphics::UI
+}
