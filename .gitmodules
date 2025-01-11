@@ -10,3 +10,6 @@
 [submodule "external/ccm"]
 	path = external/ccm
 	url = https://github.com/DavidJCottrell/ccm.git
+[submodule "external/glm"]
+	path = external/glm
+	url = https://github.com/g-truc/glm.git

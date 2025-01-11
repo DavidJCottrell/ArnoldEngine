@@ -23,6 +23,13 @@ set(GLFW_PATH ${EXTERNAL_DIR}/glfw)
 add_subdirectory(${GLFW_PATH})
 
 # ============================
+# GLM
+# ============================
+set(GLM_PATH ${EXTERNAL_DIR}/glm)
+add_subdirectory(${GLM_PATH})
+target_include_directories(glm PUBLIC ${GLM_PATH}/glm)
+
+# ============================
 # GLAD
 # ============================
 set(GLAD_PATH ${EXTERNAL_DIR}/glad)
@@ -102,4 +109,5 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC imgui
         PUBLIC spdlog::spdlog
         PUBLIC ccm
+        PUBLIC glm::glm
 )
