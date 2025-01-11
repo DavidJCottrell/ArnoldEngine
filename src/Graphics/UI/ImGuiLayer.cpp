@@ -11,9 +11,11 @@
 #include "Core/Window.h"
 #include "Core/Application.h"
 
-
 namespace AE::Graphics::UI
 {
+    static constexpr float DEFAULT_FONT_SIZE = 13.0f;
+    static constexpr float RETINA_SCALE_FACTOR = 0.5f;
+
     ImGuiLayer::ImGuiLayer()
         : Layer("ImGuiLayer")
     {
@@ -31,16 +33,42 @@ namespace AE::Graphics::UI
 
     void ImGuiLayer::OnAttach()
     {
-        ImGui::CreateContext();
-        ImGui::StyleColorsDark();
+        if (!IMGUI_CHECKVERSION())
+        {
+            AE_CORE_ERROR("Failed to check ImGui!");
+            return;
+        }
 
+        ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
+
         io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
         io.IniFilename = nullptr;
 
+        float xScale, yScale;
+        unsigned int width, height;
+        Core::Window::GetWindowProperties(&width, &height, &xScale, &yScale);
+
+        // Configure font scaling for Retina displays
+        io.FontGlobalScale = RETINA_SCALE_FACTOR;
+
+        ImFontConfig fontConfig;
+        fontConfig.SizePixels = DEFAULT_FONT_SIZE * xScale;
+        io.Fonts->Clear();
+        io.Fonts->AddFontDefault(&fontConfig);
+        io.Fonts->SetTexID(static_cast<ImTextureID>(0));
+
+        ImGui::StyleColorsDark();
+        ImGuiStyle& style = ImGui::GetStyle();
+        style.ScaleAllSizes(xScale);
+
+        auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
+        ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 150");
+
+        io.Fonts->Build();
     }
 
     void ImGuiLayer::OnUpdate()
@@ -51,11 +79,11 @@ namespace AE::Graphics::UI
         unsigned int width, height;
         Core::Window::GetWindowProperties(&width, &height, &xScale, &yScale);
 
-        io.DisplaySize = ImVec2(width, height);
+        io.DisplaySize = ImVec2(width / xScale, height / yScale);
         io.DisplayFramebufferScale = ImVec2(xScale, yScale);
 
-
         ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
         auto const time = static_cast<float>(glfwGetTime());
@@ -66,6 +94,13 @@ namespace AE::Graphics::UI
         ImGui::ShowDemoWindow(&show);
 
         ImGui::Render();
+
+        // Ensure the viewport is consistent when dragging between monitors
+        auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
+        int fbWidth, fbHeight;
+        glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+        glViewport(0, 0, fbWidth, fbHeight);
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
@@ -79,7 +114,13 @@ namespace AE::Graphics::UI
         case AE_KEY_UP: return ImGuiKey_UpArrow;
         case AE_KEY_DOWN: return ImGuiKey_DownArrow;
         case AE_KEY_ENTER: return ImGuiKey_Enter;
+        case AE_KEY_ESCAPE: return ImGuiKey_Escape;
         case AE_KEY_BACKSPACE: return ImGuiKey_Backspace;
+        case AE_KEY_DELETE: return ImGuiKey_Delete;
+        case AE_KEY_HOME: return ImGuiKey_Home;
+        case AE_KEY_END: return ImGuiKey_End;
+        case AE_KEY_PAGE_UP: return ImGuiKey_PageUp;
+        case AE_KEY_PAGE_DOWN: return ImGuiKey_PageDown;
         default: return ImGuiKey_None;
         }
     }
@@ -102,21 +143,17 @@ namespace AE::Graphics::UI
         handler.TryHandle<Events::WindowResizeEvent>(AE_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
     }
 
-    bool ImGuiLayer::OnMouseButtonPressedEvent(
-        const Events::MouseButtonPressedEvent& event)
+    bool ImGuiLayer::OnMouseButtonPressedEvent(const Events::MouseButtonPressedEvent& event)
     {
         ImGuiIO& io = ImGui::GetIO();
         io.MouseDown[event.GetMouseButton()] = true;
-
-        return false; // Allow other layers to handle the event
+        return false;
     }
 
-    bool ImGuiLayer::OnMouseButtonReleasedEvent(
-        const Events::MouseButtonReleasedEvent& event)
+    bool ImGuiLayer::OnMouseButtonReleasedEvent(const Events::MouseButtonReleasedEvent& event)
     {
         ImGuiIO& io = ImGui::GetIO();
         io.MouseDown[event.GetMouseButton()] = false;
-
         return false;
     }
 
@@ -124,7 +161,6 @@ namespace AE::Graphics::UI
     {
         ImGuiIO& io = ImGui::GetIO();
         io.MousePos = ImVec2(event.GetX(), event.GetY());
-
         return false;
     }
 
@@ -133,7 +169,6 @@ namespace AE::Graphics::UI
         ImGuiIO& io = ImGui::GetIO();
         io.MouseWheelH += event.GetXOffset();
         io.MouseWheel += event.GetYOffset();
-
         return false;
     }
 
@@ -147,7 +182,6 @@ namespace AE::Graphics::UI
         io.AddKeyEvent(ImGuiMod_Super, io.KeySuper);
 
         const ImGuiKey imgui_key = MapSpecialKeys(event.GetKeyCode());
-
         if (imgui_key != ImGuiKey_None)
             io.AddKeyEvent(imgui_key, true);
 
@@ -159,7 +193,6 @@ namespace AE::Graphics::UI
         ImGuiIO& io = ImGui::GetIO();
 
         const ImGuiKey imgui_key = MapSpecialKeys(event.GetKeyCode());
-
         if (imgui_key != ImGuiKey_None)
             io.AddKeyEvent(imgui_key, false);
 
@@ -185,7 +218,7 @@ namespace AE::Graphics::UI
         unsigned int width, height;
         Core::Window::GetWindowProperties(&width, &height, &xscale, &yscale);
 
-        io.DisplaySize = ImVec2(width, height);
+        io.DisplaySize = ImVec2(width / xscale, height / yscale);
         io.DisplayFramebufferScale = ImVec2(xscale, yscale);
         glViewport(0, 0, event.GetWidth(), event.GetHeight());
 

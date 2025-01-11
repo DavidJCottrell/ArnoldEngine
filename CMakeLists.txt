@@ -81,6 +81,7 @@ add_library(${PROJECT_NAME} SHARED
         src/Core/Layer.cpp
         src/Core/LayerStack.cpp
         src/Graphics/UI/ImGuiLayer.cpp
+        src/Graphics/UI/ImGuiBuild.cpp
         src/Platform/Mac/MacWindow.cpp
         src/Platform/Mac/MacInput.cpp
 )
