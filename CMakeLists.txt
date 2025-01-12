@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 project(ArnoldEngine VERSION 0.0.1 LANGUAGES C CXX)
 
+enable_testing()
+
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,6 +10,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # External dependencies base directory
 set(EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
+
+# ============================
+# GoogleTest
+# ============================
+set(GTEST_PATH ${EXTERNAL_DIR}/googletest)
+add_subdirectory(${GTEST_PATH})
 
 # ============================
 # EnTT (Header-only library)
@@ -74,21 +82,47 @@ add_subdirectory(${CCM_PATH})
 # ============================
 # ArnoldEngine
 # ============================
+set(AE_SOURCE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(AE_SOURCES
+        ${AE_SOURCE_PATH}/Core/Application.cpp
+        ${AE_SOURCE_PATH}/Core/Log.cpp
+        ${AE_SOURCE_PATH}/Core/Window.cpp
+        ${AE_SOURCE_PATH}/Core/Layer.cpp
+        ${AE_SOURCE_PATH}/Core/LayerStack.cpp
+        ${AE_SOURCE_PATH}/Graphics/UI/ImGuiLayer.cpp
+        ${AE_SOURCE_PATH}/Graphics/UI/ImGuiBuild.cpp
+
+)
+if (APPLE)
+    set(AE_PLATFORM_SOURCES
+            ${AE_SOURCE_PATH}/Platform/Mac/MacWindow.cpp
+            ${AE_SOURCE_PATH}/Platform/Mac/MacInput.cpp
+    )
+    message(STATUS "Configuring for macOS")
+elseif (WIN32)
+    set(AE_PLATFORM_SOURCES
+            ${AE_SOURCE_PATH}/Platform/Windows/WindowsWindow.cpp
+            ${AE_SOURCE_PATH}/Platform/Windows/WindowsInput.cpp
+    )
+    message(STATUS "Configuring for Windows")
+elseif (UNIX AND NOT APPLE)
+    set(AE_PLATFORM_SOURCES
+            ${AE_SOURCE_PATH}/Platform/Linux/LinuxWindow.cpp
+            ${AE_SOURCE_PATH}/Platform/Linux/LinuxInput.cpp
+    )
+    message(STATUS "Configuring for Linux")
+else ()
+    message(FATAL_ERROR "Unsupported platform")
+endif ()
+
 add_library(${PROJECT_NAME} SHARED
-        src/Core/Application.cpp
-        src/Core/Log.cpp
-        src/Core/Window.cpp
-        src/Core/Layer.cpp
-        src/Core/LayerStack.cpp
-        src/Graphics/UI/ImGuiLayer.cpp
-        src/Graphics/UI/ImGuiBuild.cpp
-        src/Platform/Mac/MacWindow.cpp
-        src/Platform/Mac/MacInput.cpp
+        ${AE_SOURCES}
+        ${AE_PLATFORM_SOURCES}
 )
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE ARNOLDENGINE_BUILD_DLL)
+target_compile_definitions(${PROJECT_NAME} PRIVATE ARNOLD_ENGINE_BUILD_DLL)
 
-target_precompile_headers(ArnoldEngine PRIVATE src/aepch.h)
+target_precompile_headers(${PROJECT_NAME} PRIVATE src/aepch.h)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -103,6 +137,19 @@ if (APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE "-framework OpenGL")
 endif ()
 
+# ============================
+# Tests
+# ============================
+add_executable(${PROJECT_NAME}_tests
+        tests/LayerStackTests.cpp
+)
+target_link_libraries(${PROJECT_NAME}_tests
+        PRIVATE GTest::gtest_main
+        PRIVATE ${PROJECT_NAME}
+)
+include(GoogleTest)
+gtest_discover_tests(${PROJECT_NAME}_tests)
+
 target_link_libraries(${PROJECT_NAME}
         PRIVATE glfw
         PRIVATE glad
@@ -112,3 +159,5 @@ target_link_libraries(${PROJECT_NAME}
         PRIVATE ccm
         PRIVATE glm::glm
 )
+
+
