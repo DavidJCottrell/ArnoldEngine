@@ -9,6 +9,18 @@
 
 namespace AE::Graphics::UI
 {
+    /**
+     * @class ImGuiLayer
+     * @brief Manages Dear ImGui integration for debugging and tools
+     *
+     * The ImGuiLayer provides immediate mode GUI functionality:
+     * - Debug windows and tools
+     * - Real-time property editing
+     * - Performance monitoring
+     * - Custom editor tools
+     *
+     * @note This layer typically runs as an overlay to render on top of other layers
+     */
     class ARNOLD_API ImGuiLayer : public Core::Layer
     {
     public:

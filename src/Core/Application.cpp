@@ -5,8 +5,6 @@
 
 #include "Window.h"
 #include "ConfigurationManager.h"
-#include "Input.h"
-#include "KeyCodes.h"
 #include "Events/ApplicationEvent.h"
 
 namespace AE::Core
@@ -93,4 +91,4 @@ namespace AE::Core
         m_Running = false;
         return true;
     }
-} // namespace AE::Core
+}

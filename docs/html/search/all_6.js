@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['tryhandle_0',['TryHandle',['../class_a_e_1_1_events_1_1_event_handler.html#a9d3e8dabfdb44dc3c8b903f7aa6aa32b',1,'AE::Events::EventHandler']]]
+  ['keyevent_0',['KeyEvent',['../class_a_e_1_1_events_1_1_key_event.html',1,'AE::Events']]],
+  ['keypressedevent_1',['KeyPressedEvent',['../class_a_e_1_1_events_1_1_key_pressed_event.html',1,'AE::Events']]],
+  ['keyreleasedevent_2',['KeyReleasedEvent',['../class_a_e_1_1_events_1_1_key_released_event.html',1,'AE::Events']]],
+  ['keytypedevent_3',['KeyTypedEvent',['../class_a_e_1_1_events_1_1_key_typed_event.html',1,'AE::Events']]]
 ];

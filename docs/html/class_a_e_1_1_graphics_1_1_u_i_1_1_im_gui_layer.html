@@ -104,18 +104,22 @@ $(function(){initNavTree('class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer.html',
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">AE::Graphics::UI::ImGuiLayer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Manages Dear ImGui integration for debugging and tools.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_im_gui_layer_8h_source.html">ImGuiLayer.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AE::Graphics::UI::ImGuiLayer:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer.png" usemap="#AE::Graphics::UI::ImGuiLayer_map" alt=""/>
   <map id="AE::Graphics::UI::ImGuiLayer_map" name="AE::Graphics::UI::ImGuiLayer_map">
-<area href="class_a_e_1_1_core_1_1_layer.html" alt="AE::Core::Layer" shape="rect" coords="0,0,173,24"/>
+<area href="class_a_e_1_1_core_1_1_layer.html" title="Base class for application layers that can be pushed/popped from the LayerStack." alt="AE::Core::Layer" shape="rect" coords="0,0,173,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -125,23 +129,26 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3d051f0860134c6c386bded3d1aa5301"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44eb464f27b2f293b1077cdf56a172dd" id="r_a44eb464f27b2f293b1077cdf56a172dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44eb464f27b2f293b1077cdf56a172dd">OnDetach</a> () override</td></tr>
 <tr class="separator:a44eb464f27b2f293b1077cdf56a172dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abae1fbf34388c6e839c46bfcce1585ea" id="r_abae1fbf34388c6e839c46bfcce1585ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abae1fbf34388c6e839c46bfcce1585ea">OnUpdate</a> () override</td></tr>
-<tr class="separator:abae1fbf34388c6e839c46bfcce1585ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7febda34d42b61ddcc790dc343b185dd" id="r_a7febda34d42b61ddcc790dc343b185dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7febda34d42b61ddcc790dc343b185dd">OnEvent</a> (<a class="el" href="class_a_e_1_1_events_1_1_event.html">Events::Event</a> &amp;event) override</td></tr>
-<tr class="separator:a7febda34d42b61ddcc790dc343b185dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab36a7e9c8f12cd951dffa58750598943" id="r_ab36a7e9c8f12cd951dffa58750598943"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab36a7e9c8f12cd951dffa58750598943">OnImGuiRender</a> () override</td></tr>
+<tr class="separator:ab36a7e9c8f12cd951dffa58750598943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cfdc84e848c8e629afb0c5153e2f9e8" id="r_a9cfdc84e848c8e629afb0c5153e2f9e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9cfdc84e848c8e629afb0c5153e2f9e8">Begin</a> ()</td></tr>
+<tr class="separator:a9cfdc84e848c8e629afb0c5153e2f9e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1a433810e1ce715ad093567123a380d" id="r_ad1a433810e1ce715ad093567123a380d"><td class="memItemLeft" align="right" valign="top"><a id="ad1a433810e1ce715ad093567123a380d" name="ad1a433810e1ce715ad093567123a380d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>End</b> ()</td></tr>
+<tr class="separator:ad1a433810e1ce715ad093567123a380d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_a_e_1_1_core_1_1_layer"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_a_e_1_1_core_1_1_layer')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_a_e_1_1_core_1_1_layer.html">AE::Core::Layer</a></td></tr>
 <tr class="memitem:ab6380bb71327eaa80eba18988575b1b2 inherit pub_methods_class_a_e_1_1_core_1_1_layer" id="r_ab6380bb71327eaa80eba18988575b1b2"><td class="memItemLeft" align="right" valign="top">
 &#160;</td><td class="memItemRight" valign="bottom"><b>Layer</b> (const std::string &amp;debugName=&quot;Layer&quot;)</td></tr>
 <tr class="separator:ab6380bb71327eaa80eba18988575b1b2 inherit pub_methods_class_a_e_1_1_core_1_1_layer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a4540b23095b978498ed846b491213b inherit pub_methods_class_a_e_1_1_core_1_1_layer" id="r_a3a4540b23095b978498ed846b491213b"><td class="memItemLeft" align="right" valign="top">
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnUpdate</b> ()</td></tr>
+<tr class="separator:a3a4540b23095b978498ed846b491213b inherit pub_methods_class_a_e_1_1_core_1_1_layer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a994dc4fc7223358a3bb8325ce69c2eb2 inherit pub_methods_class_a_e_1_1_core_1_1_layer" id="r_a994dc4fc7223358a3bb8325ce69c2eb2"><td class="memItemLeft" align="right" valign="top">
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnEvent</b> (<a class="el" href="class_a_e_1_1_events_1_1_event.html">Events::Event</a> &amp;event)</td></tr>
+<tr class="separator:a994dc4fc7223358a3bb8325ce69c2eb2 inherit pub_methods_class_a_e_1_1_core_1_1_layer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15f1ece878408f13c2a6ba984500457d inherit pub_methods_class_a_e_1_1_core_1_1_layer" id="r_a15f1ece878408f13c2a6ba984500457d"><td class="memItemLeft" align="right" valign="top">
 const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetName</b> () const</td></tr>
 <tr class="separator:a15f1ece878408f13c2a6ba984500457d inherit pub_methods_class_a_e_1_1_core_1_1_layer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a2018fa9adf652576f3c8eebc8b29150b" id="r_a2018fa9adf652576f3c8eebc8b29150b"><td class="memItemLeft" align="right" valign="top"><a id="a2018fa9adf652576f3c8eebc8b29150b" name="a2018fa9adf652576f3c8eebc8b29150b"></a>
-static ImGuiKey&#160;</td><td class="memItemRight" valign="bottom"><b>MapSpecialKeys</b> (int keyCode)</td></tr>
-<tr class="separator:a2018fa9adf652576f3c8eebc8b29150b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -150,7 +157,34 @@ Additional Inherited Members</h2></td></tr>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_DebugName</b></td></tr>
 <tr class="separator:a0a3ec544486d8aa16ab377b148e93f4a inherit pro_attribs_class_a_e_1_1_core_1_1_layer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Manages Dear ImGui integration for debugging and tools. </p>
+<p>The <a class="el" href="class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer.html" title="Manages Dear ImGui integration for debugging and tools.">ImGuiLayer</a> provides immediate mode GUI functionality:</p><ul>
+<li>Debug windows and tools</li>
+<li>Real-time property editing</li>
+<li>Performance monitoring</li>
+<li>Custom editor tools</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This layer typically runs as an overlay to render on top of other layers </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9cfdc84e848c8e629afb0c5153e2f9e8" name="a9cfdc84e848c8e629afb0c5153e2f9e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cfdc84e848c8e629afb0c5153e2f9e8">&#9670;&#160;</a></span>Begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AE::Graphics::UI::ImGuiLayer::Begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Allow Layers to do their own ImGui rendering </p>
+
+</div>
+</div>
 <a id="a3d051f0860134c6c386bded3d1aa5301" name="a3d051f0860134c6c386bded3d1aa5301"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3d051f0860134c6c386bded3d1aa5301">&#9670;&#160;</a></span>OnAttach()</h2>
 
@@ -205,8 +239,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_DebugName</b
 
 </div>
 </div>
-<a id="a7febda34d42b61ddcc790dc343b185dd" name="a7febda34d42b61ddcc790dc343b185dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7febda34d42b61ddcc790dc343b185dd">&#9670;&#160;</a></span>OnEvent()</h2>
+<a id="ab36a7e9c8f12cd951dffa58750598943" name="ab36a7e9c8f12cd951dffa58750598943"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab36a7e9c8f12cd951dffa58750598943">&#9670;&#160;</a></span>OnImGuiRender()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,34 +249,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_DebugName</b
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void AE::Graphics::UI::ImGuiLayer::OnEvent </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_a_e_1_1_events_1_1_event.html">Events::Event</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reimplemented from <a class="el" href="class_a_e_1_1_core_1_1_layer.html">AE::Core::Layer</a>.</p>
-
-</div>
-</div>
-<a id="abae1fbf34388c6e839c46bfcce1585ea" name="abae1fbf34388c6e839c46bfcce1585ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abae1fbf34388c6e839c46bfcce1585ea">&#9670;&#160;</a></span>OnUpdate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void AE::Graphics::UI::ImGuiLayer::OnUpdate </td>
+          <td class="memname">void AE::Graphics::UI::ImGuiLayer::OnImGuiRender </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>

@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['window_0',['Window',['../class_a_e_1_1_core_1_1_window.html',1,'AE::Core']]],
-  ['windowcloseevent_1',['WindowCloseEvent',['../class_a_e_1_1_events_1_1_window_close_event.html',1,'AE::Events']]],
-  ['windowprops_2',['WindowProps',['../struct_a_e_1_1_core_1_1_window_props.html',1,'AE::Core']]],
-  ['windowresizeevent_3',['WindowResizeEvent',['../class_a_e_1_1_events_1_1_window_resize_event.html',1,'AE::Events']]],
-  ['windowswindow_4',['WindowsWindow',['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html',1,'AE::Platform::Windows']]]
+  ['layer_0',['Layer',['../class_a_e_1_1_core_1_1_layer.html',1,'AE::Core']]],
+  ['layerstack_1',['LayerStack',['../class_a_e_1_1_core_1_1_layer_stack.html',1,'AE::Core']]],
+  ['layerstack_2eh_2',['LayerStack.h',['../_layer_stack_8h.html',1,'']]],
+  ['linuxwindow_3',['LinuxWindow',['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html',1,'AE::Platform::Linux']]],
+  ['log_4',['Log',['../class_a_e_1_1_core_1_1_log.html',1,'AE::Core']]]
 ];

@@ -21,15 +21,15 @@ namespace AE::Platform::Mac
 
     MacWindow::MacWindow(const WindowProps& props)
     {
-        MacWindow::Init(props);
+        Init(props);
     }
 
     MacWindow::~MacWindow()
     {
-        MacWindow::Shutdown();
+        Shutdown();
     }
 
-    void MacWindow::Shutdown()
+    void MacWindow::Shutdown() const
     {
         glfwDestroyWindow(m_Window);
     }
@@ -141,6 +141,7 @@ namespace AE::Platform::Mac
                     data.EventCallback(event);
                     break;
                 }
+            default: break;
             }
         });
 

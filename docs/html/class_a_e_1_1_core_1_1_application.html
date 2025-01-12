@@ -109,6 +109,11 @@ $(function(){initNavTree('class_a_e_1_1_core_1_1_application.html',''); initResi
   <div class="headertitle"><div class="title">AE::Core::Application Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>The core application class that manages the game/application lifecycle.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_application_8h_source.html">Application.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -134,7 +139,17 @@ Static Public Member Functions</h2></td></tr>
 static <a class="el" href="class_a_e_1_1_core_1_1_application.html">Application</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Get</b> ()</td></tr>
 <tr class="separator:aef6825aa40049fd6cb8925e731e41a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The core application class that manages the game/application lifecycle. </p>
+<p>The <a class="el" href="class_a_e_1_1_core_1_1_application.html" title="The core application class that manages the game/application lifecycle.">Application</a> class is the central class of the Arnold Engine. It:</p><ul>
+<li>Manages the main window</li>
+<li>Handles the main game loop</li>
+<li>Manages layers and overlays</li>
+<li>Processes events</li>
+</ul>
+<p>There should only be one <a class="el" href="class_a_e_1_1_core_1_1_application.html" title="The core application class that manages the game/application lifecycle.">Application</a> instance per program, managed through the singleton pattern with Application::Get().</p>
+<dl class="section note"><dt>Note</dt><dd>Client applications must implement CreateApplication() to instantiate their custom <a class="el" href="class_a_e_1_1_core_1_1_application.html" title="The core application class that manages the game/application lifecycle.">Application</a> class. </dd></dl>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>/Users/david/Developer/ArnoldSandbox/external/ArnoldEngine/src/Core/<a class="el" href="_application_8h_source.html">Application.h</a></li>
 <li>/Users/david/Developer/ArnoldSandbox/external/ArnoldEngine/src/Core/<b>Application.cpp</b></li>
 </ul>

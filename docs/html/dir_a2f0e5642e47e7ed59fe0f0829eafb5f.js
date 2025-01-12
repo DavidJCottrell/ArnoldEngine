@@ -6,8 +6,8 @@ var dir_a2f0e5642e47e7ed59fe0f0829eafb5f =
     [ "Input.h", "_input_8h_source.html", null ],
     [ "KeyCodes.h", "_key_codes_8h_source.html", null ],
     [ "Layer.h", "_layer_8h_source.html", null ],
-    [ "LayerStack.h", "_layer_stack_8h_source.html", null ],
+    [ "LayerStack.h", "_layer_stack_8h.html", "_layer_stack_8h" ],
     [ "Log.h", "_log_8h_source.html", null ],
     [ "MouseButtonCodes.h", "_mouse_button_codes_8h_source.html", null ],
-    [ "Window.h", "_window_8h_source.html", null ]
+    [ "Window.h", "_window_8h.html", "_window_8h" ]
 ];

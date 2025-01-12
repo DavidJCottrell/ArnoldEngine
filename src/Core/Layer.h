@@ -4,11 +4,24 @@
 
 namespace AE::Core
 {
+    /**
+     * @class Layer
+     * @brief Base class for application layers that can be pushed/popped from the LayerStack
+     *
+     * Layers are a fundamental part of the engine's architecture, allowing for:
+     * - Modular organization of game/application logic
+     * - Independent update and render loops
+     * - Event handling with propagation control
+     * - ImGui integration for debugging/tools
+     *
+     * Layers are processed in order, with later layers potentially overriding earlier ones.
+     * Each layer can handle events and choose whether to pass them to layers below.
+     */
     class ARNOLD_API Layer
     {
     public:
         explicit Layer(const std::string& debugName = "Layer");
-        ~Layer();
+        virtual ~Layer();
 
         virtual void OnAttach()
         {

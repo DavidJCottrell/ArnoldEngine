@@ -11,15 +11,16 @@
 namespace AE::Core
 {
     /**
+     * @class LayerStack
      * @brief Manages a stack of layers with separate overlay layers
      *
-     * The LayerStack manages the ordering and updating of layers in the engine.
-     * It supports two types of layers:
-     * - Regular layers: Rendered in the middle of the stack
-     * - Overlay layers: Always rendered on top of regular layers
+     * The LayerStack provides ordered management of layers and overlays:
+     * - Regular layers are rendered in the middle of the stack
+     * - Overlay layers are always rendered on top
+     * - Supports dynamic adding/removing of layers
+     * - Maintains proper render and update order
      *
-     * Layers are managed as pointers to allow polymorphic behavior of different
-     * layer types while avoiding object slicing.
+     * @note Layers are processed from bottom to top for updates, and top to bottom for events
      */
     class LayerStack
     {
@@ -47,13 +48,13 @@ namespace AE::Core
          * @brief Removes a regular layer from the stack
          * @param layer Pointer to the layer to remove
          */
-        void PopLayer(Layer* layer);
+        void PopLayer(const Layer* layer);
 
         /**
          * @brief Removes an overlay layer from the stack
          * @param overlay Pointer to the overlay layer to remove
          */
-        void PopOverlay(Layer* overlay);
+        void PopOverlay(const Layer* overlay);
 
         /**
          * @brief Gets iterator to the beginning of the layer stack

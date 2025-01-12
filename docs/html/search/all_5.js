@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['macinput_0',['MacInput',['../class_a_e_1_1_platform_1_1_mac_1_1_mac_input.html',1,'AE::Platform::Mac']]],
-  ['macwindow_1',['MacWindow',['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html',1,'AE::Platform::Mac']]],
-  ['mousebuttonevent_2',['MouseButtonEvent',['../class_a_e_1_1_events_1_1_mouse_button_event.html',1,'AE::Events']]],
-  ['mousebuttonpressedevent_3',['MouseButtonPressedEvent',['../class_a_e_1_1_events_1_1_mouse_button_pressed_event.html',1,'AE::Events']]],
-  ['mousebuttonreleasedevent_4',['MouseButtonReleasedEvent',['../class_a_e_1_1_events_1_1_mouse_button_released_event.html',1,'AE::Events']]],
-  ['mousemovedevent_5',['MouseMovedEvent',['../class_a_e_1_1_events_1_1_mouse_moved_event.html',1,'AE::Events']]],
-  ['mousescrolledevent_6',['MouseScrolledEvent',['../class_a_e_1_1_events_1_1_mouse_scrolled_event.html',1,'AE::Events']]]
+  ['imguilayer_0',['ImGuiLayer',['../class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer.html',1,'AE::Graphics::UI']]],
+  ['input_1',['Input',['../class_a_e_1_1_core_1_1_input.html',1,'AE::Core']]],
+  ['isvsync_2',['IsVSync',['../class_a_e_1_1_core_1_1_window.html#a4a2e1ce1ba0f1d79cde4314ae2a90798',1,'AE::Core::Window::IsVSync()'],['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#ab775067d2e148584099359f1765b136a',1,'AE::Platform::Linux::LinuxWindow::IsVSync()'],['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#a7d0c354d0aa2f8019c3410f80f2a7b93',1,'AE::Platform::Mac::MacWindow::IsVSync()'],['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#a03089eae137d35e8b8d3813a1d018b71',1,'AE::Platform::Windows::WindowsWindow::IsVSync()']]]
 ];

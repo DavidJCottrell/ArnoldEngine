@@ -109,13 +109,18 @@ $(function(){initNavTree('class_a_e_1_1_core_1_1_layer.html',''); initResizable(
   <div class="headertitle"><div class="title">AE::Core::Layer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Base class for application layers that can be pushed/popped from the <a class="el" href="class_a_e_1_1_core_1_1_layer_stack.html" title="Manages a stack of layers with separate overlay layers.">LayerStack</a>.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_layer_8h_source.html">Layer.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AE::Core::Layer:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_a_e_1_1_core_1_1_layer.png" usemap="#AE::Core::Layer_map" alt=""/>
   <map id="AE::Core::Layer_map" name="AE::Core::Layer_map">
-<area href="class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer.html" alt="AE::Graphics::UI::ImGuiLayer" shape="rect" coords="0,56,173,80"/>
+<area href="class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer.html" title="Manages Dear ImGui integration for debugging and tools." alt="AE::Graphics::UI::ImGuiLayer" shape="rect" coords="0,56,173,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -133,6 +138,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnDetach</b> 
 <tr class="memitem:a3a4540b23095b978498ed846b491213b" id="r_a3a4540b23095b978498ed846b491213b"><td class="memItemLeft" align="right" valign="top"><a id="a3a4540b23095b978498ed846b491213b" name="a3a4540b23095b978498ed846b491213b"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnUpdate</b> ()</td></tr>
 <tr class="separator:a3a4540b23095b978498ed846b491213b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfb3441425b78dc87f95a7bb93eb581f" id="r_acfb3441425b78dc87f95a7bb93eb581f"><td class="memItemLeft" align="right" valign="top"><a id="acfb3441425b78dc87f95a7bb93eb581f" name="acfb3441425b78dc87f95a7bb93eb581f"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnImGuiRender</b> ()</td></tr>
+<tr class="separator:acfb3441425b78dc87f95a7bb93eb581f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a994dc4fc7223358a3bb8325ce69c2eb2" id="r_a994dc4fc7223358a3bb8325ce69c2eb2"><td class="memItemLeft" align="right" valign="top"><a id="a994dc4fc7223358a3bb8325ce69c2eb2" name="a994dc4fc7223358a3bb8325ce69c2eb2"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnEvent</b> (<a class="el" href="class_a_e_1_1_events_1_1_event.html">Events::Event</a> &amp;event)</td></tr>
 <tr class="separator:a994dc4fc7223358a3bb8325ce69c2eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,7 +154,16 @@ Protected Attributes</h2></td></tr>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_DebugName</b></td></tr>
 <tr class="separator:a0a3ec544486d8aa16ab377b148e93f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Base class for application layers that can be pushed/popped from the <a class="el" href="class_a_e_1_1_core_1_1_layer_stack.html" title="Manages a stack of layers with separate overlay layers.">LayerStack</a>. </p>
+<p>Layers are a fundamental part of the engine's architecture, allowing for:</p><ul>
+<li>Modular organization of game/application logic</li>
+<li>Independent update and render loops</li>
+<li>Event handling with propagation control</li>
+<li>ImGui integration for debugging/tools</li>
+</ul>
+<p>Layers are processed in order, with later layers potentially overriding earlier ones. Each layer can handle events and choose whether to pass them to layers below. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>/Users/david/Developer/ArnoldSandbox/external/ArnoldEngine/src/Core/<a class="el" href="_layer_8h_source.html">Layer.h</a></li>
 <li>/Users/david/Developer/ArnoldSandbox/external/ArnoldEngine/src/Core/<b>Layer.cpp</b></li>
 </ul>

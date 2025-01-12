@@ -2,10 +2,11 @@
 
 /**
  * @file
- * @brief Abstract window interface for platform-specific window implementations
+ * @brief An abstract window interface for platform-specific window implementations
  */
 
 #define GLFW_INCLUDE_NONE
+
 #include "Graphics/UI/ImGuiLayer.h"
 #include "Events/Event.h"
 
@@ -26,20 +27,27 @@ namespace AE::Core
          * @param width Window width in pixels (defaults to 1280)
          * @param height Window height in pixels (defaults to 720)
          */
-        WindowProps(const std::string& title = "Arnold Engine",
-                    unsigned int width = 1280,
-                    unsigned int height = 720)
-            : title(title), width(width), height(height)
+        explicit WindowProps(std::string title = "Arnold Engine",
+                             const unsigned int width = 1280,
+                             const unsigned int height = 720)
+            : title(std::move(title)), width(width), height(height)
         {
         }
     };
 
     /**
-     * @brief Abstract base class for platform-specific window implementations
+     * @class Window
+     * @brief Abstract base class for cross-platform window management
      *
      * The Window class provides a common interface for creating and managing windows
      * across different platforms. Platform-specific implementations (e.g., MacWindow,
      * WindowsWindow) inherit from this class and implement its pure virtual methods.
+     *
+     * Features include:
+     * - Window creation and destruction
+     * - Event handling
+     * - VSync control
+     * - Window property management (size, title, etc.)
      */
     class Window
     {

@@ -2,6 +2,9 @@
 
 namespace AE::Core
 {
-    Layer::Layer(const std::string &debugName) {}
-    Layer::~Layer() {}
+    Layer::Layer(const std::string& debugName)
+    {
+    }
+
+    Layer::~Layer() = default;
 }

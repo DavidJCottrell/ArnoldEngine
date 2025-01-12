@@ -7,11 +7,23 @@ using namespace AE::Core;
 
 namespace AE::Platform::Mac
 {
-    class MacWindow : public Window
+    /**
+     * @class MacWindow
+     * @brief macOS-specific implementation of the Window interface
+     *
+     * Implements platform-specific window functionality for macOS:
+     * - GLFW window creation and management
+     * - Native event handling
+     * - OpenGL context management
+     * - High DPI display support
+     *
+     * @note Handles macOS-specific features like Retina displays and command key shortcuts
+     */
+    class MacWindow final : public Window
     {
     public:
-        MacWindow(const WindowProps& props);
-        ~MacWindow();
+        explicit MacWindow(const WindowProps& props);
+        ~MacWindow() override;
 
         void OnUpdate() override;
 
@@ -26,8 +38,8 @@ namespace AE::Platform::Mac
         [[nodiscard]] void* GetNativeWindow() const override { return m_Window; };
 
     private:
-        virtual void Init(const WindowProps& props);
-        virtual void Shutdown();
+        void Init(const WindowProps& props);
+        void Shutdown() const;
 
         GLFWwindow* m_Window{};
 

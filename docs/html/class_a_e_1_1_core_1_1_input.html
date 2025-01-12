@@ -109,6 +109,11 @@ $(function(){initNavTree('class_a_e_1_1_core_1_1_input.html',''); initResizable(
   <div class="headertitle"><div class="title">AE::Core::Input Class Reference<span class="mlabels"><span class="mlabel abstract">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Abstract base class for cross-platform input handling.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_input_8h_source.html">Input.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AE::Core::Input:</div>
 <div class="dyncontent">
@@ -155,7 +160,16 @@ virtual float&#160;</td><td class="memItemRight" valign="bottom"><b>GetMouseYImp
 virtual std::pair&lt; float, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetMousePositionImpl</b> ()=0</td></tr>
 <tr class="separator:ae95ee4aa041329bd503bf67a463660d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Abstract base class for cross-platform input handling. </p>
+<p>The <a class="el" href="class_a_e_1_1_core_1_1_input.html" title="Abstract base class for cross-platform input handling.">Input</a> class provides a unified interface for:</p><ul>
+<li>Keyboard input detection</li>
+<li>Mouse button state tracking</li>
+<li>Mouse position tracking</li>
+<li>Platform-specific input implementations</li>
+</ul>
+<p>Uses the singleton pattern to provide global access to input state. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>/Users/david/Developer/ArnoldSandbox/external/ArnoldEngine/src/Core/<a class="el" href="_input_8h_source.html">Input.h</a></li>
 <li>/Users/david/Developer/ArnoldSandbox/external/ArnoldEngine/src/Platform/Mac/<b>MacInput.cpp</b></li>
 </ul>

@@ -8,7 +8,7 @@ namespace AE::Platform::Mac
     {
     public:
         MacInput();
-        ~MacInput();
+        virtual ~MacInput();
 
     protected:
         bool IsKeyPressedImpl(int keycode) override;

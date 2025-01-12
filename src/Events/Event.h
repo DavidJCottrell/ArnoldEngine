@@ -43,6 +43,20 @@ namespace AE::Events
 #define EVENT_CLASS_CATEGORY(category) \
     int GetCategoryFlags() const override { return category; }
 
+    /**
+     * @class Event
+     * @brief Base class for the event system
+     *
+     * The Event system provides a type-safe way to handle various events including:
+     * - Window events (resize, close)
+     * - Input events (keyboard, mouse)
+     * - Application events (tick, update, render)
+     *
+     * Events are processed through an event bus system where they can be:
+     * - Dispatched to appropriate handlers
+     * - Marked as handled to prevent further propagation
+     * - Categorized for filtering
+     */
     class ARNOLD_API Event
     {
         friend class EventHandler;

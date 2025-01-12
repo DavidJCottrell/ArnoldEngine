@@ -2,6 +2,18 @@
 
 namespace AE::Core
 {
+    /**
+     * @class Input
+     * @brief Abstract base class for cross-platform input handling
+     *
+     * The Input class provides a unified interface for:
+     * - Keyboard input detection
+     * - Mouse button state tracking
+     * - Mouse position tracking
+     * - Platform-specific input implementations
+     *
+     * Uses the singleton pattern to provide global access to input state.
+     */
     class ARNOLD_API Input
     {
     public:
@@ -21,6 +33,6 @@ namespace AE::Core
         virtual std::pair<float, float> GetMousePositionImpl() = 0;
 
     private:
-        static Input *s_Instance;
+        static Input* s_Instance;
     };
 }

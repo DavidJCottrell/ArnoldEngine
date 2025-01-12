@@ -2,13 +2,11 @@
 
 namespace AE::Core
 {
-    LayerStack::LayerStack()
-    {
-    }
+    LayerStack::LayerStack() = default;
 
     LayerStack::~LayerStack()
     {
-        for (Layer* layer : m_Layers)
+        for (const Layer* layer : m_Layers)
             delete layer;
     }
 
@@ -24,7 +22,7 @@ namespace AE::Core
         m_Layers.emplace_back(overlay);
     }
 
-    void LayerStack::PopLayer(Layer* layer)
+    void LayerStack::PopLayer(const Layer* layer)
     {
         auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
         if (it != m_Layers.end())
@@ -34,7 +32,7 @@ namespace AE::Core
         }
     }
 
-    void LayerStack::PopOverlay(Layer* overlay)
+    void LayerStack::PopOverlay(const Layer* overlay)
     {
         auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
         if (it != m_Layers.end())

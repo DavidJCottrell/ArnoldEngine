@@ -110,6 +110,11 @@ $(function(){initNavTree('class_a_e_1_1_events_1_1_event.html',''); initResizabl
   <div class="headertitle"><div class="title">AE::Events::Event Class Reference<span class="mlabels"><span class="mlabel abstract">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Base class for the event system.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_event_8h_source.html">Event.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AE::Events::Event:</div>
 <div class="dyncontent">
@@ -158,7 +163,19 @@ Friends</h2></td></tr>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>EventHandler</b></td></tr>
 <tr class="separator:a0b257358246ba8f9c2f228c35e4f3e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Base class for the event system. </p>
+<p>The <a class="el" href="class_a_e_1_1_events_1_1_event.html" title="Base class for the event system.">Event</a> system provides a type-safe way to handle various events including:</p><ul>
+<li>Window events (resize, close)</li>
+<li>Input events (keyboard, mouse)</li>
+<li>Application events (tick, update, render)</li>
+</ul>
+<p>Events are processed through an event bus system where they can be:</p><ul>
+<li>Dispatched to appropriate handlers</li>
+<li>Marked as handled to prevent further propagation</li>
+<li>Categorized for filtering </li>
+</ul>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/david/Developer/ArnoldSandbox/external/ArnoldEngine/src/Events/<a class="el" href="_event_8h_source.html">Event.h</a></li>
 </ul>
 </div><!-- contents -->
