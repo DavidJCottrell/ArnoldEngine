@@ -1,33 +1,106 @@
-# Æ
+# Arnold Engine
 
-<img align="right" src="./assets/ArnoldEngineLogo.png" width="200" height="200"/>
+<div align="center">
+  <img src="./assets/ArnoldEngineLogo.png" width="200" height="200"/>
+  <h3>C++ Game Engine</h3>
+</div>
 
-A lightweight 2D Game Engine.
+## Overview
 
-<br><br><br><br><br>
+Arnold Engine is a cross-platform game engine built in C++. It provides a robust foundation for game development with
+features including:
 
-## Install and Setup
+- Cross-platform support (Windows, macOS, Linux)
+- Event system for handling input and window events
+- Layer-based architecture for organized game logic
+- ImGui integration for debugging and tools
+- Modern OpenGL rendering
+- Built-in logging system
 
-### Clone the repository and setup dependencies
+## Prerequisites
 
-Clone the repo:
+- CMake (3.12 or higher)
+- C++20 compatible compiler
+- Git
 
-`git clone --recurse-submodules https://github.com/DavidJCottrell/ArnoldEngine.git`
+## Getting Started
 
-### Build
+### Clone the Repository
 
-Create the build directory:
+Clone the repository with all its submodules:
 
-`mkdir build && cd build`
-
-Build with CMake:
-
-`cmake .. && cmake --build .`
-
-### Adding to a different project's CMakeLists.txt
-
+```bash
+git clone --recurse-submodules https://github.com/DavidJCottrell/ArnoldEngine.git
+cd ArnoldEngine
 ```
-SET(EXTERNAL_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
+
+If you already cloned the repository without submodules, you can initialize them with:
+
+```bash
+git submodule update --init --recursive
+```
+
+### Building from Source
+
+1. Create a build directory:
+
+```bash
+mkdir build && cd build
+```
+
+2. Generate build files and compile:
+
+```bash
+cmake ..
+cmake --build .
+```
+
+### Using in Your Project
+
+To use Arnold Engine in your own project, add it as a subdirectory in your CMake project:
+
+```cmake
+# In your project's CMakeLists.txt
+set(EXTERNAL_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
 add_subdirectory(${EXTERNAL_LIBS_DIR}/ArnoldEngine)
-target_link_libraries(ExampleGame ArnoldEngine)
+target_link_libraries(YourGameTarget ArnoldEngine)
 ```
+
+## Basic Example
+
+Here's a minimal example of creating a game using Arnold Engine:
+
+```cpp
+#include <ArnoldEngine.h>
+
+class ExampleGame : public AE::Core::Application {
+public:
+    ExampleGame() {
+        // Initialize your game here
+    }
+};
+
+AE::Core::Application* AE::Core::CreateApplication() {
+    return new ExampleGame();
+}
+```
+
+## Project Structure
+
+- `src/Core/` - Core engine systems
+- `src/Events/` - Event system implementation
+- `src/Graphics/` - Rendering and graphics systems
+- `src/Platform/` - Platform-specific implementations
+- `include/` - Public API headers
+- `tests/` - Engine test suite
+
+## Dependencies
+
+Arnold Engine uses several external libraries (automatically handled via Git submodules):
+
+- GLFW - Window creation and input
+- Dear ImGui - Debug UI and tools
+- Glad - OpenGL loading
+- spdlog - Logging system
+- GLM - Mathematics library
+- GoogleTest - Testing framework
