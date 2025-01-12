@@ -1,6 +1,7 @@
 #include "Core/Window.h"
 #include "Application.h"
 #include "Platform/Mac/MacWindow.h"
+#include "Platform/Windows/WindowsWindow.h"
 
 namespace AE::Core
 {

@@ -1,4 +1,3 @@
-#include "aepch.h"
 #include "Log.h"
 #include <spdlog/sinks/stdout_color_sinks.h>
 
@@ -10,10 +9,11 @@ namespace AE::Core
     void Log::init()
     {
         // --- Core Logger --
-        s_CoreLogger = spdlog::stdout_color_mt("ARNOLD_ENGINE");
         s_CoreLogger->set_pattern("%^[%T] %n: %v%$");
+        s_CoreLogger = spdlog::stdout_color_mt("ARNOLD_ENGINE");
         s_CoreLogger->set_level(spdlog::level::trace);
 
+#if defined(__APPLE__)
         const auto core_sink = dynamic_cast<spdlog::sinks::stdout_color_sink_mt*>(s_CoreLogger->sinks()[0].get());
         if (core_sink)
         {
@@ -24,12 +24,14 @@ namespace AE::Core
             core_sink->set_color(spdlog::level::err, core_sink->blue);
             core_sink->set_color(spdlog::level::critical, core_sink->blue);
         }
+#endif
 
         // --- Client Logger ---
         s_ClientLogger = spdlog::stdout_color_mt("APP");
         s_ClientLogger->set_pattern("%^[%T] %n: %v%$");
         s_ClientLogger->set_level(spdlog::level::trace);
 
+#if defined(__APPLE__)
         const auto client_sink = dynamic_cast<spdlog::sinks::stdout_color_sink_mt*>(s_ClientLogger->sinks()[0].get());
         if (client_sink)
         {
@@ -40,5 +42,7 @@ namespace AE::Core
             client_sink->set_color(spdlog::level::err, client_sink->green);
             client_sink->set_color(spdlog::level::critical, client_sink->green);
         }
+#endif
+
     }
 }
