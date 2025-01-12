@@ -10,7 +10,7 @@ namespace AE::Platform::Mac
     class MacWindow : public Window
     {
     public:
-        MacWindow(const WindowProps &props);
+        MacWindow(const WindowProps& props);
         ~MacWindow();
 
         void OnUpdate() override;
@@ -19,17 +19,17 @@ namespace AE::Platform::Mac
         [[nodiscard]] unsigned int GetHeight() const override { return m_Data.Height; }
 
         // Window attributes
-        void SetEventCallback(const EventCallbackFn &callback) override { m_Data.EventCallback = callback; }
+        void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
         void SetVSync(bool enabled) override;
         [[nodiscard]] bool IsVSync() const override;
 
-        [[nodiscard]] void *GetNativeWindow() const override { return m_Window; };
+        [[nodiscard]] void* GetNativeWindow() const override { return m_Window; };
 
     private:
-        virtual void Init(const WindowProps &props);
+        virtual void Init(const WindowProps& props);
         virtual void Shutdown();
 
-        GLFWwindow *m_Window;
+        GLFWwindow* m_Window{};
 
         struct WindowData
         {
