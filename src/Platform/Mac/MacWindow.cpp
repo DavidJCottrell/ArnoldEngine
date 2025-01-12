@@ -1,10 +1,10 @@
+#include "aepch.h"
+
 #include "MacWindow.h"
 
 #include <Core/Input.h>
 #include <Core/KeyCodes.h>
 #include <glad/glad.h>
-
-#include "aepch.h"
 
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"

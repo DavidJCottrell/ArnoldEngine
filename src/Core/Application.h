@@ -27,6 +27,7 @@ namespace AE::Core
         bool OnWindowClose(Events::WindowCloseEvent& e);
 
         std::unique_ptr<Window> m_Window;
+        Graphics::UI::ImGuiLayer* m_ImGuiLayer;
         bool m_Running = true;
         LayerStack m_LayerStack;
 

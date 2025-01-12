@@ -104,11 +104,11 @@ if (APPLE)
 endif ()
 
 target_link_libraries(${PROJECT_NAME}
-        PUBLIC glfw
-        PUBLIC glad
-        PUBLIC entt
+        PRIVATE glfw
+        PRIVATE glad
+        PRIVATE entt
         PUBLIC imgui
         PUBLIC spdlog::spdlog
-        PUBLIC ccm
-        PUBLIC glm::glm
+        PRIVATE ccm
+        PRIVATE glm::glm
 )
