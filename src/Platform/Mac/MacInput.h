@@ -4,7 +4,7 @@
 
 namespace AE::Platform::Mac
 {
-    class MacInput : public Core::Input
+    class MacInput final : public Core::Input
     {
     public:
         MacInput();

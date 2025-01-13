@@ -3,7 +3,6 @@
 
 #include "imgui.h"
 
-// #define IMGUI_IMPL_API;
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
@@ -13,7 +12,6 @@
 
 #include "Core/Window.h"
 #include "Core/Application.h"
-#include <Core/KeyCodes.h>
 
 namespace AE::Graphics::UI
 {
@@ -91,8 +89,6 @@ namespace AE::Graphics::UI
 
     void ImGuiLayer::OnImGuiRender()
     {
-        // static bool show = true;
-        // ImGui::ShowDemoWindow(&show);
     }
 
     void ImGuiLayer::Begin()
@@ -122,9 +118,9 @@ namespace AE::Graphics::UI
 
         // TODO: Test if this is needed
         // Ensure the viewport is consistent when dragging between monitors
-        // auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
-        // int fbWidth, fbHeight;
-        // glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
-        // glViewport(0, 0, fbWidth, fbHeight);
+        auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
+        int fbWidth, fbHeight;
+        glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+        glViewport(0, 0, fbWidth, fbHeight);
     }
 }
