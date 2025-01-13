@@ -27,12 +27,6 @@ namespace AE::Graphics::UI
 
     ImGuiLayer::~ImGuiLayer()
     {
-        if (ImGui::GetCurrentContext() != nullptr)
-        {
-            ImGui_ImplOpenGL3_Shutdown();
-            ImGui_ImplGlfw_Shutdown();
-            ImGui::DestroyContext();
-        }
     }
 
     void ImGuiLayer::OnAttach()
@@ -44,6 +38,12 @@ namespace AE::Graphics::UI
         }
 
         ImGui::CreateContext();
+        if (!ImGui::GetCurrentContext())
+        {
+            AE_CORE_ERROR("Failed to create ImGui context!");
+            return;
+        }
+
         ImGuiIO& io = ImGui::GetIO();
 
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable keyboard controls
@@ -64,6 +64,7 @@ namespace AE::Graphics::UI
         fontConfig.SizePixels = DEFAULT_FONT_SIZE * xScale;
         io.Fonts->Clear();
         io.Fonts->AddFontDefault(&fontConfig);
+        io.Fonts->Build();
         io.Fonts->SetTexID(0);
 
         ImGuiStyle& style = ImGui::GetStyle();
@@ -78,8 +79,6 @@ namespace AE::Graphics::UI
         auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 150");
-
-        io.Fonts->Build();
     }
 
     void ImGuiLayer::OnDetach()
@@ -92,6 +91,8 @@ namespace AE::Graphics::UI
 
     void ImGuiLayer::OnImGuiRender()
     {
+        // static bool show = true;
+        // ImGui::ShowDemoWindow(&show);
     }
 
     void ImGuiLayer::Begin()
