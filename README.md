@@ -42,6 +42,62 @@ git submodule update --init --recursive
 
 ### Building from Source
 
+#### Building on Linux
+
+You will need to have the Wayland development libraries installed before building.
+
+For Ubuntu/Debian-based systems, run:
+```bash
+sudo apt-get install libwayland-dev wayland-protocols extra-cmake-modules libxkbcommon-dev
+```
+
+For Fedora:
+```bash
+sudo dnf install wayland-devel wayland-protocols-devel extra-cmake-modules libxkbcommon-devel
+```
+
+Arch Linux:
+```bash
+sudo pacman -S wayland wayland-protocols extra-cmake-modules libxkbcommon
+```
+
+You will also need pkg-config and X11 development packages.
+
+For Ubuntu/Debian-based systems, run:
+```bash
+sudo apt-get install pkg-config libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+```
+
+
+For Fedora:
+```bash
+sudo dnf install pkgconfig libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel
+```
+
+For Arch Linux:
+```bash
+sudo pacman -S pkg-config libx11 libxrandr libxinerama libxcursor libxi
+```
+
+As well as OpenGL development packages.
+
+For Ubuntu/Debian systems, run:
+```bash
+sudo apt-get install mesa-common-dev libgl1-mesa-dev
+```
+
+For Fedora:
+```bash
+sudo dnf install mesa-libGL-devel
+```
+
+For Arch Linux:
+```bash
+sudo pacman -S mesa
+```
+
+#### Building
+
 1. Create a build directory:
 
 ```bash
