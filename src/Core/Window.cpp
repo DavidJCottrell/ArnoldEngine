@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Platform/Mac/MacWindow.h"
 #include "Platform/Windows/WindowsWindow.h"
+#include "Platform/Linux/LinuxWindow.h"
 
 namespace AE::Core
 {
@@ -14,10 +15,10 @@ namespace AE::Core
 #elif defined(_WIN32)
         return new Platform::Windows::WindowsWindow(props);
 #elif defined(__linux__)
-                throw std::runtime_error("Linux platform not supported yet!");
-                return new Platform::Linux::LinuxWindow(props);
+        return new Platform::Linux::LinuxWindow(props);
 #else
-#error "Platform not supported!"
+        throw std::runtime_error("Linux platform not supported yet!");
+        #error "Platform not supported!"
 #endif
     }
 

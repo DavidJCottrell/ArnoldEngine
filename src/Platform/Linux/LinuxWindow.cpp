@@ -39,4 +39,4 @@ namespace AE::Platform::Linux
     {
     }
 
-} // namespace AE::Platform::Linux
+}
