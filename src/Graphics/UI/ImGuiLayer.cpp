@@ -15,7 +15,6 @@
 
 namespace AE::Graphics::UI
 {
-
     ImGuiLayer::ImGuiLayer()
         : Layer("ImGuiLayer")
     {
@@ -40,13 +39,18 @@ namespace AE::Graphics::UI
             return;
         }
 
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
 
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable keyboard controls
-        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable docking
-        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   // Enable multi-viewports
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable docking
 
-        ImGuiStyle &style = ImGui::GetStyle();
+        // Wayland does not currently support multi-viewports
+        if (!glfwPlatformSupported(GLFW_PLATFORM_WAYLAND))
+        {
+            io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable multi-viewports
+        }
+
+        ImGuiStyle& style = ImGui::GetStyle();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             style.WindowRounding = 0.0f;
@@ -54,7 +58,7 @@ namespace AE::Graphics::UI
         }
         ImGui::StyleColorsDark();
 
-        auto *window = static_cast<GLFWwindow *>(Core::Application::Get().GetWindow().GetNativeWindow());
+        auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 150");
     }
@@ -80,7 +84,7 @@ namespace AE::Graphics::UI
 
     void ImGuiLayer::End()
     {
-        ImGuiIO &io = ImGui::GetIO();
+        ImGuiIO& io = ImGui::GetIO();
 
         // Rendering
         ImGui::Render();
@@ -88,13 +92,13 @@ namespace AE::Graphics::UI
 
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
-            GLFWwindow *backup_current_window = glfwGetCurrentContext();
+            GLFWwindow* backup_current_window = glfwGetCurrentContext();
             ImGui::UpdatePlatformWindows();
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(backup_current_window);
         }
 
-        auto *window = static_cast<GLFWwindow *>(Core::Application::Get().GetWindow().GetNativeWindow());
+        auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);

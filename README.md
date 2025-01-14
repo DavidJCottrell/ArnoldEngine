@@ -23,6 +23,31 @@ features including:
 - C++20 compatible compiler
 - Git
 
+When building on Linux, you will need to have the following development libraries installed on you system:
+
+- Wayland
+- pkg-config
+- X11
+- OpenGL
+
+To install all of these on Ubuntu/Debian systems, run:
+
+```bash
+sudo apt-get install libwayland-dev wayland-protocols extra-cmake-modules libxkbcommon-dev pkg-config libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev mesa-common-dev libgl1-mesa-dev
+```
+
+For Fedora:
+
+```bash
+sudo dnf install wayland-devel wayland-protocols-devel extra-cmake-modules libxkbcommon-devel pkgconfig libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel mesa-libGL-devel
+```
+
+Arch Linux:
+
+```bash
+sudo pacman -S wayland wayland-protocols extra-cmake-modules libxkbcommon pkg-config libx11 libxrandr libxinerama libxcursor libxi mesa
+```
+
 ## Getting Started
 
 ### Clone the Repository
@@ -42,35 +67,6 @@ git submodule update --init --recursive
 
 ### Building from Source
 
-#### Building on Linux
-
-You will need to have the following development libraries installed on you system in order to build on Linux:
-
-- Wayland
-- pkg-config
-- X11
-- OpenGL
-
-To install on Ubuntu/Debian system, run:
-
-```bash
-sudo apt-get install libwayland-dev wayland-protocols extra-cmake-modules libxkbcommon-dev pkg-config libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev mesa-common-dev libgl1-mesa-dev
-```
-
-For Fedora:
-
-```bash
-sudo dnf install wayland-devel wayland-protocols-devel extra-cmake-modules libxkbcommon-devel pkgconfig libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel mesa-libGL-devel
-```
-
-Arch Linux:
-
-```bash
-sudo pacman -S wayland wayland-protocols extra-cmake-modules libxkbcommon pkg-config libx11 libxrandr libxinerama libxcursor libxi mesa
-```
-
-#### Building
-
 1. Create a build directory:
 
 ```bash
@@ -84,12 +80,11 @@ cmake ..
 cmake --build .
 ```
 
-### Using in Your Project
+### Using Arnold Engine in Your Project
 
 To use Arnold Engine in your own project, add it as a subdirectory in your CMake project:
 
 ```cmake
-# In your project's CMakeLists.txt
 set(EXTERNAL_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
 add_subdirectory(${EXTERNAL_LIBS_DIR}/ArnoldEngine)
 target_link_libraries(YourGameTarget ArnoldEngine)
@@ -118,8 +113,8 @@ AE::Core::Application* AE::Core::CreateApplication() {
 
 - `src/Core/` - Core engine systems
 - `src/Events/` - Event system implementation
-- `src/Graphics/` - Rendering and graphics systems
-- `src/Platform/` - Platform-specific implementations
+- `src/Graphics/` - Rendering and UI systems
+- `src/Platform/` - Platform-specific implementations for Windowing and Input
 - `include/` - Public API headers
 - `tests/` - Engine test suite
 
