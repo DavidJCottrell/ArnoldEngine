@@ -1,47 +1,63 @@
+# =============================================================================
+# Project Configuration
+# =============================================================================
 cmake_minimum_required(VERSION 3.12)
+
 project(ArnoldEngine
         VERSION 0.0.1
         LANGUAGES C CXX
         DESCRIPTION "ArnoldEngine"
 )
 
-if(MSVC)
-    # Force consistent runtime library settings
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
-
-    add_compile_options(/W0)
-
-    # Update GoogleTest build settings
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-endif()
-
-# Global settings
+# =============================================================================
+# Compiler and Platform Settings
+# =============================================================================
+# Global C++ settings
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Option declarations
+# MSVC-specific settings
+if(MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+    add_compile_options(/W0)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
+
+# =============================================================================
+# Build Options and Paths
+# =============================================================================
 option(BUILD_TESTS "Build test suite" ON)
 
-# Path configurations
+# Define important paths
 set(EXTERNAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external")
 set(AE_SOURCE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
-# External dependencies function
-function(setup_external_lib NAME PATH)
-    if (NOT TARGET ${NAME})
-        add_subdirectory("${EXTERNAL_DIR}/${PATH}")
-    endif ()
-endfunction()
+# =============================================================================
+# External Dependencies
+# =============================================================================
+# Third-party libraries with CMake support
+if (NOT TARGET gtest)
+    add_subdirectory("${EXTERNAL_DIR}/googletest")
+endif()
 
-# Setup external dependencies
-setup_external_lib(gtest googletest)
-setup_external_lib(glfw glfw)
-setup_external_lib(glm glm)
-setup_external_lib(spdlog spdlog)
-setup_external_lib(ccm ccm)
+if (NOT TARGET glfw)
+    add_subdirectory("${EXTERNAL_DIR}/glfw")
+endif()
 
-# EnTT setup (header-only)
+if (NOT TARGET glm)
+    add_subdirectory("${EXTERNAL_DIR}/glm")
+endif()
+
+if (NOT TARGET spdlog)
+    add_subdirectory("${EXTERNAL_DIR}/spdlog")
+endif()
+
+if (NOT TARGET ccm)
+    add_subdirectory("${EXTERNAL_DIR}/ccm")
+endif()
+
+# Header-only libraries
 add_library(entt INTERFACE)
 target_include_directories(entt INTERFACE "${EXTERNAL_DIR}/entt")
 
@@ -66,7 +82,9 @@ target_include_directories(imgui PUBLIC
 )
 target_link_libraries(imgui PUBLIC glfw glad)
 
-# Platform-specific source files
+# =============================================================================
+# Platform-Specific Window and Input Implementations
+# =============================================================================
 set(AE_PLATFORM_SOURCES "")
 if (APPLE)
     list(APPEND AE_PLATFORM_SOURCES
@@ -88,7 +106,9 @@ else ()
     message(FATAL_ERROR "Unsupported platform")
 endif ()
 
-# Main library setup
+# =============================================================================
+# Main Library Target
+# =============================================================================
 add_library(${PROJECT_NAME} STATIC
         "${AE_SOURCE_PATH}/Core/Application.cpp"
         "${AE_SOURCE_PATH}/Core/Log.cpp"
@@ -100,16 +120,19 @@ add_library(${PROJECT_NAME} STATIC
         ${AE_PLATFORM_SOURCES}
 )
 
+# Precompiled headers
 target_precompile_headers(${PROJECT_NAME}
         PRIVATE src/aepch.h
 )
 
+# Include directories
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
         $<INSTALL_INTERFACE:include>
 )
 
+# Link dependencies
 target_link_libraries(${PROJECT_NAME}
         PUBLIC glfw
         PUBLIC glad
@@ -120,17 +143,19 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC glm::glm
 )
 
+# Platform-specific links
 if (APPLE)
     target_link_libraries(${PROJECT_NAME}
             PRIVATE "-framework OpenGL"
     )
 endif ()
 
-# Tests setup
+# =============================================================================
+# Tests Configuration
+# =============================================================================
 if (BUILD_TESTS)
     enable_testing()
 
-    # Create the test executable
     add_executable(${PROJECT_NAME}_tests
             tests/LayerStackTests.cpp
     )
@@ -139,11 +164,9 @@ if (BUILD_TESTS)
             "${CMAKE_CURRENT_SOURCE_DIR}/src"
     )
 
-    # Set runtime library for tests to match GTest
     if(MSVC)
         set_property(TARGET ${PROJECT_NAME}_tests PROPERTY
                 MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
-        # Disable warnings
         target_compile_options(${PROJECT_NAME}_tests PRIVATE /W0)
     endif()
 
@@ -152,11 +175,12 @@ if (BUILD_TESTS)
             PRIVATE ${PROJECT_NAME}
     )
 
-    # Add test without discovery
     add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
 endif()
 
-# Installation rules 
+# =============================================================================
+# Installation Rules
+# =============================================================================
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}Targets
