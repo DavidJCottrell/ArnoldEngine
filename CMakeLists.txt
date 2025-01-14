@@ -89,7 +89,7 @@ else ()
 endif ()
 
 # Main library setup
-add_library(${PROJECT_NAME} SHARED
+add_library(${PROJECT_NAME} STATIC
         "${AE_SOURCE_PATH}/Core/Application.cpp"
         "${AE_SOURCE_PATH}/Core/Log.cpp"
         "${AE_SOURCE_PATH}/Core/Window.cpp"
@@ -98,10 +98,6 @@ add_library(${PROJECT_NAME} SHARED
         "${AE_SOURCE_PATH}/Graphics/UI/ImGuiLayer.cpp"
         "${AE_SOURCE_PATH}/Graphics/UI/ImGuiBuild.cpp"
         ${AE_PLATFORM_SOURCES}
-)
-
-target_compile_definitions(${PROJECT_NAME}
-        PRIVATE ARNOLD_ENGINE_BUILD_DLL
 )
 
 target_precompile_headers(${PROJECT_NAME}
@@ -115,13 +111,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 target_link_libraries(${PROJECT_NAME}
-        PRIVATE glfw
-        PRIVATE glad
-        PRIVATE entt
+        PUBLIC glfw
+        PUBLIC glad
+        PUBLIC entt
         PUBLIC imgui
         PUBLIC spdlog::spdlog
-        PRIVATE ccm
-        PRIVATE glm::glm
+        PUBLIC ccm
+        PUBLIC glm::glm
 )
 
 if (APPLE)
@@ -160,7 +156,7 @@ if (BUILD_TESTS)
     add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
 endif()
 
-# Installation rules (optional but recommended)
+# Installation rules 
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}Targets
