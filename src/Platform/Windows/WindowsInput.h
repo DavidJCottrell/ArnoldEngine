@@ -2,13 +2,13 @@
 
 #include "Core/Input.h"
 
-namespace AE::Platform::Mac
+namespace AE::Platform::Windows
 {
-    class MacInput final : public Core::Input
+    class WindowsInput : public Core::Input
     {
     public:
-        MacInput();
-        virtual ~MacInput();
+        WindowsInput();
+        virtual ~WindowsInput();
 
     protected:
         bool IsKeyPressedImpl(int keycode) override;

@@ -1,32 +1,47 @@
 #pragma once
 
 #include "Core/Window.h"
+#include <GLFW/glfw3.h>
 
 using namespace AE::Core;
 
 namespace AE::Platform::Windows
 {
-    class WindowsWindow : public Window
+    /**
+     * @class WindowsWindow
+     * @brief Windows-specific implementation of the Window interface
+     *
+     * Implements platform-specific window functionality for Windows:
+     * - GLFW window creation and management
+     * - Native event handling
+     * - OpenGL context management
+     * - High DPI display support
+     *
+     * @note Handles Windows-specific features like Retina displays and command key shortcuts
+     */
+    class WindowsWindow final : public Window
     {
     public:
-        WindowsWindow(const WindowProps &props);
-        ~WindowsWindow();
+        explicit WindowsWindow(const WindowProps& props);
+        ~WindowsWindow() override;
 
         void OnUpdate() override;
 
-        inline unsigned int GetWidth() const override { return m_Data.Width; }
-        inline unsigned int GetHeight() const override { return m_Data.Height; }
+        [[nodiscard]] unsigned int GetWidth() const override { return m_Data.Width; }
+        [[nodiscard]] unsigned int GetHeight() const override { return m_Data.Height; }
 
         // Window attributes
-        inline void SetEventCallback(const EventCallbackFn &callback) override { m_Data.EventCallback = callback; }
+        void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
         void SetVSync(bool enabled) override;
-        bool IsVSync() const override;
+        [[nodiscard]] bool IsVSync() const override;
+
+        [[nodiscard]] void* GetNativeWindow() const override { return m_Window; };
 
     private:
-        virtual void Init(const WindowProps &props);
-        virtual void Shutdown();
+        void Init(const WindowProps& props);
+        void Shutdown() const;
 
-        GLFWwindow *m_Window;
+        GLFWwindow* m_Window{};
 
         struct WindowData
         {

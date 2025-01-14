@@ -3,7 +3,6 @@
 
 #include "imgui.h"
 
-// #define IMGUI_IMPL_API;
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
@@ -13,7 +12,6 @@
 
 #include "Core/Window.h"
 #include "Core/Application.h"
-#include <Core/KeyCodes.h>
 
 namespace AE::Graphics::UI
 {
@@ -27,12 +25,6 @@ namespace AE::Graphics::UI
 
     ImGuiLayer::~ImGuiLayer()
     {
-        if (ImGui::GetCurrentContext() != nullptr)
-        {
-            ImGui_ImplOpenGL3_Shutdown();
-            ImGui_ImplGlfw_Shutdown();
-            ImGui::DestroyContext();
-        }
     }
 
     void ImGuiLayer::OnAttach()
@@ -44,6 +36,12 @@ namespace AE::Graphics::UI
         }
 
         ImGui::CreateContext();
+        if (!ImGui::GetCurrentContext())
+        {
+            AE_CORE_ERROR("Failed to create ImGui context!");
+            return;
+        }
+
         ImGuiIO& io = ImGui::GetIO();
 
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable keyboard controls
@@ -64,6 +62,7 @@ namespace AE::Graphics::UI
         fontConfig.SizePixels = DEFAULT_FONT_SIZE * xScale;
         io.Fonts->Clear();
         io.Fonts->AddFontDefault(&fontConfig);
+        io.Fonts->Build();
         io.Fonts->SetTexID(0);
 
         ImGuiStyle& style = ImGui::GetStyle();
@@ -78,8 +77,6 @@ namespace AE::Graphics::UI
         auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 150");
-
-        io.Fonts->Build();
     }
 
     void ImGuiLayer::OnDetach()
@@ -121,9 +118,9 @@ namespace AE::Graphics::UI
 
         // TODO: Test if this is needed
         // Ensure the viewport is consistent when dragging between monitors
-        // auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
-        // int fbWidth, fbHeight;
-        // glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
-        // glViewport(0, 0, fbWidth, fbHeight);
+        auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
+        int fbWidth, fbHeight;
+        glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+        glViewport(0, 0, fbWidth, fbHeight);
     }
 }

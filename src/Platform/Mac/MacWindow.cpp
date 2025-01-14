@@ -163,7 +163,7 @@ namespace AE::Platform::Mac
     void MacWindow::OnUpdate()
     {
         // Close window on command+w
-        if (Input::IskeyPressed(AE_KEY_LEFT_SUPER) && Input::IskeyPressed(AE_KEY_W))
+        if (Input::IsKeyPressed(AE_KEY_LEFT_SUPER) && Input::IsKeyPressed(AE_KEY_W))
         {
             const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(m_Window));
             Events::WindowCloseEvent e;

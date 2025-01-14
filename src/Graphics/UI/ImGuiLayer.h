@@ -4,8 +4,6 @@
 #include "Core/Layer.h"
 
 #include "Events/ApplicationEvent.h"
-#include "Events/MouseEvent.h"
-#include "Events/KeyEvent.h"
 
 namespace AE::Graphics::UI
 {
@@ -21,11 +19,11 @@ namespace AE::Graphics::UI
      *
      * @note This layer typically runs as an overlay to render on top of other layers
      */
-    class ARNOLD_API ImGuiLayer : public Core::Layer
+    class ARNOLD_API ImGuiLayer final : public Core::Layer
     {
     public:
         ImGuiLayer();
-        ~ImGuiLayer();
+        ~ImGuiLayer() override;
 
         void OnAttach() override;
         void OnDetach() override;

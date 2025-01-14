@@ -5,6 +5,16 @@ project(ArnoldEngine
         DESCRIPTION "ArnoldEngine"
 )
 
+if(MSVC)
+    # Force consistent runtime library settings
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+
+    add_compile_options(/W0)
+
+    # Update GoogleTest build settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
+
 # Global settings
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -123,16 +133,32 @@ endif ()
 # Tests setup
 if (BUILD_TESTS)
     enable_testing()
+
+    # Create the test executable
     add_executable(${PROJECT_NAME}_tests
             tests/LayerStackTests.cpp
     )
+
+    target_include_directories(${PROJECT_NAME}_tests PRIVATE
+            "${CMAKE_CURRENT_SOURCE_DIR}/src"
+    )
+
+    # Set runtime library for tests to match GTest
+    if(MSVC)
+        set_property(TARGET ${PROJECT_NAME}_tests PROPERTY
+                MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+        # Disable warnings
+        target_compile_options(${PROJECT_NAME}_tests PRIVATE /W0)
+    endif()
+
     target_link_libraries(${PROJECT_NAME}_tests
             PRIVATE GTest::gtest_main
             PRIVATE ${PROJECT_NAME}
     )
-    include(GoogleTest)
-    gtest_discover_tests(${PROJECT_NAME}_tests)
-endif ()
+
+    # Add test without discovery
+    add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
+endif()
 
 # Installation rules (optional but recommended)
 include(GNUInstallDirs)

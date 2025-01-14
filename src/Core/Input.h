@@ -17,7 +17,7 @@ namespace AE::Core
     class ARNOLD_API Input
     {
     public:
-        static bool IskeyPressed(const int keycode) { return s_Instance->IsKeyPressedImpl(keycode); }
+        static bool IsKeyPressed(const int keycode) { return s_Instance->IsKeyPressedImpl(keycode); }
 
         static bool IsMouseButtonPressed(const int button) { return s_Instance->IsMouseButtonPressedImpl(button); }
         static float GetMouseX() { return s_Instance->GetMouseXImpl(); }

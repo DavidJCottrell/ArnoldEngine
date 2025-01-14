@@ -22,7 +22,7 @@ namespace AE::Core
      *
      * @note Layers are processed from bottom to top for updates, and top to bottom for events
      */
-    class LayerStack
+    class ARNOLD_API LayerStack
     {
     public:
         LayerStack();
