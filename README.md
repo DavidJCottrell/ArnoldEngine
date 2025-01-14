@@ -52,11 +52,11 @@ sudo pacman -S wayland wayland-protocols extra-cmake-modules libxkbcommon pkg-co
 
 ### Clone the Repository
 
-Clone the repository with all its submodules:
+Clone the repository along with all of the submodules into an `/external` directory within your project:
 
 ```bash
-git clone --recurse-submodules https://github.com/DavidJCottrell/ArnoldEngine.git
-cd ArnoldEngine
+git clone --recurse-submodules https://github.com/DavidJCottrell/ArnoldEngine.git /external/ArnoldEngine
+cd /external/ArnoldEngine
 ```
 
 If you already cloned the repository without submodules, you can initialize them with:
@@ -85,8 +85,8 @@ cmake --build .
 To use Arnold Engine in your own project, add it as a subdirectory in your CMake project:
 
 ```cmake
-set(EXTERNAL_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
-add_subdirectory(${EXTERNAL_LIBS_DIR}/ArnoldEngine)
+add_subdirectory({CMAKE_CURRENT_SOURCE_DIR}/external/ArnoldEngine)
+...
 target_link_libraries(YourGameTarget ArnoldEngine)
 ```
 
