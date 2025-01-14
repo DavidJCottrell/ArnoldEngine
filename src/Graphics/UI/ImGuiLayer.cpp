@@ -15,8 +15,6 @@
 
 namespace AE::Graphics::UI
 {
-    static constexpr float DEFAULT_FONT_SIZE = 13.0f;
-    static constexpr float RETINA_SCALE_FACTOR = 0.5f;
 
     ImGuiLayer::ImGuiLayer()
         : Layer("ImGuiLayer")
@@ -42,39 +40,21 @@ namespace AE::Graphics::UI
             return;
         }
 
-        ImGuiIO& io = ImGui::GetIO();
+        ImGuiIO &io = ImGui::GetIO();
 
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable keyboard controls
-        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable docking
-        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable multi-viewports
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;     // Enable docking
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   // Enable multi-viewports
 
-        // io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-        // io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-
-        float xScale, yScale;
-        unsigned int width, height;
-        Core::Window::GetWindowProperties(&width, &height, &xScale, &yScale);
-
-        // Configure font scaling for Retina displays
-        io.FontGlobalScale = RETINA_SCALE_FACTOR;
-
-        ImFontConfig fontConfig;
-        fontConfig.SizePixels = DEFAULT_FONT_SIZE * xScale;
-        io.Fonts->Clear();
-        io.Fonts->AddFontDefault(&fontConfig);
-        io.Fonts->Build();
-        io.Fonts->SetTexID(0);
-
-        ImGuiStyle& style = ImGui::GetStyle();
+        ImGuiStyle &style = ImGui::GetStyle();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             style.WindowRounding = 0.0f;
             style.Colors[ImGuiCol_WindowBg].w = 1.0f;
         }
-        style.ScaleAllSizes(xScale);
         ImGui::StyleColorsDark();
 
-        auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
+        auto *window = static_cast<GLFWwindow *>(Core::Application::Get().GetWindow().GetNativeWindow());
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 150");
     }
@@ -100,9 +80,7 @@ namespace AE::Graphics::UI
 
     void ImGuiLayer::End()
     {
-        ImGuiIO& io = ImGui::GetIO();
-        Core::Application& app = Core::Application::Get();
-        io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+        ImGuiIO &io = ImGui::GetIO();
 
         // Rendering
         ImGui::Render();
@@ -110,17 +88,15 @@ namespace AE::Graphics::UI
 
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
-            GLFWwindow* backup_current_window = glfwGetCurrentContext();
+            GLFWwindow *backup_current_window = glfwGetCurrentContext();
             ImGui::UpdatePlatformWindows();
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(backup_current_window);
         }
 
-        // TODO: Test if this is needed
-        // Ensure the viewport is consistent when dragging between monitors
-        auto* window = static_cast<GLFWwindow*>(Core::Application::Get().GetWindow().GetNativeWindow());
-        int fbWidth, fbHeight;
-        glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
-        glViewport(0, 0, fbWidth, fbHeight);
+        auto *window = static_cast<GLFWwindow *>(Core::Application::Get().GetWindow().GetNativeWindow());
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
     }
 }

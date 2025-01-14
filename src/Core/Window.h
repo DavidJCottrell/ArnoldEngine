@@ -103,8 +103,5 @@ namespace AE::Core
          * @return Pointer to the platform-specific window handle
          */
         [[nodiscard]] virtual void* GetNativeWindow() const = 0;
-
-        static void GetWindowProperties(unsigned int* width, unsigned int* height,
-                                        float* xScale, float* yScale);
     };
 }

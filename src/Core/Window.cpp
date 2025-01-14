@@ -21,16 +21,4 @@ namespace AE::Core
         #error "Platform not supported!"
 #endif
     }
-
-    void Window::GetWindowProperties(unsigned int* width, unsigned int* height,
-                                     float* xScale, float* yScale)
-    {
-        const Application& app = Application::Get();
-
-        *width = app.GetWindow().GetWidth();
-        *height = app.GetWindow().GetHeight();
-
-        auto* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
-        glfwGetWindowContentScale(window, xScale, yScale);
-    }
 }
