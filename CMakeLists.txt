@@ -53,9 +53,9 @@ if (NOT TARGET spdlog)
     add_subdirectory("${EXTERNAL_DIR}/spdlog")
 endif ()
 
-if (NOT TARGET ccm)
-    add_subdirectory("${EXTERNAL_DIR}/ccm")
-endif ()
+if (NOT TARGET ACM)
+    add_subdirectory("${EXTERNAL_DIR}/ACM")
+endif()
 
 # Header-only libraries
 add_library(entt INTERFACE)
@@ -145,7 +145,7 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC entt
         PUBLIC imgui
         PUBLIC spdlog::spdlog
-        PUBLIC ccm
+        PUBLIC ACM
         PUBLIC glm::glm
 )
 
