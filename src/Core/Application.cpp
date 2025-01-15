@@ -47,11 +47,11 @@ namespace AE::Core
             glClear(GL_COLOR_BUFFER_BIT);
 
             // Update each layer
-            for (Layer* layer : m_LayerStack)
+            for (Layer *layer : m_LayerStack)
                 layer->OnUpdate();
 
             m_ImGuiLayer->Begin();
-            for (Layer* layer : m_LayerStack)
+            for (Layer *layer : m_LayerStack)
                 layer->OnImGuiRender();
             m_ImGuiLayer->End();
 
@@ -59,7 +59,7 @@ namespace AE::Core
         }
     }
 
-    void Application::OnEvent(Events::Event& e)
+    void Application::OnEvent(Events::Event &e)
     {
         Events::EventHandler handler(e);
 
@@ -73,19 +73,19 @@ namespace AE::Core
         }
     }
 
-    void Application::PushLayer(Layer* layer)
+    void Application::PushLayer(Layer *layer)
     {
         m_LayerStack.PushLayer(layer);
         layer->OnAttach();
     }
 
-    void Application::PushOverlay(Layer* overlay)
+    void Application::PushOverlay(Layer *overlay)
     {
         m_LayerStack.PushOverlay(overlay);
         overlay->OnAttach();
     }
 
-    bool Application::OnWindowClose(Events::WindowCloseEvent& e)
+    bool Application::OnWindowClose(Events::WindowCloseEvent &e)
     {
         AE_CORE_INFO("ArnoldEngine closing...");
         m_Running = false;
