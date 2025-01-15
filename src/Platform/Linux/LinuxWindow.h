@@ -22,7 +22,7 @@ namespace AE::Platform::Linux
     class LinuxWindow final : public Window
     {
     public:
-        explicit LinuxWindow(const WindowProps &props);
+        explicit LinuxWindow(const WindowProps& props);
         ~LinuxWindow() override;
 
         void OnUpdate() override;
@@ -31,17 +31,18 @@ namespace AE::Platform::Linux
         [[nodiscard]] unsigned int GetHeight() const override { return m_Data.Height; }
 
         // Window attributes
-        void SetEventCallback(const EventCallbackFn &callback) override { m_Data.EventCallback = callback; }
+        void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
         void SetVSync(bool enabled) override;
         [[nodiscard]] bool IsVSync() const override;
 
-        [[nodiscard]] void *GetNativeWindow() const override { return m_Window; };
+        [[nodiscard]] void* GetNativeWindow() const override { return m_Window; };
 
     private:
-        void Init(const WindowProps &props);
+        void Init(const WindowProps& props);
         void Shutdown() const;
+        Graphics::Renderer::Context* m_Context{};
 
-        GLFWwindow *m_Window{};
+        GLFWwindow* m_Window{};
 
         struct WindowData
         {

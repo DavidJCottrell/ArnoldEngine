@@ -7,6 +7,7 @@
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace AE::Platform::Windows
 {
@@ -58,12 +59,9 @@ namespace AE::Platform::Windows
         AE_CORE_INFO("[1/2] - GLFW Initialized.");
 
         m_Window = glfwCreateWindow((int)props.width, (int)props.height, props.title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_Window);
 
-        if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
-        {
-            throw std::runtime_error("Failed to initialize GLAD");
-        }
+        m_Context = new OpenGL::OpenGLContext(m_Window);
+        m_Context->Init();
 
         AE_CORE_INFO("[2/2] - GLAD Initialized.");
 
@@ -161,7 +159,6 @@ namespace AE::Platform::Windows
     void WindowsWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
     }
 
     void WindowsWindow::SetVSync(const bool enabled)
