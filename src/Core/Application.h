@@ -1,9 +1,12 @@
 #pragma once
 
+#include <Graphics/Renderer/Buffer.h>
+
 #include "Core.h"
 #include "LayerStack.h"
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
+#include "Graphics/Renderer/Shader.h"
 
 namespace AE::Core
 {
@@ -48,6 +51,11 @@ namespace AE::Core
         LayerStack m_LayerStack;
 
         static Application* s_Instance;
+
+        unsigned int m_VertexArray{};
+        std::unique_ptr<Graphics::Renderer::IndexBuffer> m_IndexBuffer;
+        std::unique_ptr<Graphics::Renderer::VertexBuffer> m_VertexBuffer;
+        std::unique_ptr<Graphics::Shader> m_Shader;
     };
 
     // To be defined in client

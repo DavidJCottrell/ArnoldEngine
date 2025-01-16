@@ -18,11 +18,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # MSVC-specific settings
-if(MSVC)
+if (MSVC)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
     add_compile_options(/W0)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-endif()
+endif ()
 
 # =============================================================================
 # Build Options and Paths
@@ -39,23 +39,23 @@ set(AE_SOURCE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src")
 # Third-party libraries with CMake support
 if (NOT TARGET gtest)
     add_subdirectory("${EXTERNAL_DIR}/googletest")
-endif()
+endif ()
 
 if (NOT TARGET glfw)
     add_subdirectory("${EXTERNAL_DIR}/glfw")
-endif()
+endif ()
 
 if (NOT TARGET glm)
     add_subdirectory("${EXTERNAL_DIR}/glm")
-endif()
+endif ()
 
 if (NOT TARGET spdlog)
     add_subdirectory("${EXTERNAL_DIR}/spdlog")
-endif()
+endif ()
 
 if (NOT TARGET ACM)
     add_subdirectory("${EXTERNAL_DIR}/ACM")
-endif()
+endif ()
 
 # Header-only libraries
 add_library(entt INTERFACE)
@@ -83,9 +83,15 @@ target_include_directories(imgui PUBLIC
 target_link_libraries(imgui PUBLIC glfw glad)
 
 # =============================================================================
-# Platform-Specific Window and Input Implementations
+# Platform-Specific Implementations
 # =============================================================================
-set(AE_PLATFORM_SOURCES "")
+
+# Renderer
+list(APPEND AE_PLATFORM_SOURCES
+        src/Platform/OpenGL/OpenGLContext.cpp
+        src/Platform/OpenGL/OpenGLBuffer.cpp
+)
+
 if (APPLE)
     list(APPEND AE_PLATFORM_SOURCES
             "${AE_SOURCE_PATH}/Platform/Mac/MacWindow.cpp"
@@ -117,6 +123,9 @@ add_library(${PROJECT_NAME} STATIC
         "${AE_SOURCE_PATH}/Core/LayerStack.cpp"
         "${AE_SOURCE_PATH}/Graphics/UI/ImGuiLayer.cpp"
         "${AE_SOURCE_PATH}/Graphics/UI/ImGuiBuild.cpp"
+        "${AE_SOURCE_PATH}/Graphics/Renderer/Shader.cpp"
+        "${AE_SOURCE_PATH}/Graphics/Renderer/Buffer.cpp"
+        "${AE_SOURCE_PATH}/Graphics/Renderer/Renderer.cpp"
         ${AE_PLATFORM_SOURCES}
 )
 
@@ -164,11 +173,11 @@ if (BUILD_TESTS)
             "${CMAKE_CURRENT_SOURCE_DIR}/src"
     )
 
-    if(MSVC)
+    if (MSVC)
         set_property(TARGET ${PROJECT_NAME}_tests PROPERTY
                 MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
         target_compile_options(${PROJECT_NAME}_tests PRIVATE /W0)
-    endif()
+    endif ()
 
     target_link_libraries(${PROJECT_NAME}_tests
             PRIVATE GTest::gtest_main
@@ -176,7 +185,7 @@ if (BUILD_TESTS)
     )
 
     add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
-endif()
+endif ()
 
 # =============================================================================
 # Installation Rules

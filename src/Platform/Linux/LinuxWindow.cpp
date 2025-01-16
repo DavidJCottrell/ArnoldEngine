@@ -9,17 +9,18 @@
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace AE::Platform::Linux
 {
     static bool s_GLFWInitialized = false;
 
-    static void GLFWErrorCallback(int error, const char *description)
+    static void GLFWErrorCallback(int error, const char* description)
     {
         AE_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
     }
 
-    LinuxWindow::LinuxWindow(const WindowProps &props)
+    LinuxWindow::LinuxWindow(const WindowProps& props)
     {
         Init(props);
     }
@@ -34,13 +35,13 @@ namespace AE::Platform::Linux
         glfwDestroyWindow(m_Window);
     }
 
-    void LinuxWindow::Init(const WindowProps &props)
+    void LinuxWindow::Init(const WindowProps& props)
     {
-        AE_CORE_INFO("Initialising window...");
-
         m_Data.Title = props.title;
         m_Data.Width = props.width;
         m_Data.Height = props.height;
+
+        AE_CORE_INFO("Initialising window...");
 
         if (!s_GLFWInitialized)
         {
@@ -60,36 +61,33 @@ namespace AE::Platform::Linux
         AE_CORE_INFO("[1/2] - GLFW Initialized.");
 
         m_Window = glfwCreateWindow((int)props.width, (int)props.height, props.title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_Window);
 
-        if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
-        {
-            throw std::runtime_error("Failed to initialize GLAD");
-        }
-
-        AE_CORE_INFO("[2/2] - GLAD Initialized.");
+        m_Context = new OpenGL::OpenGLContext(m_Window);
+        m_Context->Init();
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
         // Set GLFW callbacks
-        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *window, int width, int height)
-                                  {
+        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
+        {
             WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
             data.Height = height;
             data.Width = width;
 
             Events::WindowResizeEvent event(width, height);
-            data.EventCallback(event); });
+            data.EventCallback(event);
+        });
 
-        glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *window)
-                                   {
+        glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
+        {
             const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
             Events::WindowCloseEvent event;
-            data.EventCallback(event); });
+            data.EventCallback(event);
+        });
 
-        glfwSetKeyCallback(m_Window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
-                           {
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+        {
             const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
             switch (action)
             {
@@ -112,16 +110,18 @@ namespace AE::Platform::Linux
                     break;
                 }
             default: break;
-            } });
+            }
+        });
 
-        glfwSetCharCallback(m_Window, [](GLFWwindow *window, const unsigned int keycode)
-                            {
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, const unsigned int keycode)
+        {
             const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
             Events::KeyTypedEvent event(keycode);
-            data.EventCallback(event); });
+            data.EventCallback(event);
+        });
 
-        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow *window, int button, int action, int mods)
-                                   {
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+        {
             const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
             switch (action)
             {
@@ -138,25 +138,36 @@ namespace AE::Platform::Linux
                     break;
                 }
             default: break;
-            } });
+            }
+        });
 
-        glfwSetScrollCallback(m_Window, [](GLFWwindow *window, const double xOffset, const double yOffset)
-                              {
+        glfwSetScrollCallback(m_Window, [](GLFWwindow* window, const double xOffset, const double yOffset)
+        {
             const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
             Events::MouseScrolledEvent event((float)xOffset, (float)yOffset);
-            data.EventCallback(event); });
+            data.EventCallback(event);
+        });
 
-        glfwSetCursorPosCallback(m_Window, [](GLFWwindow *window, double xPos, double yPos)
-                                 {
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+        {
             WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
             Events::MouseMovedEvent event((float)xPos, (float)yPos);
-            data.EventCallback(event); });
+            data.EventCallback(event);
+        });
     }
 
     void LinuxWindow::OnUpdate()
     {
+        // Close window on command+w
+        if (Input::IsKeyPressed(AE_KEY_LEFT_SUPER) && Input::IsKeyPressed(AE_KEY_W))
+        {
+            const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(m_Window));
+            Events::WindowCloseEvent e;
+            data.EventCallback(e);
+        }
+
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
     }
 
     void LinuxWindow::SetVSync(const bool enabled)

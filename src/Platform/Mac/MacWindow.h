@@ -2,6 +2,7 @@
 
 #include "Core/Window.h"
 #include <GLFW/glfw3.h>
+#include "Graphics/Renderer/Context.h"
 
 using namespace AE::Core;
 
@@ -42,6 +43,7 @@ namespace AE::Platform::Mac
         void Shutdown() const;
 
         GLFWwindow* m_Window{};
+        Graphics::Renderer::Context* m_Context{};
 
         struct WindowData
         {
