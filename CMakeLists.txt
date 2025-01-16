@@ -55,7 +55,7 @@ endif ()
 
 if (NOT TARGET ACM)
     add_subdirectory("${EXTERNAL_DIR}/ACM")
-endif()
+endif ()
 
 # Header-only libraries
 add_library(entt INTERFACE)
@@ -85,7 +85,6 @@ target_link_libraries(imgui PUBLIC glfw glad)
 # =============================================================================
 # Platform-Specific Implementations
 # =============================================================================
-set(AE_PLATFORM_SOURCES "")
 
 # Renderer
 list(APPEND AE_PLATFORM_SOURCES
@@ -124,6 +123,7 @@ add_library(${PROJECT_NAME} STATIC
         "${AE_SOURCE_PATH}/Graphics/UI/ImGuiLayer.cpp"
         "${AE_SOURCE_PATH}/Graphics/UI/ImGuiBuild.cpp"
         ${AE_PLATFORM_SOURCES}
+        src/Graphics/Renderer/Shader.cpp
 )
 
 # Precompiled headers

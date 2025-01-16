@@ -2,6 +2,8 @@
 
 #include "WindowsWindow.h"
 
+#include <Core/Input.h>
+#include <Core/KeyCodes.h>
 #include <glad/glad.h>
 
 #include "Events/ApplicationEvent.h"
@@ -35,11 +37,11 @@ namespace AE::Platform::Windows
 
     void WindowsWindow::Init(const WindowProps& props)
     {
-        AE_CORE_INFO("Initialising window...");
-
         m_Data.Title = props.title;
         m_Data.Width = props.width;
         m_Data.Height = props.height;
+
+        AE_CORE_INFO("Initialising window...");
 
         if (!s_GLFWInitialized)
         {
@@ -56,14 +58,12 @@ namespace AE::Platform::Windows
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-        AE_CORE_INFO("[1/2] - GLFW Initialized.");
+        AE_CORE_INFO("GLFW initialised.");
 
         m_Window = glfwCreateWindow((int)props.width, (int)props.height, props.title.c_str(), nullptr, nullptr);
 
         m_Context = new OpenGL::OpenGLContext(m_Window);
         m_Context->Init();
-
-        AE_CORE_INFO("[2/2] - GLAD Initialized.");
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
@@ -154,11 +154,22 @@ namespace AE::Platform::Windows
             Events::MouseMovedEvent event((float)xPos, (float)yPos);
             data.EventCallback(event);
         });
+
+        AE_CORE_INFO("Window initialised.");
     }
 
     void WindowsWindow::OnUpdate()
     {
+        // Close window on command+w
+        if (Input::IsKeyPressed(AE_KEY_LEFT_SUPER) && Input::IsKeyPressed(AE_KEY_W))
+        {
+            const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(m_Window));
+            Events::WindowCloseEvent e;
+            data.EventCallback(e);
+        }
+
         glfwPollEvents();
+        m_Context->SwapBuffers();
     }
 
     void WindowsWindow::SetVSync(const bool enabled)

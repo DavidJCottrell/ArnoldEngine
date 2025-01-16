@@ -40,9 +40,9 @@ namespace AE::Platform::Linux
     private:
         void Init(const WindowProps& props);
         void Shutdown() const;
-        Graphics::Renderer::Context* m_Context{};
 
         GLFWwindow* m_Window{};
+        Graphics::Renderer::Context* m_Context{};
 
         struct WindowData
         {

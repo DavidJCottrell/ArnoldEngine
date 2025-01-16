@@ -2,6 +2,7 @@
 
 #include "Core/Window.h"
 #include <GLFW/glfw3.h>
+#include "Graphics/Renderer/Context.h"
 
 using namespace AE::Core;
 
@@ -40,9 +41,9 @@ namespace AE::Platform::Windows
     private:
         void Init(const WindowProps& props);
         void Shutdown() const;
-        Graphics::Renderer::Context* m_Context{};
 
         GLFWwindow* m_Window{};
+        Graphics::Renderer::Context* m_Context{};
 
         struct WindowData
         {
