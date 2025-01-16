@@ -89,6 +89,7 @@ target_link_libraries(imgui PUBLIC glfw glad)
 # Renderer
 list(APPEND AE_PLATFORM_SOURCES
         src/Platform/OpenGL/OpenGLContext.cpp
+        src/Platform/OpenGL/OpenGLBuffer.cpp
 )
 
 if (APPLE)
@@ -122,8 +123,10 @@ add_library(${PROJECT_NAME} STATIC
         "${AE_SOURCE_PATH}/Core/LayerStack.cpp"
         "${AE_SOURCE_PATH}/Graphics/UI/ImGuiLayer.cpp"
         "${AE_SOURCE_PATH}/Graphics/UI/ImGuiBuild.cpp"
+        "${AE_SOURCE_PATH}/Graphics/Renderer/Shader.cpp"
+        "${AE_SOURCE_PATH}/Graphics/Renderer/Buffer.cpp"
+        "${AE_SOURCE_PATH}/Graphics/Renderer/Renderer.cpp"
         ${AE_PLATFORM_SOURCES}
-        src/Graphics/Renderer/Shader.cpp
 )
 
 # Precompiled headers
