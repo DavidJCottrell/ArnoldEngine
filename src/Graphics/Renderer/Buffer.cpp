@@ -6,7 +6,7 @@
 
 namespace AE::Graphics::Renderer
 {
-    VertexBuffer* VertexBuffer::Create(const float* vertices, uint32_t size)
+    VertexBuffer* VertexBuffer::Create(const float* vertices, const uint32_t size)
     {
         // Decide which rendering API to use
         switch (Renderer::GetAPI())

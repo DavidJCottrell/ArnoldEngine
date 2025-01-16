@@ -52,7 +52,7 @@ namespace AE::Core
 
         static Application* s_Instance;
 
-        unsigned int m_VertexArray;
+        unsigned int m_VertexArray{};
         std::unique_ptr<Graphics::Renderer::IndexBuffer> m_IndexBuffer;
         std::unique_ptr<Graphics::Renderer::VertexBuffer> m_VertexBuffer;
         std::unique_ptr<Graphics::Shader> m_Shader;

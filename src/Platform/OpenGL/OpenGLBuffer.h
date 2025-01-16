@@ -7,7 +7,7 @@ namespace AE::Platform::Render::OpenGL
 {
     // -------------------- VertexBuffer --------------------
     // OpenGL implementation of generic VertexBuffer
-    class OpenGLVertexBuffer : public Graphics::Renderer::VertexBuffer
+    class OpenGLVertexBuffer final : public Graphics::Renderer::VertexBuffer
     {
     public:
         OpenGLVertexBuffer(const float* vertices, uint32_t size);
@@ -17,12 +17,12 @@ namespace AE::Platform::Render::OpenGL
         void UnBind() const override;
 
     private:
-        uint32_t m_RendererID{};
+        uint32_t m_RendererID;
     };
 
     // -------------------- IndexBuffer --------------------
     // OpenGL implementation of generic IndexBuffer
-    class OpenGLIndexBuffer : public Graphics::Renderer::IndexBuffer
+    class OpenGLIndexBuffer final : public Graphics::Renderer::IndexBuffer
     {
     public:
         OpenGLIndexBuffer(const uint32_t* indices, uint32_t count);
@@ -31,13 +31,13 @@ namespace AE::Platform::Render::OpenGL
         void Bind() const override;
         void UnBind() const override;
 
-        uint32_t GetCount() const
+        [[nodiscard]] uint32_t GetCount() const override
         {
             return m_Count;
         };
 
     private:
-        uint32_t m_RendererID{};
+        uint32_t m_RendererID;
         uint32_t m_Count{};
     };
 }

@@ -24,11 +24,10 @@ namespace AE::Platform::OpenGL
         }
 
         AE_CORE_INFO("GLAD Initialized.");
-
         AE_CORE_INFO("OpenGL Info:");
-        AE_CORE_INFO("  OpenGL Renderer: {0}", (const char*)glGetString(GL_VENDOR));
+        AE_CORE_INFO("  OpenGL Vendor: {0}", (const char*)glGetString(GL_VENDOR));
         AE_CORE_INFO("  OpenGL Renderer: {0}", (const char*)glGetString(GL_RENDERER));
-        AE_CORE_INFO("  OpenGL Renderer: {0}", (const char*)glGetString(GL_VERSION));
+        AE_CORE_INFO("  OpenGL Version: {0}", (const char*)glGetString(GL_VERSION));
     }
 
     void OpenGLContext::SwapBuffers()

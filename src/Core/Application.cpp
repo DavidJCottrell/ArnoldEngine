@@ -27,7 +27,7 @@ namespace AE::Core
         glGenVertexArrays(1, &m_VertexArray);
         glBindVertexArray(m_VertexArray);
 
-        float vertices[3 * 3] = {
+        constexpr float vertices[3 * 3] = {
             -0.5f, -0.5f, 0.0f,
             0.5f, -0.5f, 0.0f,
             0.0f, 0.5f, 0.0f
@@ -36,7 +36,7 @@ namespace AE::Core
         m_VertexBuffer.reset(Graphics::Renderer::VertexBuffer::Create(vertices, sizeof(vertices)));
 
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
         uint32_t indices[3] = {0, 1, 2};
         m_IndexBuffer.reset(Graphics::Renderer::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
