@@ -167,6 +167,7 @@ if (BUILD_TESTS)
 
     add_executable(${PROJECT_NAME}_tests
             tests/LayerStackTests.cpp
+            tests/EventHandlerTests.cpp
     )
 
     target_include_directories(${PROJECT_NAME}_tests PRIVATE
