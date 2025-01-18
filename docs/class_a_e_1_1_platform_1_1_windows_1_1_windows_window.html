@@ -105,9 +105,14 @@ $(function(){initNavTree('class_a_e_1_1_platform_1_1_windows_1_1_windows_window.
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_a_e_1_1_platform_1_1_windows_1_1_windows_window-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">AE::Platform::Windows::WindowsWindow Class Reference</div></div>
+  <div class="headertitle"><div class="title">AE::Platform::Windows::WindowsWindow Class Reference<span class="mlabels"><span class="mlabel final">final</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Windows-specific implementation of the <a class="el" href="class_a_e_1_1_core_1_1_window.html" title="Abstract base class for cross-platform window management.">Window</a> interface.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_windows_window_8h_source.html">WindowsWindow.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AE::Platform::Windows::WindowsWindow:</div>
 <div class="dyncontent">
@@ -141,10 +146,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a03089eae137d35e8b8d3813a1d018b71" id="r_a03089eae137d35e8b8d3813a1d018b71"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03089eae137d35e8b8d3813a1d018b71">IsVSync</a> () const override</td></tr>
 <tr class="memdesc:a03089eae137d35e8b8d3813a1d018b71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if VSync is currently enabled.  <br /></td></tr>
 <tr class="separator:a03089eae137d35e8b8d3813a1d018b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_class_a_e_1_1_core_1_1_window"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_a_e_1_1_core_1_1_window')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_a_e_1_1_core_1_1_window.html">AE::Core::Window</a></td></tr>
-<tr class="memitem:a2d254f84abe54c045a61502594339237 inherit pub_methods_class_a_e_1_1_core_1_1_window" id="r_a2d254f84abe54c045a61502594339237"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_e_1_1_core_1_1_window.html#a2d254f84abe54c045a61502594339237">GetNativeWindow</a> () const =0</td></tr>
-<tr class="memdesc:a2d254f84abe54c045a61502594339237 inherit pub_methods_class_a_e_1_1_core_1_1_window"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the native window handle.  <br /></td></tr>
-<tr class="separator:a2d254f84abe54c045a61502594339237 inherit pub_methods_class_a_e_1_1_core_1_1_window"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ab6edb4e7b0a25f2c5d7299e9b74871" id="r_a2ab6edb4e7b0a25f2c5d7299e9b74871"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ab6edb4e7b0a25f2c5d7299e9b74871">GetNativeWindow</a> () const override</td></tr>
+<tr class="memdesc:a2ab6edb4e7b0a25f2c5d7299e9b74871"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the native window handle.  <br /></td></tr>
+<tr class="separator:a2ab6edb4e7b0a25f2c5d7299e9b74871"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -156,11 +160,17 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>EventCallbackFn</b> 
 <tr class="memitem:abf24a11d89af562e88054441ce2f0861 inherit pub_static_methods_class_a_e_1_1_core_1_1_window" id="r_abf24a11d89af562e88054441ce2f0861"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_a_e_1_1_core_1_1_window.html">Window</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_e_1_1_core_1_1_window.html#abf24a11d89af562e88054441ce2f0861">Create</a> (const <a class="el" href="struct_a_e_1_1_core_1_1_window_props.html">WindowProps</a> &amp;props=<a class="el" href="struct_a_e_1_1_core_1_1_window_props.html">WindowProps</a>())</td></tr>
 <tr class="memdesc:abf24a11d89af562e88054441ce2f0861 inherit pub_static_methods_class_a_e_1_1_core_1_1_window"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a platform-specific window instance.  <br /></td></tr>
 <tr class="separator:abf24a11d89af562e88054441ce2f0861 inherit pub_static_methods_class_a_e_1_1_core_1_1_window"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac420613ca9fe755c68e5f51ef662a43c inherit pub_static_methods_class_a_e_1_1_core_1_1_window" id="r_ac420613ca9fe755c68e5f51ef662a43c"><td class="memItemLeft" align="right" valign="top">
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>GetWindowProperties</b> (unsigned int *width, unsigned int *height, float *xScale, float *yScale)</td></tr>
-<tr class="separator:ac420613ca9fe755c68e5f51ef662a43c inherit pub_static_methods_class_a_e_1_1_core_1_1_window"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Windows-specific implementation of the <a class="el" href="class_a_e_1_1_core_1_1_window.html" title="Abstract base class for cross-platform window management.">Window</a> interface. </p>
+<p>Implements platform-specific window functionality for Windows:</p><ul>
+<li>GLFW window creation and management</li>
+<li>Native event handling</li>
+<li>OpenGL context management</li>
+<li>High DPI display support</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Handles Windows-specific features like Retina displays and command key shortcuts </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a28f18a57c680645c2cfc09a826f06e28" name="a28f18a57c680645c2cfc09a826f06e28"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a28f18a57c680645c2cfc09a826f06e28">&#9670;&#160;</a></span>GetHeight()</h2>
 
@@ -179,7 +189,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>GetWindowPrope
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -188,6 +198,36 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>GetWindowPrope
 <dl class="section return"><dt>Returns</dt><dd>Current window height in pixels </dd></dl>
 
 <p>Implements <a class="el" href="class_a_e_1_1_core_1_1_window.html#a1df5eb1c7dfab550252bec1c12aa41fc">AE::Core::Window</a>.</p>
+
+</div>
+</div>
+<a id="a2ab6edb4e7b0a25f2c5d7299e9b74871" name="a2ab6edb4e7b0a25f2c5d7299e9b74871"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ab6edb4e7b0a25f2c5d7299e9b74871">&#9670;&#160;</a></span>GetNativeWindow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * AE::Platform::Windows::WindowsWindow::GetNativeWindow </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the native window handle. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the platform-specific window handle </dd></dl>
+
+<p>Implements <a class="el" href="class_a_e_1_1_core_1_1_window.html#a2d254f84abe54c045a61502594339237">AE::Core::Window</a>.</p>
 
 </div>
 </div>
@@ -209,7 +249,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>GetWindowPrope
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -239,7 +279,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>GetWindowPrope
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

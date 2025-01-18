@@ -120,15 +120,17 @@ Inheritance diagram for AE::Core::Input:</div>
  <div class="center">
   <img src="class_a_e_1_1_core_1_1_input.png" usemap="#AE::Core::Input_map" alt=""/>
   <map id="AE::Core::Input_map" name="AE::Core::Input_map">
-<area href="class_a_e_1_1_platform_1_1_mac_1_1_mac_input.html" alt="AE::Platform::Mac::MacInput" shape="rect" coords="0,56,170,80"/>
+<area href="class_a_e_1_1_platform_1_1_linux_1_1_linux_input.html" title="Linux-specific implementation of the Input interface." alt="AE::Platform::Linux::LinuxInput" shape="rect" coords="0,56,220,80"/>
+<area href="class_a_e_1_1_platform_1_1_mac_1_1_mac_input.html" title="macOS-specific implementation of the Input interface" alt="AE::Platform::Mac::MacInput" shape="rect" coords="230,56,450,80"/>
+<area href="class_a_e_1_1_platform_1_1_windows_1_1_windows_input.html" title="Windows-specific implementation of the Input interface." alt="AE::Platform::Windows::WindowsInput" shape="rect" coords="460,56,680,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a05a9cc50629ef44a6e0deb7c09e19151" id="r_a05a9cc50629ef44a6e0deb7c09e19151"><td class="memItemLeft" align="right" valign="top"><a id="a05a9cc50629ef44a6e0deb7c09e19151" name="a05a9cc50629ef44a6e0deb7c09e19151"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IskeyPressed</b> (const int keycode)</td></tr>
-<tr class="separator:a05a9cc50629ef44a6e0deb7c09e19151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2762524bd310fdc412fc85b3ed613deb" id="r_a2762524bd310fdc412fc85b3ed613deb"><td class="memItemLeft" align="right" valign="top"><a id="a2762524bd310fdc412fc85b3ed613deb" name="a2762524bd310fdc412fc85b3ed613deb"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsKeyPressed</b> (const int keycode)</td></tr>
+<tr class="separator:a2762524bd310fdc412fc85b3ed613deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae235692d2ca84d35094a19e7e76a179a" id="r_ae235692d2ca84d35094a19e7e76a179a"><td class="memItemLeft" align="right" valign="top"><a id="ae235692d2ca84d35094a19e7e76a179a" name="ae235692d2ca84d35094a19e7e76a179a"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsMouseButtonPressed</b> (const int button)</td></tr>
 <tr class="separator:ae235692d2ca84d35094a19e7e76a179a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,7 +173,9 @@ virtual std::pair&lt; float, float &gt;&#160;</td><td class="memItemRight" valig
 <p>Uses the singleton pattern to provide global access to input state. </p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/Core/<a class="el" href="_input_8h_source.html">Input.h</a></li>
+<li>src/Platform/Linux/<b>LinuxInput.cpp</b></li>
 <li>src/Platform/Mac/<b>MacInput.cpp</b></li>
+<li>src/Platform/Windows/<b>WindowsInput.cpp</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

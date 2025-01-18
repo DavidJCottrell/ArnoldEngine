@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['event_0',['Event',['../class_a_e_1_1_events_1_1_event.html',1,'AE::Events']]],
-  ['eventhandler_1',['EventHandler',['../class_a_e_1_1_events_1_1_event_handler.html',1,'AE::Events']]]
+  ['context_0',['Context',['../class_a_e_1_1_graphics_1_1_renderer_1_1_context.html',1,'AE::Graphics::Renderer']]]
 ];

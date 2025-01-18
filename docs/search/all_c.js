@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['tryhandle_0',['TryHandle',['../class_a_e_1_1_events_1_1_event_handler.html#a9d3e8dabfdb44dc3c8b903f7aa6aa32b',1,'AE::Events::EventHandler']]]
+  ['seteventcallback_0',['SetEventCallback',['../class_a_e_1_1_core_1_1_window.html#ab45b1a9a935c83f25f177425a729375d',1,'AE::Core::Window::SetEventCallback()'],['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#aeea9317a1910cc315229dda9b07ae256',1,'AE::Platform::Linux::LinuxWindow::SetEventCallback()'],['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#ac5c46638bbd6e1f910913b09a07aa329',1,'AE::Platform::Mac::MacWindow::SetEventCallback()'],['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#abbb883b33080aec17c3d8d6f7a510b87',1,'AE::Platform::Windows::WindowsWindow::SetEventCallback()']]],
+  ['setvsync_1',['SetVSync',['../class_a_e_1_1_core_1_1_window.html#aa1c54dafb5d1cdd394a7b7b4562eaf9d',1,'AE::Core::Window::SetVSync()'],['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#a3060b8f8031a9416e26514d7f77e6eff',1,'AE::Platform::Linux::LinuxWindow::SetVSync()'],['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#af82da7b8f5e4c108008e5d16245388ad',1,'AE::Platform::Mac::MacWindow::SetVSync()'],['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#aa08671af8d44d1682e574a4b690e7642',1,'AE::Platform::Windows::WindowsWindow::SetVSync()']]],
+  ['shader_2',['Shader',['../class_a_e_1_1_graphics_1_1_shader.html',1,'AE::Graphics']]]
 ];

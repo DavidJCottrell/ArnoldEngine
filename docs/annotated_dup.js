@@ -29,19 +29,37 @@ var annotated_dup =
         [ "WindowResizeEvent", "class_a_e_1_1_events_1_1_window_resize_event.html", null ]
       ] ],
       [ "Graphics", null, [
+        [ "Renderer", null, [
+          [ "Context", "class_a_e_1_1_graphics_1_1_renderer_1_1_context.html", null ],
+          [ "IndexBuffer", "class_a_e_1_1_graphics_1_1_renderer_1_1_index_buffer.html", null ],
+          [ "Renderer", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html", null ],
+          [ "VertexBuffer", "class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_buffer.html", null ]
+        ] ],
         [ "UI", null, [
           [ "ImGuiLayer", "class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer.html", "class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer" ]
-        ] ]
+        ] ],
+        [ "Shader", "class_a_e_1_1_graphics_1_1_shader.html", null ]
       ] ],
       [ "Platform", null, [
         [ "Linux", null, [
+          [ "LinuxInput", "class_a_e_1_1_platform_1_1_linux_1_1_linux_input.html", null ],
           [ "LinuxWindow", "class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html", "class_a_e_1_1_platform_1_1_linux_1_1_linux_window" ]
         ] ],
         [ "Mac", null, [
           [ "MacInput", "class_a_e_1_1_platform_1_1_mac_1_1_mac_input.html", null ],
           [ "MacWindow", "class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html", "class_a_e_1_1_platform_1_1_mac_1_1_mac_window" ]
         ] ],
+        [ "OpenGL", null, [
+          [ "OpenGLContext", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_context.html", null ]
+        ] ],
+        [ "Render", null, [
+          [ "OpenGL", null, [
+            [ "OpenGLIndexBuffer", "class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_index_buffer.html", null ],
+            [ "OpenGLVertexBuffer", "class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html", null ]
+          ] ]
+        ] ],
         [ "Windows", null, [
+          [ "WindowsInput", "class_a_e_1_1_platform_1_1_windows_1_1_windows_input.html", null ],
           [ "WindowsWindow", "class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html", "class_a_e_1_1_platform_1_1_windows_1_1_windows_window" ]
         ] ]
       ] ]

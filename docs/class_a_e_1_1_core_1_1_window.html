@@ -121,9 +121,9 @@ Inheritance diagram for AE::Core::Window:</div>
  <div class="center">
   <img src="class_a_e_1_1_core_1_1_window.png" usemap="#AE::Core::Window_map" alt=""/>
   <map id="AE::Core::Window_map" name="AE::Core::Window_map">
-<area href="class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html" alt="AE::Platform::Linux::LinuxWindow" shape="rect" coords="0,56,237,80"/>
+<area href="class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html" title="Linux-specific implementation of the Window interface." alt="AE::Platform::Linux::LinuxWindow" shape="rect" coords="0,56,237,80"/>
 <area href="class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html" title="macOS-specific implementation of the Window interface" alt="AE::Platform::Mac::MacWindow" shape="rect" coords="247,56,484,80"/>
-<area href="class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html" alt="AE::Platform::Windows::WindowsWindow" shape="rect" coords="494,56,731,80"/>
+<area href="class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html" title="Windows-specific implementation of the Window interface." alt="AE::Platform::Windows::WindowsWindow" shape="rect" coords="494,56,731,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -162,9 +162,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:abf24a11d89af562e88054441ce2f0861" id="r_abf24a11d89af562e88054441ce2f0861"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_a_e_1_1_core_1_1_window.html">Window</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf24a11d89af562e88054441ce2f0861">Create</a> (const <a class="el" href="struct_a_e_1_1_core_1_1_window_props.html">WindowProps</a> &amp;props=<a class="el" href="struct_a_e_1_1_core_1_1_window_props.html">WindowProps</a>())</td></tr>
 <tr class="memdesc:abf24a11d89af562e88054441ce2f0861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a platform-specific window instance.  <br /></td></tr>
 <tr class="separator:abf24a11d89af562e88054441ce2f0861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac420613ca9fe755c68e5f51ef662a43c" id="r_ac420613ca9fe755c68e5f51ef662a43c"><td class="memItemLeft" align="right" valign="top"><a id="ac420613ca9fe755c68e5f51ef662a43c" name="ac420613ca9fe755c68e5f51ef662a43c"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>GetWindowProperties</b> (unsigned int *width, unsigned int *height, float *xScale, float *yScale)</td></tr>
-<tr class="separator:ac420613ca9fe755c68e5f51ef662a43c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class for cross-platform window management. </p>
@@ -266,7 +263,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>GetWindowPrope
 <p>Gets the native window handle. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the platform-specific window handle </dd></dl>
 
-<p>Implemented in <a class="el" href="class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#acfe185b391b84416b63179f6fc857746">AE::Platform::Mac::MacWindow</a>.</p>
+<p>Implemented in <a class="el" href="class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#a44febd6dd49f97d1dae5035d505dce32">AE::Platform::Linux::LinuxWindow</a>, <a class="el" href="class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#acfe185b391b84416b63179f6fc857746">AE::Platform::Mac::MacWindow</a>, and <a class="el" href="class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#a2ab6edb4e7b0a25f2c5d7299e9b74871">AE::Platform::Windows::WindowsWindow</a>.</p>
 
 </div>
 </div>
