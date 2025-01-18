@@ -4,6 +4,17 @@
 
 namespace AE::Platform::Mac
 {
+    /**
+     * @class MacInput
+     * @brief macOS-specific implementation of the Input interface
+     *
+     * Provides macOS platform-specific implementation for:
+     * - Keyboard input detection
+     * - Mouse button state tracking
+     * - Cursor position tracking
+     *
+     * Uses Cocoa API for low-level input handling.
+     */
     class MacInput final : public Core::Input
     {
     public:

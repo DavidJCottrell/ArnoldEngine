@@ -2,6 +2,16 @@
 
 namespace AE::Graphics::Renderer
 {
+    /**
+     * @enum RendererAPI
+     * @brief Enumeration of supported rendering APIs
+     *
+     * Defines the available graphics APIs that can be used by the engine:
+     * - None: No rendering (for headless operation)
+     * - OpenGL: OpenGL rendering backend
+     * - Vulkan: Vulkan rendering backend (future)
+     * - DirectX: DirectX rendering backend (future)
+     */
     enum class RendererAPI
     {
         None = 0,
@@ -10,6 +20,20 @@ namespace AE::Graphics::Renderer
         DirectX = 3,
     };
 
+    /**
+     * @class Renderer
+     * @brief Core rendering system managing graphics API selection
+     *
+     * Provides a high-level interface for rendering operations and graphics API selection.
+     * Centralizes rendering configuration and state management.
+     *
+     * Features:
+     * - Graphics API selection (OpenGL, Vulkan, DirectX)
+     * - Rendering state management
+     * - Platform-agnostic rendering interface
+     *
+     * @note Currently supports OpenGL with architecture ready for additional APIs
+     */
     class Renderer
     {
     public:
