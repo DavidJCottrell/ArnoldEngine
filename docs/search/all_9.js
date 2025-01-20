@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['onupdate_0',['OnUpdate',['../class_a_e_1_1_core_1_1_window.html#a43479337aa7d6aaaed4c75618264e095',1,'AE::Core::Window::OnUpdate()'],['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#a140754de1ce180811c85e76ef6ddf399',1,'AE::Platform::Linux::LinuxWindow::OnUpdate()'],['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#a0ab1fe01ef20730f1e302676a64e42d0',1,'AE::Platform::Mac::MacWindow::OnUpdate()'],['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#a77aa5bfad998b1a63410eaea3c2534c3',1,'AE::Platform::Windows::WindowsWindow::OnUpdate()']]],
-  ['openglcontext_1',['OpenGLContext',['../class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_context.html',1,'AE::Platform::OpenGL']]],
-  ['openglindexbuffer_2',['OpenGLIndexBuffer',['../class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_index_buffer.html',1,'AE::Platform::Render::OpenGL']]],
-  ['openglvertexbuffer_3',['OpenGLVertexBuffer',['../class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html',1,'AE::Platform::Render::OpenGL']]]
+  ['macinput_0',['MacInput',['../class_a_e_1_1_platform_1_1_mac_1_1_mac_input.html',1,'AE::Platform::Mac']]],
+  ['macwindow_1',['MacWindow',['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html',1,'AE::Platform::Mac']]],
+  ['mousebuttonevent_2',['MouseButtonEvent',['../class_a_e_1_1_events_1_1_mouse_button_event.html',1,'AE::Events']]],
+  ['mousebuttonpressedevent_3',['MouseButtonPressedEvent',['../class_a_e_1_1_events_1_1_mouse_button_pressed_event.html',1,'AE::Events']]],
+  ['mousebuttonreleasedevent_4',['MouseButtonReleasedEvent',['../class_a_e_1_1_events_1_1_mouse_button_released_event.html',1,'AE::Events']]],
+  ['mousemovedevent_5',['MouseMovedEvent',['../class_a_e_1_1_events_1_1_mouse_moved_event.html',1,'AE::Events']]],
+  ['mousescrolledevent_6',['MouseScrolledEvent',['../class_a_e_1_1_events_1_1_mouse_scrolled_event.html',1,'AE::Events']]]
 ];

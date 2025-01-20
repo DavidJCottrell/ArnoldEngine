@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vertexbuffer_0',['VertexBuffer',['../class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_buffer.html',1,'AE::Graphics::Renderer']]]
+  ['tryhandle_0',['TryHandle',['../class_a_e_1_1_events_1_1_event_handler.html#a9d3e8dabfdb44dc3c8b903f7aa6aa32b',1,'AE::Events::EventHandler']]]
 ];

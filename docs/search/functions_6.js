@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['poplayer_0',['PopLayer',['../class_a_e_1_1_core_1_1_layer_stack.html#ab812f2ca60737921b979e5be26977fb5',1,'AE::Core::LayerStack']]],
-  ['popoverlay_1',['PopOverlay',['../class_a_e_1_1_core_1_1_layer_stack.html#af5ff7d377d1ddc90d0bbaa5ec3da47a2',1,'AE::Core::LayerStack']]],
-  ['pushlayer_2',['PushLayer',['../class_a_e_1_1_core_1_1_layer_stack.html#a012378d6b7b4e5dda2b6a968749dee75',1,'AE::Core::LayerStack']]],
-  ['pushoverlay_3',['PushOverlay',['../class_a_e_1_1_core_1_1_layer_stack.html#a30843fff750a21603f50370abfb5c736',1,'AE::Core::LayerStack']]]
+  ['onupdate_0',['OnUpdate',['../class_a_e_1_1_core_1_1_window.html#a43479337aa7d6aaaed4c75618264e095',1,'AE::Core::Window::OnUpdate()'],['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#a140754de1ce180811c85e76ef6ddf399',1,'AE::Platform::Linux::LinuxWindow::OnUpdate()'],['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#a0ab1fe01ef20730f1e302676a64e42d0',1,'AE::Platform::Mac::MacWindow::OnUpdate()'],['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#a77aa5bfad998b1a63410eaea3c2534c3',1,'AE::Platform::Windows::WindowsWindow::OnUpdate()']]]
 ];

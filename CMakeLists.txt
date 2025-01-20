@@ -1,8 +1,8 @@
+cmake_minimum_required(VERSION 3.12)
+
 # =============================================================================
 # Project Configuration
 # =============================================================================
-cmake_minimum_required(VERSION 3.12)
-
 project(ArnoldEngine
         VERSION 0.0.1
         LANGUAGES C CXX
@@ -10,14 +10,21 @@ project(ArnoldEngine
 )
 
 # =============================================================================
-# Compiler and Platform Settings
+# Global Settings
 # =============================================================================
-# Global C++ settings
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# MSVC-specific settings
+# Important paths
+set(EXTERNAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external")
+
+# Build options
+option(BUILD_TESTS "Build test suite" ON)
+
+# =============================================================================
+# Platform-Specific Settings
+# =============================================================================
 if (MSVC)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
     add_compile_options(/W0)
@@ -25,47 +32,35 @@ if (MSVC)
 endif ()
 
 # =============================================================================
-# Build Options and Paths
-# =============================================================================
-option(BUILD_TESTS "Build test suite" ON)
-
-# Define important paths
-set(EXTERNAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external")
-set(AE_SOURCE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src")
-
-# =============================================================================
 # External Dependencies
 # =============================================================================
-# Third-party libraries with CMake support
-if (NOT TARGET gtest)
-    add_subdirectory("${EXTERNAL_DIR}/googletest")
-endif ()
+# Core dependencies
+find_package(OpenGL REQUIRED)
 
-if (NOT TARGET glfw)
-    add_subdirectory("${EXTERNAL_DIR}/glfw")
-endif ()
+# Third-party CMake libraries
+set(THIRD_PARTY_LIBS
+        googletest
+        glfw
+        glm
+        spdlog
+        ACM
+)
 
-if (NOT TARGET glm)
-    add_subdirectory("${EXTERNAL_DIR}/glm")
-endif ()
-
-if (NOT TARGET spdlog)
-    add_subdirectory("${EXTERNAL_DIR}/spdlog")
-endif ()
-
-if (NOT TARGET ACM)
-    add_subdirectory("${EXTERNAL_DIR}/ACM")
-endif ()
+foreach (lib ${THIRD_PARTY_LIBS})
+    if (NOT TARGET ${lib})
+        add_subdirectory("${EXTERNAL_DIR}/${lib}")
+    endif ()
+endforeach ()
 
 # Header-only libraries
 add_library(entt INTERFACE)
 target_include_directories(entt INTERFACE "${EXTERNAL_DIR}/entt")
 
-# GLAD setup
+# GLAD
 add_library(glad STATIC "${EXTERNAL_DIR}/glad/src/glad.c")
 target_include_directories(glad PUBLIC "${EXTERNAL_DIR}/glad/include")
 
-# ImGui setup
+# ImGui
 set(IMGUI_PATH "${EXTERNAL_DIR}/imgui")
 add_library(imgui STATIC
         "${IMGUI_PATH}/imgui.cpp"
@@ -83,31 +78,30 @@ target_include_directories(imgui PUBLIC
 target_link_libraries(imgui PUBLIC glfw glad)
 
 # =============================================================================
-# Platform-Specific Implementations
+# Platform-Specific Source Files
 # =============================================================================
-
-# Renderer
-list(APPEND AE_PLATFORM_SOURCES
+set(RENDERER_SOURCES
         src/Platform/OpenGL/OpenGLContext.cpp
         src/Platform/OpenGL/OpenGLBuffer.cpp
         src/Platform/OpenGL/OpenGLVertexArray.cpp
+        src/Platform/OpenGL/OpenGLRendererAPI.cpp
 )
 
+# Platform-specific files
 if (APPLE)
-    list(APPEND AE_PLATFORM_SOURCES
-            "${AE_SOURCE_PATH}/Platform/Mac/MacWindow.cpp"
-            "${AE_SOURCE_PATH}/Platform/Mac/MacInput.cpp"
+    list(APPEND PLATFORM_SOURCES
+            "src/Platform/Mac/MacWindow.cpp"
+            "src/Platform/Mac/MacInput.cpp"
     )
-    find_package(OpenGL REQUIRED)
 elseif (WIN32)
-    list(APPEND AE_PLATFORM_SOURCES
-            "${AE_SOURCE_PATH}/Platform/Windows/WindowsWindow.cpp"
-            "${AE_SOURCE_PATH}/Platform/Windows/WindowsInput.cpp"
+    list(APPEND PLATFORM_SOURCES
+            "src/Platform/Windows/WindowsWindow.cpp"
+            "src/Platform/Windows/WindowsInput.cpp"
     )
 elseif (UNIX AND NOT APPLE)
-    list(APPEND AE_PLATFORM_SOURCES
-            "${AE_SOURCE_PATH}/Platform/Linux/LinuxWindow.cpp"
-            "${AE_SOURCE_PATH}/Platform/Linux/LinuxInput.cpp"
+    list(APPEND PLATFORM_SOURCES
+            "src/Platform/Linux/LinuxWindow.cpp"
+            "src/Platform/Linux/LinuxInput.cpp"
     )
 else ()
     message(FATAL_ERROR "Unsupported platform")
@@ -116,57 +110,55 @@ endif ()
 # =============================================================================
 # Main Library Target
 # =============================================================================
+set(CORE_SOURCES
+        "src/Arnold/Core/Application.cpp"
+        "src/Arnold/Core/Log.cpp"
+        "src/Arnold/Core/Window.cpp"
+        "src/Arnold/Core/Layer.cpp"
+        "src/Arnold/Core/LayerStack.cpp"
+)
+
+set(GRAPHICS_SOURCES
+        "src/Arnold/Graphics/UI/ImGuiLayer.cpp"
+        "src/Arnold/Graphics/UI/ImGuiBuild.cpp"
+        "src/Arnold/Graphics/Renderer/Shader.cpp"
+        "src/Arnold/Graphics/Renderer/Buffer.cpp"
+        "src/Arnold/Graphics/Renderer/Renderer.cpp"
+        "src/Arnold/Graphics/Renderer/VertexArray.cpp"
+        "src/Arnold/Graphics/Renderer/RendererAPI.cpp"
+        "src/Arnold/Graphics/Renderer/RendererAPI.h"
+        "src/Arnold/Graphics/Renderer/RenderCommand.cpp"
+        "src/Arnold/Graphics/Renderer/RenderCommand.h"
+)
+
 add_library(${PROJECT_NAME} STATIC
-        "${AE_SOURCE_PATH}/Arnold/Core/Application.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Core/Log.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Core/Window.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Core/Layer.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Core/LayerStack.cpp"
-
-        "${AE_SOURCE_PATH}/Arnold/Graphics/UI/ImGuiLayer.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/UI/ImGuiBuild.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/Shader.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/Buffer.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/Renderer.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/VertexArray.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/RendererAPI.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/RendererAPI.h"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/RenderCommand.cpp"
-        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/RenderCommand.h"
-        ${AE_PLATFORM_SOURCES}
-        src/Platform/OpenGL/OpenGLRendererAPI.h
-        src/Platform/OpenGL/OpenGLRendererAPI.cpp
+        ${CORE_SOURCES}
+        ${GRAPHICS_SOURCES}
+        ${RENDERER_SOURCES}
+        ${PLATFORM_SOURCES}
 )
 
+target_precompile_headers(${PROJECT_NAME} PRIVATE src/aepch.h)
 
-# Precompiled headers
-target_precompile_headers(${PROJECT_NAME}
-        PRIVATE src/aepch.h
-)
-
-# Include directories
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
         $<INSTALL_INTERFACE:include>
 )
 
-# Link dependencies
-target_link_libraries(${PROJECT_NAME}
-        PUBLIC glfw
-        PUBLIC glad
-        PUBLIC entt
-        PUBLIC imgui
-        PUBLIC spdlog::spdlog
-        PUBLIC ACM
-        PUBLIC glm::glm
+target_link_libraries(${PROJECT_NAME} PUBLIC
+        glfw
+        glad
+        entt
+        imgui
+        spdlog::spdlog
+        ACM
+        glm::glm
 )
 
-# Platform-specific links
+# Platform-specific linking
 if (APPLE)
-    target_link_libraries(${PROJECT_NAME}
-            PRIVATE "-framework OpenGL"
-    )
+    target_link_libraries(${PROJECT_NAME} PRIVATE "-framework OpenGL")
 endif ()
 
 # =============================================================================
@@ -190,16 +182,16 @@ if (BUILD_TESTS)
         target_compile_options(${PROJECT_NAME}_tests PRIVATE /W0)
     endif ()
 
-    target_link_libraries(${PROJECT_NAME}_tests
-            PRIVATE GTest::gtest_main
-            PRIVATE ${PROJECT_NAME}
+    target_link_libraries(${PROJECT_NAME}_tests PRIVATE
+            GTest::gtest_main
+            ${PROJECT_NAME}
     )
 
     add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
 endif ()
 
 # =============================================================================
-# Installation Rules
+# Installation Configuration
 # =============================================================================
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}

@@ -1,6 +1,8 @@
 var hierarchy =
 [
     [ "AE::Core::Application", "class_a_e_1_1_core_1_1_application.html", null ],
+    [ "AE::Graphics::Renderer::BufferElement", "struct_a_e_1_1_graphics_1_1_renderer_1_1_buffer_element.html", null ],
+    [ "AE::Graphics::Renderer::BufferLayout", "class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout.html", null ],
     [ "AE::Graphics::Renderer::Context", "class_a_e_1_1_graphics_1_1_renderer_1_1_context.html", [
       [ "AE::Platform::OpenGL::OpenGLContext", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_context.html", null ]
     ] ],
@@ -24,7 +26,7 @@ var hierarchy =
     ] ],
     [ "AE::Events::EventHandler", "class_a_e_1_1_events_1_1_event_handler.html", null ],
     [ "AE::Graphics::Renderer::IndexBuffer", "class_a_e_1_1_graphics_1_1_renderer_1_1_index_buffer.html", [
-      [ "AE::Platform::Render::OpenGL::OpenGLIndexBuffer", "class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_index_buffer.html", null ]
+      [ "AE::Platform::OpenGL::OpenGLIndexBuffer", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_index_buffer.html", null ]
     ] ],
     [ "AE::Core::Input", "class_a_e_1_1_core_1_1_input.html", [
       [ "AE::Platform::Linux::LinuxInput", "class_a_e_1_1_platform_1_1_linux_1_1_linux_input.html", null ],
@@ -36,10 +38,17 @@ var hierarchy =
     ] ],
     [ "AE::Core::LayerStack", "class_a_e_1_1_core_1_1_layer_stack.html", null ],
     [ "AE::Core::Log", "class_a_e_1_1_core_1_1_log.html", null ],
+    [ "AE::Graphics::Renderer::RenderCommand", "class_a_e_1_1_graphics_1_1_renderer_1_1_render_command.html", null ],
     [ "AE::Graphics::Renderer::Renderer", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html", null ],
-    [ "AE::Graphics::Shader", "class_a_e_1_1_graphics_1_1_shader.html", null ],
+    [ "AE::Graphics::Renderer::RendererAPI", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer_a_p_i.html", [
+      [ "AE::Platform::OpenGL::OpenGLRendererAPI", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_renderer_a_p_i.html", null ]
+    ] ],
+    [ "AE::Graphics::Renderer::Shader", "class_a_e_1_1_graphics_1_1_renderer_1_1_shader.html", null ],
+    [ "AE::Graphics::Renderer::VertexArray", "class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_array.html", [
+      [ "AE::Platform::OpenGL::OpenGLVertexArray", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_array.html", null ]
+    ] ],
     [ "AE::Graphics::Renderer::VertexBuffer", "class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_buffer.html", [
-      [ "AE::Platform::Render::OpenGL::OpenGLVertexBuffer", "class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html", null ]
+      [ "AE::Platform::OpenGL::OpenGLVertexBuffer", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html", null ]
     ] ],
     [ "AE::Core::Window", "class_a_e_1_1_core_1_1_window.html", [
       [ "AE::Platform::Linux::LinuxWindow", "class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html", null ],

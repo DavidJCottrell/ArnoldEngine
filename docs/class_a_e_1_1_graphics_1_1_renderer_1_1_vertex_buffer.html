@@ -120,18 +120,21 @@ Inheritance diagram for AE::Graphics::Renderer::VertexBuffer:</div>
  <div class="center">
   <img src="class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_buffer.png" usemap="#AE::Graphics::Renderer::VertexBuffer_map" alt=""/>
   <map id="AE::Graphics::Renderer::VertexBuffer_map" name="AE::Graphics::Renderer::VertexBuffer_map">
-<area href="class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html" alt="AE::Platform::Render::OpenGL::OpenGLVertexBuffer" shape="rect" coords="0,56,306,80"/>
+<area href="class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html" title="OpenGL-specific implementation of the vertex buffer interface." alt="AE::Platform::OpenGL::OpenGLVertexBuffer" shape="rect" coords="0,56,259,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae8efcc74ea583fc63f1e88418d5bb70f" id="r_ae8efcc74ea583fc63f1e88418d5bb70f"><td class="memItemLeft" align="right" valign="top"><a id="ae8efcc74ea583fc63f1e88418d5bb70f" name="ae8efcc74ea583fc63f1e88418d5bb70f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Bind</b> () const =0</td></tr>
+<tr class="memitem:ae8efcc74ea583fc63f1e88418d5bb70f" id="r_ae8efcc74ea583fc63f1e88418d5bb70f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8efcc74ea583fc63f1e88418d5bb70f">Bind</a> () const =0</td></tr>
 <tr class="separator:ae8efcc74ea583fc63f1e88418d5bb70f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14a017e7d726eaaf502c0f1fffceacac" id="r_a14a017e7d726eaaf502c0f1fffceacac"><td class="memItemLeft" align="right" valign="top"><a id="a14a017e7d726eaaf502c0f1fffceacac" name="a14a017e7d726eaaf502c0f1fffceacac"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>UnBind</b> () const =0</td></tr>
+<tr class="memitem:a14a017e7d726eaaf502c0f1fffceacac" id="r_a14a017e7d726eaaf502c0f1fffceacac"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14a017e7d726eaaf502c0f1fffceacac">UnBind</a> () const =0</td></tr>
 <tr class="separator:a14a017e7d726eaaf502c0f1fffceacac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbbf2bf0b18765da4e63432623687ca8" id="r_afbbf2bf0b18765da4e63432623687ca8"><td class="memItemLeft" align="right" valign="top"><a id="afbbf2bf0b18765da4e63432623687ca8" name="afbbf2bf0b18765da4e63432623687ca8"></a>
+virtual const <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout.html">BufferLayout</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetLayout</b> () const =0</td></tr>
+<tr class="separator:afbbf2bf0b18765da4e63432623687ca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81454627e3be6e9b6476422ad6453ccb" id="r_a81454627e3be6e9b6476422ad6453ccb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81454627e3be6e9b6476422ad6453ccb">SetLayout</a> (const <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout.html">BufferLayout</a> &amp;<a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout.html">BufferLayout</a>)=0</td></tr>
+<tr class="separator:a81454627e3be6e9b6476422ad6453ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -147,9 +150,91 @@ static <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_buffer
 <li>Binding and unbinding of buffers</li>
 <li>Cross-platform compatibility through renderer abstraction </li>
 </ul>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/Graphics/Renderer/<a class="el" href="_buffer_8h_source.html">Buffer.h</a></li>
-<li>src/Graphics/Renderer/<b>Buffer.cpp</b></li>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae8efcc74ea583fc63f1e88418d5bb70f" name="ae8efcc74ea583fc63f1e88418d5bb70f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8efcc74ea583fc63f1e88418d5bb70f">&#9670;&#160;</a></span>Bind()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void AE::Graphics::Renderer::VertexBuffer::Bind </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html#ae41045833102c9c8de57599f35491d79">AE::Platform::OpenGL::OpenGLVertexBuffer</a>.</p>
+
+</div>
+</div>
+<a id="a81454627e3be6e9b6476422ad6453ccb" name="a81454627e3be6e9b6476422ad6453ccb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81454627e3be6e9b6476422ad6453ccb">&#9670;&#160;</a></span>SetLayout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void AE::Graphics::Renderer::VertexBuffer::SetLayout </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout.html">BufferLayout</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>BufferLayout</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html#a3079db7b7ab9c1a3e8d680c2d503530d">AE::Platform::OpenGL::OpenGLVertexBuffer</a>.</p>
+
+</div>
+</div>
+<a id="a14a017e7d726eaaf502c0f1fffceacac" name="a14a017e7d726eaaf502c0f1fffceacac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14a017e7d726eaaf502c0f1fffceacac">&#9670;&#160;</a></span>UnBind()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void AE::Graphics::Renderer::VertexBuffer::UnBind </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html#a2175dc676ec5df07a16a1ac57c9f491b">AE::Platform::OpenGL::OpenGLVertexBuffer</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>src/Arnold/Graphics/Renderer/<a class="el" href="_buffer_8h_source.html">Buffer.h</a></li>
+<li>src/Arnold/Graphics/Renderer/<b>Buffer.cpp</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

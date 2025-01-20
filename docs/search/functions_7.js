@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['seteventcallback_0',['SetEventCallback',['../class_a_e_1_1_core_1_1_window.html#ab45b1a9a935c83f25f177425a729375d',1,'AE::Core::Window::SetEventCallback()'],['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#aeea9317a1910cc315229dda9b07ae256',1,'AE::Platform::Linux::LinuxWindow::SetEventCallback()'],['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#ac5c46638bbd6e1f910913b09a07aa329',1,'AE::Platform::Mac::MacWindow::SetEventCallback()'],['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#abbb883b33080aec17c3d8d6f7a510b87',1,'AE::Platform::Windows::WindowsWindow::SetEventCallback()']]],
-  ['setvsync_1',['SetVSync',['../class_a_e_1_1_core_1_1_window.html#aa1c54dafb5d1cdd394a7b7b4562eaf9d',1,'AE::Core::Window::SetVSync()'],['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#a3060b8f8031a9416e26514d7f77e6eff',1,'AE::Platform::Linux::LinuxWindow::SetVSync()'],['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#af82da7b8f5e4c108008e5d16245388ad',1,'AE::Platform::Mac::MacWindow::SetVSync()'],['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#aa08671af8d44d1682e574a4b690e7642',1,'AE::Platform::Windows::WindowsWindow::SetVSync()']]]
+  ['poplayer_0',['PopLayer',['../class_a_e_1_1_core_1_1_layer_stack.html#ab812f2ca60737921b979e5be26977fb5',1,'AE::Core::LayerStack']]],
+  ['popoverlay_1',['PopOverlay',['../class_a_e_1_1_core_1_1_layer_stack.html#af5ff7d377d1ddc90d0bbaa5ec3da47a2',1,'AE::Core::LayerStack']]],
+  ['pushlayer_2',['PushLayer',['../class_a_e_1_1_core_1_1_layer_stack.html#a012378d6b7b4e5dda2b6a968749dee75',1,'AE::Core::LayerStack']]],
+  ['pushoverlay_3',['PushOverlay',['../class_a_e_1_1_core_1_1_layer_stack.html#a30843fff750a21603f50370abfb5c736',1,'AE::Core::LayerStack']]]
 ];

@@ -108,6 +108,11 @@ $(function(){initNavTree('class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_conte
   <div class="headertitle"><div class="title">AE::Platform::OpenGL::OpenGLContext Class Reference<span class="mlabels"><span class="mlabel final">final</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>OpenGL implementation of the graphics context.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_open_g_l_context_8h_source.html">OpenGLContext.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AE::Platform::OpenGL::OpenGLContext:</div>
 <div class="dyncontent">
@@ -128,7 +133,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2f4d4738cd186d4d708773ed0768ef5d" id="r_a2f4d4738cd186d4d708773ed0768ef5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f4d4738cd186d4d708773ed0768ef5d">SwapBuffers</a> () override</td></tr>
 <tr class="separator:a2f4d4738cd186d4d708773ed0768ef5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>OpenGL implementation of the graphics context. </p>
+<p>Handles OpenGL-specific initialization and context management:</p><ul>
+<li>Creates and manages OpenGL context using GLFW</li>
+<li>Initializes GLAD for OpenGL function loading</li>
+<li>Handles buffer swapping for smooth rendering</li>
+<li>Provides OpenGL version and vendor information</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This class is specific to OpenGL and should not be used directly. Use the generic Context interface instead. </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae5dbe3b682b95fff03816e289d5192a8" name="ae5dbe3b682b95fff03816e289d5192a8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae5dbe3b682b95fff03816e289d5192a8">&#9670;&#160;</a></span>Init()</h2>
 

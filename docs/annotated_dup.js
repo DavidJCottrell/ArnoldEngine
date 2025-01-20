@@ -30,15 +30,20 @@ var annotated_dup =
       ] ],
       [ "Graphics", null, [
         [ "Renderer", null, [
+          [ "BufferElement", "struct_a_e_1_1_graphics_1_1_renderer_1_1_buffer_element.html", null ],
+          [ "BufferLayout", "class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout.html", "class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout" ],
           [ "Context", "class_a_e_1_1_graphics_1_1_renderer_1_1_context.html", null ],
           [ "IndexBuffer", "class_a_e_1_1_graphics_1_1_renderer_1_1_index_buffer.html", null ],
+          [ "RenderCommand", "class_a_e_1_1_graphics_1_1_renderer_1_1_render_command.html", null ],
           [ "Renderer", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html", null ],
+          [ "RendererAPI", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer_a_p_i.html", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer_a_p_i" ],
+          [ "Shader", "class_a_e_1_1_graphics_1_1_renderer_1_1_shader.html", null ],
+          [ "VertexArray", "class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_array.html", null ],
           [ "VertexBuffer", "class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_buffer.html", null ]
         ] ],
         [ "UI", null, [
           [ "ImGuiLayer", "class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer.html", "class_a_e_1_1_graphics_1_1_u_i_1_1_im_gui_layer" ]
-        ] ],
-        [ "Shader", "class_a_e_1_1_graphics_1_1_shader.html", null ]
+        ] ]
       ] ],
       [ "Platform", null, [
         [ "Linux", null, [
@@ -50,13 +55,11 @@ var annotated_dup =
           [ "MacWindow", "class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html", "class_a_e_1_1_platform_1_1_mac_1_1_mac_window" ]
         ] ],
         [ "OpenGL", null, [
-          [ "OpenGLContext", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_context.html", null ]
-        ] ],
-        [ "Render", null, [
-          [ "OpenGL", null, [
-            [ "OpenGLIndexBuffer", "class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_index_buffer.html", null ],
-            [ "OpenGLVertexBuffer", "class_a_e_1_1_platform_1_1_render_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html", null ]
-          ] ]
+          [ "OpenGLContext", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_context.html", null ],
+          [ "OpenGLIndexBuffer", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_index_buffer.html", null ],
+          [ "OpenGLRendererAPI", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_renderer_a_p_i.html", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_renderer_a_p_i" ],
+          [ "OpenGLVertexArray", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_array.html", null ],
+          [ "OpenGLVertexBuffer", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer" ]
         ] ],
         [ "Windows", null, [
           [ "WindowsInput", "class_a_e_1_1_platform_1_1_windows_1_1_windows_input.html", null ],

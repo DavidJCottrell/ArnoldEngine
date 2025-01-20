@@ -109,29 +109,156 @@ $(function(){initNavTree('class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html'
 </div><!--header-->
 <div class="contents">
 
-<p>Core rendering system managing graphics API selection.  
+<p>High-level rendering system manager.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_renderer_8h_source.html">Renderer.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0a6ad9659099e385da1d29779c39fed5" id="r_a0a6ad9659099e385da1d29779c39fed5"><td class="memItemLeft" align="right" valign="top"><a id="a0a6ad9659099e385da1d29779c39fed5" name="a0a6ad9659099e385da1d29779c39fed5"></a>
-static RendererAPI&#160;</td><td class="memItemRight" valign="bottom"><b>GetAPI</b> ()</td></tr>
-<tr class="separator:a0a6ad9659099e385da1d29779c39fed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff089892eac703dc3457c85effea9455" id="r_aff089892eac703dc3457c85effea9455"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff089892eac703dc3457c85effea9455">BeginScene</a> ()</td></tr>
+<tr class="memdesc:aff089892eac703dc3457c85effea9455"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins a new scene for rendering.  <br /></td></tr>
+<tr class="separator:aff089892eac703dc3457c85effea9455"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae055f7b20e2fd8d7a7e1d46804651613" id="r_ae055f7b20e2fd8d7a7e1d46804651613"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae055f7b20e2fd8d7a7e1d46804651613">EndScene</a> ()</td></tr>
+<tr class="memdesc:ae055f7b20e2fd8d7a7e1d46804651613"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the current scene.  <br /></td></tr>
+<tr class="separator:ae055f7b20e2fd8d7a7e1d46804651613"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98de266cc75564922e5ca92af3b3e413" id="r_a98de266cc75564922e5ca92af3b3e413"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98de266cc75564922e5ca92af3b3e413">Submit</a> (const std::shared_ptr&lt; <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_array.html">VertexArray</a> &gt; &amp;vertexArray)</td></tr>
+<tr class="memdesc:a98de266cc75564922e5ca92af3b3e413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submits a vertex array for rendering.  <br /></td></tr>
+<tr class="separator:a98de266cc75564922e5ca92af3b3e413"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3681a72b0a1cabb37b82494b8a691b9" id="r_aa3681a72b0a1cabb37b82494b8a691b9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_renderer_a_p_i.html#a07f2404c040b98117caa5ea77c47b658">RendererAPI::API</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3681a72b0a1cabb37b82494b8a691b9">GetAPI</a> ()</td></tr>
+<tr class="memdesc:aa3681a72b0a1cabb37b82494b8a691b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current graphics API.  <br /></td></tr>
+<tr class="separator:aa3681a72b0a1cabb37b82494b8a691b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Core rendering system managing graphics API selection. </p>
-<p>Provides a high-level interface for rendering operations and graphics API selection. Centralizes rendering configuration and state management.</p>
-<p>Features:</p><ul>
-<li>Graphics API selection (OpenGL, Vulkan, DirectX)</li>
-<li>Rendering state management</li>
-<li>Platform-agnostic rendering interface</li>
+<div class="textblock"><p>High-level rendering system manager. </p>
+<p>The <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html" title="High-level rendering system manager.">Renderer</a> class manages the high-level rendering pipeline. It:</p><ul>
+<li>Controls scene rendering state through BeginScene/EndScene</li>
+<li>Submits drawable objects to the rendering queue</li>
+<li>Provides access to the current graphics API</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Currently supports OpenGL with architecture ready for additional APIs </dd></dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/Graphics/Renderer/<a class="el" href="_renderer_8h_source.html">Renderer.h</a></li>
-<li>src/Graphics/Renderer/<b>Renderer.cpp</b></li>
+<p>This class works in conjunction with <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_render_command.html" title="Static interface for rendering operations.">RenderCommand</a> to provide both high-level scene management and low-level rendering operations. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aff089892eac703dc3457c85effea9455" name="aff089892eac703dc3457c85effea9455"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff089892eac703dc3457c85effea9455">&#9670;&#160;</a></span>BeginScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AE::Graphics::Renderer::Renderer::BeginScene </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Begins a new scene for rendering. </p>
+<p>Sets up any necessary state for beginning a new frame/scene. </p>
+
+</div>
+</div>
+<a id="ae055f7b20e2fd8d7a7e1d46804651613" name="ae055f7b20e2fd8d7a7e1d46804651613"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae055f7b20e2fd8d7a7e1d46804651613">&#9670;&#160;</a></span>EndScene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AE::Graphics::Renderer::Renderer::EndScene </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ends the current scene. </p>
+<p>Finalizes the current frame/scene and prepares for the next one. </p>
+
+</div>
+</div>
+<a id="aa3681a72b0a1cabb37b82494b8a691b9" name="aa3681a72b0a1cabb37b82494b8a691b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3681a72b0a1cabb37b82494b8a691b9">&#9670;&#160;</a></span>GetAPI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_renderer_a_p_i.html#a07f2404c040b98117caa5ea77c47b658">RendererAPI::API</a> AE::Graphics::Renderer::Renderer::GetAPI </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the current graphics API. </p>
+<dl class="section return"><dt>Returns</dt><dd>The active rendering API type </dd></dl>
+
+</div>
+</div>
+<a id="a98de266cc75564922e5ca92af3b3e413" name="a98de266cc75564922e5ca92af3b3e413"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98de266cc75564922e5ca92af3b3e413">&#9670;&#160;</a></span>Submit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AE::Graphics::Renderer::Renderer::Submit </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_array.html">VertexArray</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>vertexArray</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Submits a vertex array for rendering. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vertexArray</td><td>The vertex array to be rendered</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Queues the given geometry for rendering in the current scene. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>src/Arnold/Graphics/Renderer/<a class="el" href="_renderer_8h_source.html">Renderer.h</a></li>
+<li>src/Arnold/Graphics/Renderer/<b>Renderer.cpp</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

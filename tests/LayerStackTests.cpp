@@ -1,18 +1,23 @@
 #include <gtest/gtest.h>
-#include "Core/LayerStack.h"
+#include "Arnold/Core/LayerStack.h"
 
 // A simple test layer class for testing
-class TestLayer : public AE::Core::Layer {
+class TestLayer : public AE::Core::Layer
+{
 public:
-    TestLayer(const std::string& name) : Layer(name) {}
+    TestLayer(const std::string& name) : Layer(name)
+    {
+    }
 };
 
-class LayerStackTest : public ::testing::Test {
+class LayerStackTest : public ::testing::Test
+{
 protected:
     AE::Core::LayerStack layerStack;
 };
 
-TEST_F(LayerStackTest, PushLayerTest) {
+TEST_F(LayerStackTest, PushLayerTest)
+{
     // Create a test layer
     auto* layer = new TestLayer("TestLayer");
 
@@ -21,8 +26,10 @@ TEST_F(LayerStackTest, PushLayerTest) {
 
     // Check if the layer is in the stack
     bool found = false;
-    for (auto* stackLayer : layerStack) {
-        if (stackLayer == layer) {
+    for (auto* stackLayer : layerStack)
+    {
+        if (stackLayer == layer)
+        {
             found = true;
             break;
         }
@@ -30,7 +37,8 @@ TEST_F(LayerStackTest, PushLayerTest) {
     EXPECT_TRUE(found) << "Layer should be found in the stack";
 }
 
-TEST_F(LayerStackTest, PushOverlayTest) {
+TEST_F(LayerStackTest, PushOverlayTest)
+{
     // Create test layers
     auto* regularLayer = new TestLayer("RegularLayer");
     auto* overlayLayer = new TestLayer("OverlayLayer");
@@ -47,15 +55,18 @@ TEST_F(LayerStackTest, PushOverlayTest) {
     EXPECT_EQ(*it, overlayLayer) << "Overlay layer should be last";
 }
 
-TEST_F(LayerStackTest, PopLayerTest) {
+TEST_F(LayerStackTest, PopLayerTest)
+{
     auto* layer = new TestLayer("TestLayer");
     layerStack.PushLayer(layer);
     layerStack.PopLayer(layer);
 
     // Check if the layer is removed
     bool found = false;
-    for (auto* stackLayer : layerStack) {
-        if (stackLayer == layer) {
+    for (auto* stackLayer : layerStack)
+    {
+        if (stackLayer == layer)
+        {
             found = true;
             break;
         }
