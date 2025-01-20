@@ -129,6 +129,8 @@ set(GRAPHICS_SOURCES
         "src/Arnold/Graphics/Renderer/RendererAPI.h"
         "src/Arnold/Graphics/Renderer/RenderCommand.cpp"
         "src/Arnold/Graphics/Renderer/RenderCommand.h"
+        src/Arnold/Graphics/Renderer/OrthographicCamera.cpp
+        src/Arnold/Graphics/Renderer/OrthographicCamera.h
 )
 
 add_library(${PROJECT_NAME} STATIC
