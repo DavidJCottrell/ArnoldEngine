@@ -4,6 +4,24 @@
 
 namespace AE::Graphics::Renderer
 {
+    /**
+     * @class VertexArray
+     * @brief Abstract interface for managing vertex array objects (VAOs)
+     *
+     * The VertexArray class provides a generic interface for:
+     * - Creating and managing vertex array objects
+     * - Binding vertex buffers with specific layouts
+     * - Managing index buffers for indexed rendering
+     * - Cross-platform vertex array management
+     *
+     * Key features:
+     * - Multiple vertex buffer support
+     * - Automatic layout management
+     * - Index buffer integration
+     * - Platform-independent interface
+     *
+     * @note Concrete implementations exist for different graphics APIs (OpenGL, etc.)
+     */
     class VertexArray
     {
     public:
