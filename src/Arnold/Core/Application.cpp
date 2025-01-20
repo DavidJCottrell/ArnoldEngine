@@ -1,9 +1,11 @@
 #include "aepch.h"
 #include "Application.h"
 
-#include <glad/glad.h>
+#include "Arnold/Graphics/Renderer/Renderer.h"
+
 #include "Window.h"
-#include "Events/ApplicationEvent.h"
+#include "Arnold/Events/ApplicationEvent.h"
+
 
 namespace AE::Core
 {
@@ -23,7 +25,6 @@ namespace AE::Core
 
 
         // ----------- TRIANGLE -----------
-
         m_TriangleVertexArray.reset(Graphics::Renderer::VertexArray::Create());
 
         constexpr float triangleVertices[3 * 7] = {
@@ -48,7 +49,6 @@ namespace AE::Core
 
 
         // ----------- SQUARE -----------
-
         m_SquareVertexArray.reset(Graphics::Renderer::VertexArray::Create());
 
         constexpr float squareVertices[3 * 4] = {
@@ -149,17 +149,18 @@ namespace AE::Core
         AE_INFO("Application running...");
         while (m_Running)
         {
-            glClearColor(0.1f, 0.1f, 0.1f, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
+            Graphics::Renderer::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
+            Graphics::Renderer::RenderCommand::Clear();
+
+            Graphics::Renderer::Renderer::BeginScene();
 
             m_SquareShader->Bind();
-            m_SquareVertexArray->Bind();
-            glDrawElements(GL_TRIANGLES, m_SquareVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-
+            Graphics::Renderer::Renderer::Submit(m_SquareVertexArray);
 
             m_TriangleShader->Bind();
-            m_TriangleVertexArray->Bind();
-            glDrawElements(GL_TRIANGLES, m_TriangleVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+            Graphics::Renderer::Renderer::Submit(m_TriangleVertexArray);
+
+            Graphics::Renderer::Renderer::EndScene();
 
             // Update each layer
             for (Layer* layer : m_LayerStack)

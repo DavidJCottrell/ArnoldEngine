@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-#include "Core/Log.h"
+#include "Arnold/Core/Log.h"
 
 namespace AE::Graphics::Renderer
 {

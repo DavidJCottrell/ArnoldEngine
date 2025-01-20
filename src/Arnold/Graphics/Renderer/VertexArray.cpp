@@ -13,10 +13,10 @@ namespace AE::Graphics::Renderer
         // Decide which rendering API to use
         switch (Renderer::GetAPI())
         {
-        case RendererAPI::None:
+        case RendererAPI::API::None:
             AE_CORE_ERROR("RendererAPI::None: not supported");
             return nullptr;
-        case RendererAPI::OpenGL:
+        case RendererAPI::API::OpenGL:
             return new Platform::OpenGL::OpenGLVertexArray();
         default:
             AE_CORE_ERROR("Error determining rendering API");

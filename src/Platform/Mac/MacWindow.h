@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core/Window.h"
+#include "Arnold/Core/Window.h"
 #include <GLFW/glfw3.h>
-#include "Graphics/Renderer/Context.h"
+#include "Arnold/Graphics/Renderer/Context.h"
 
 using namespace AE::Core;
 

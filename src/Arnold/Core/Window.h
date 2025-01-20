@@ -7,8 +7,8 @@
 
 #define GLFW_INCLUDE_NONE
 
-#include "Graphics/UI/ImGuiLayer.h"
-#include "Events/Event.h"
+#include "Arnold/Graphics/UI/ImGuiLayer.h"
+#include "Arnold/Events/Event.h"
 
 namespace AE::Core
 {

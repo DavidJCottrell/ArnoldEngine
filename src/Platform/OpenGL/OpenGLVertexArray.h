@@ -1,7 +1,7 @@
 #pragma once
-#include <Graphics/Renderer/Buffer.h>
+#include "Arnold/Graphics/Renderer/Buffer.h"
 
-#include "Graphics/Renderer/VertexArray.h"
+#include "Arnold/Graphics/Renderer/VertexArray.h"
 
 namespace AE::Platform::OpenGL
 {

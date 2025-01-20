@@ -1,7 +1,7 @@
 #pragma once
 
 #include "glm/fwd.hpp"
-#include "Graphics/Renderer/Buffer.h"
+#include "Arnold/Graphics/Renderer/Buffer.h"
 
 namespace AE::Platform::OpenGL
 {

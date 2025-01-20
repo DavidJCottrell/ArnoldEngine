@@ -1,25 +1,9 @@
 #pragma once
 
+#include "RenderCommand.h"
+
 namespace AE::Graphics::Renderer
 {
-    /**
-     * @enum RendererAPI
-     * @brief Enumeration of supported rendering APIs
-     *
-     * Defines the available graphics APIs that can be used by the engine:
-     * - None: No rendering (for headless operation)
-     * - OpenGL: OpenGL rendering backend
-     * - Vulkan: Vulkan rendering backend (future)
-     * - DirectX: DirectX rendering backend (future)
-     */
-    enum class RendererAPI
-    {
-        None = 0,
-        OpenGL = 1,
-        Vulkan = 2,
-        DirectX = 3,
-    };
-
     /**
      * @class Renderer
      * @brief Core rendering system managing graphics API selection
@@ -37,10 +21,13 @@ namespace AE::Graphics::Renderer
     class Renderer
     {
     public:
-        static RendererAPI GetAPI() { return s_RendererAPI; };
+        static void BeginScene();
+        static void EndScene();
 
-    private:
-        static RendererAPI s_RendererAPI;
+        static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+
+        static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
     };
 }
 

@@ -90,6 +90,7 @@ target_link_libraries(imgui PUBLIC glfw glad)
 list(APPEND AE_PLATFORM_SOURCES
         src/Platform/OpenGL/OpenGLContext.cpp
         src/Platform/OpenGL/OpenGLBuffer.cpp
+        src/Platform/OpenGL/OpenGLVertexArray.cpp
 )
 
 if (APPLE)
@@ -116,20 +117,25 @@ endif ()
 # Main Library Target
 # =============================================================================
 add_library(${PROJECT_NAME} STATIC
-        "${AE_SOURCE_PATH}/Core/Application.cpp"
-        "${AE_SOURCE_PATH}/Core/Log.cpp"
-        "${AE_SOURCE_PATH}/Core/Window.cpp"
-        "${AE_SOURCE_PATH}/Core/Layer.cpp"
-        "${AE_SOURCE_PATH}/Core/LayerStack.cpp"
-        "${AE_SOURCE_PATH}/Graphics/UI/ImGuiLayer.cpp"
-        "${AE_SOURCE_PATH}/Graphics/UI/ImGuiBuild.cpp"
-        "${AE_SOURCE_PATH}/Graphics/Renderer/Shader.cpp"
-        "${AE_SOURCE_PATH}/Graphics/Renderer/Buffer.cpp"
-        "${AE_SOURCE_PATH}/Graphics/Renderer/Renderer.cpp"
-        "${AE_SOURCE_PATH}/Graphics/Renderer/VertexArray.cpp"
-        "${AE_SOURCE_PATH}/Platform/OpenGL/OpenGLVertexArray.cpp"
-        ${AE_PLATFORM_SOURCES}
+        "${AE_SOURCE_PATH}/Arnold/Core/Application.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Core/Log.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Core/Window.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Core/Layer.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Core/LayerStack.cpp"
 
+        "${AE_SOURCE_PATH}/Arnold/Graphics/UI/ImGuiLayer.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/UI/ImGuiBuild.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/Shader.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/Buffer.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/Renderer.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/VertexArray.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/RendererAPI.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/RendererAPI.h"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/RenderCommand.cpp"
+        "${AE_SOURCE_PATH}/Arnold/Graphics/Renderer/RenderCommand.h"
+        ${AE_PLATFORM_SOURCES}
+        src/Platform/OpenGL/OpenGLRendererAPI.h
+        src/Platform/OpenGL/OpenGLRendererAPI.cpp
 )
 
 

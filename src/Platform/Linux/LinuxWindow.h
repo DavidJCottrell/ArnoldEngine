@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Window.h"
+#include "Arnold/Core/Window.h"
 #include <GLFW/glfw3.h>
 
 using namespace AE::Core;

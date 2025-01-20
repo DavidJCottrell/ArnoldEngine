@@ -1,13 +1,11 @@
 #pragma once
 
-#include <Graphics/Renderer/Buffer.h>
-
 #include "Core.h"
 #include "LayerStack.h"
 #include "Window.h"
-#include "Events/ApplicationEvent.h"
-#include "Graphics/Renderer/Shader.h"
-#include "Graphics/Renderer/VertexArray.h"
+#include "Arnold/Events/ApplicationEvent.h"
+#include "Arnold/Graphics/Renderer/Shader.h"
+#include "Arnold/Graphics/Renderer/VertexArray.h"
 
 namespace AE::Core
 {

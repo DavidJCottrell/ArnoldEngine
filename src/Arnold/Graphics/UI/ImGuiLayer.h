@@ -1,9 +1,9 @@
 #pragma once
 
 #include "imgui_impl_glfw.h"
-#include "Core/Layer.h"
+#include "Arnold/Core/Layer.h"
 
-#include "Events/ApplicationEvent.h"
+#include "Arnold/Events/ApplicationEvent.h"
 
 namespace AE::Graphics::UI
 {

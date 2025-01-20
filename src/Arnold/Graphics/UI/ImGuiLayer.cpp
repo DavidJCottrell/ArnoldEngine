@@ -10,8 +10,8 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "Core/Window.h"
-#include "Core/Application.h"
+#include "Arnold/Core/Window.h"
+#include "Arnold/Core/Application.h"
 
 namespace AE::Graphics::UI
 {
