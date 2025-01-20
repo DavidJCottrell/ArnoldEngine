@@ -126,8 +126,12 @@ add_library(${PROJECT_NAME} STATIC
         "${AE_SOURCE_PATH}/Graphics/Renderer/Shader.cpp"
         "${AE_SOURCE_PATH}/Graphics/Renderer/Buffer.cpp"
         "${AE_SOURCE_PATH}/Graphics/Renderer/Renderer.cpp"
+        "${AE_SOURCE_PATH}/Graphics/Renderer/VertexArray.cpp"
+        "${AE_SOURCE_PATH}/Platform/OpenGL/OpenGLVertexArray.cpp"
         ${AE_PLATFORM_SOURCES}
+
 )
+
 
 # Precompiled headers
 target_precompile_headers(${PROJECT_NAME}

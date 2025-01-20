@@ -2,36 +2,12 @@
 #include "Application.h"
 
 #include <glad/glad.h>
-
-#include <memory>
-
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
 
 namespace AE::Core
 {
     Application* Application::s_Instance = nullptr;
-
-    static GLenum ShaderDataTypeToOpenGLBaseType(Graphics::Renderer::ShaderDataType type)
-    {
-        switch (type)
-        {
-        case Graphics::Renderer::ShaderDataType::Float: return GL_FLOAT;
-        case Graphics::Renderer::ShaderDataType::Float2: return GL_FLOAT;
-        case Graphics::Renderer::ShaderDataType::Float3: return GL_FLOAT;
-        case Graphics::Renderer::ShaderDataType::Float4: return GL_FLOAT;
-        case Graphics::Renderer::ShaderDataType::Mat3: return GL_FLOAT;
-        case Graphics::Renderer::ShaderDataType::Mat4: return GL_FLOAT;
-        case Graphics::Renderer::ShaderDataType::Int: return GL_INT;
-        case Graphics::Renderer::ShaderDataType::Int2: return GL_INT;
-        case Graphics::Renderer::ShaderDataType::Int3: return GL_INT;
-        case Graphics::Renderer::ShaderDataType::Int4: return GL_INT;
-        case Graphics::Renderer::ShaderDataType::Bool: return GL_BOOL;
-        default:
-            AE_CORE_ERROR("Unknown shader type");
-            return 0;
-        }
-    }
 
     Application::Application()
     {
@@ -45,43 +21,62 @@ namespace AE::Core
         m_ImGuiLayer = new Graphics::UI::ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
 
-        glGenVertexArrays(1, &m_VertexArray);
-        glBindVertexArray(m_VertexArray);
 
-        constexpr float vertices[3 * 7] = {
+        // ----------- TRIANGLE -----------
+
+        m_TriangleVertexArray.reset(Graphics::Renderer::VertexArray::Create());
+
+        constexpr float triangleVertices[3 * 7] = {
             -0.5f, -0.5f, 0.0f, 0.8f, 0.0f, 0.7f, 1.0f,
             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
             0.0f, 0.5f, 0.0f, 0.8f, 0.7f, 1.0f, 1.0f
         };
 
-        m_VertexBuffer.reset(Graphics::Renderer::VertexBuffer::Create(vertices, sizeof(vertices)));
-
-        {
-            const Graphics::Renderer::BufferLayout layout = {
-                {Graphics::Renderer::ShaderDataType::Float3, "a_Position"},
-                {Graphics::Renderer::ShaderDataType::Float4, "a_Color"},
-            };
-
-            m_VertexBuffer->SetLayout(layout);
-        }
-
-        uint32_t index = 0;
-        const auto& layout = m_VertexBuffer->GetLayout();
-        for (const auto& element : layout)
-        {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index,
-                                  element.GetComponentCount(),
-                                  ShaderDataTypeToOpenGLBaseType(element.Type),
-                                  element.Normalised ? GL_TRUE : GL_FALSE,
-                                  layout.GetStride(),
-                                  reinterpret_cast<const void*>(element.Offset));
-            index++;
-        }
-
+        std::shared_ptr<Graphics::Renderer::VertexBuffer> squareVertexBuffer;
+        squareVertexBuffer.reset(Graphics::Renderer::VertexBuffer::Create(triangleVertices, sizeof(triangleVertices)));
+        const Graphics::Renderer::BufferLayout layout = {
+            {Graphics::Renderer::ShaderDataType::Float3, "a_Position"},
+            {Graphics::Renderer::ShaderDataType::Float4, "a_Color"},
+        };
+        squareVertexBuffer->SetLayout(layout);
+        m_TriangleVertexArray->AddVertexBuffer(squareVertexBuffer);
 
         uint32_t indices[3] = {0, 1, 2};
-        m_IndexBuffer.reset(Graphics::Renderer::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+        std::shared_ptr<Graphics::Renderer::IndexBuffer> squareIndexBuffer;
+        squareIndexBuffer.reset(Graphics::Renderer::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+        m_TriangleVertexArray->SetIndexBuffer(squareIndexBuffer);
+
+
+        // ----------- SQUARE -----------
+
+        m_SquareVertexArray.reset(Graphics::Renderer::VertexArray::Create());
+
+        constexpr float squareVertices[3 * 4] = {
+            -0.75f, -0.75f, 0.0f,
+            0.75f, -0.75f, 0.0f,
+            0.75f, 0.75f, 0.0f,
+            -0.75f, 0.75f, 0.0f
+        };
+
+        // Create the vertex buffer
+        std::shared_ptr<Graphics::Renderer::VertexBuffer> squareVB;
+        squareVB.reset(Graphics::Renderer::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+        // Set the layout of the vertex buffer
+        squareVB->SetLayout({
+            {Graphics::Renderer::ShaderDataType::Float3, "a_Position"},
+        });
+        // Add the vertex buffer to the vertex array
+        m_SquareVertexArray->AddVertexBuffer(squareVB);
+
+
+        uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
+        // Create the index buffer
+        std::shared_ptr<Graphics::Renderer::IndexBuffer> squareIB;
+        squareIB.reset(
+            Graphics::Renderer::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+
+        // Add the index buffer to the vertex array
+        m_SquareVertexArray->SetIndexBuffer(squareIB);
 
         std::string vertexSrc = R"(
             #version 330 core
@@ -115,7 +110,36 @@ namespace AE::Core
             }
         )";
 
-        m_Shader = std::make_unique<Graphics::Shader>(vertexSrc, fragmentSrc);
+        m_TriangleShader = std::make_unique<Graphics::Renderer::Shader>(vertexSrc, fragmentSrc);
+
+        std::string vertexSrc2 = R"(
+            #version 330 core
+
+            layout(location = 0) in vec3 a_Position;
+
+            out vec3 v_Position;
+
+            void main()
+            {
+                v_Position = a_Position;
+                gl_Position = vec4(a_Position, 1.0);
+            }
+        )";
+
+        std::string fragmentSrc2 = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec3 v_Position;
+
+            void main()
+            {
+                color = vec4(0.2, 0.3, 0.8, 1.0);
+            }
+        )";
+
+        m_SquareShader = std::make_unique<Graphics::Renderer::Shader>(vertexSrc2, fragmentSrc2);
     }
 
     Application::~Application() = default;
@@ -128,9 +152,14 @@ namespace AE::Core
             glClearColor(0.1f, 0.1f, 0.1f, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            m_Shader->Bind();
-            glBindVertexArray(m_VertexArray);
-            glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+            m_SquareShader->Bind();
+            m_SquareVertexArray->Bind();
+            glDrawElements(GL_TRIANGLES, m_SquareVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
+
+            m_TriangleShader->Bind();
+            m_TriangleVertexArray->Bind();
+            glDrawElements(GL_TRIANGLES, m_TriangleVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
             // Update each layer
             for (Layer* layer : m_LayerStack)

@@ -3,7 +3,7 @@
 #include "glm/fwd.hpp"
 #include "Graphics/Renderer/Buffer.h"
 
-namespace AE::Platform::Render::OpenGL
+namespace AE::Platform::OpenGL
 {
     // -------------------- VertexBuffer --------------------
     /**

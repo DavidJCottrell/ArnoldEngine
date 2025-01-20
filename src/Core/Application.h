@@ -7,6 +7,7 @@
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
 #include "Graphics/Renderer/Shader.h"
+#include "Graphics/Renderer/VertexArray.h"
 
 namespace AE::Core
 {
@@ -52,10 +53,11 @@ namespace AE::Core
 
         static Application* s_Instance;
 
-        unsigned int m_VertexArray{};
-        std::unique_ptr<Graphics::Renderer::IndexBuffer> m_IndexBuffer;
-        std::unique_ptr<Graphics::Renderer::VertexBuffer> m_VertexBuffer;
-        std::unique_ptr<Graphics::Shader> m_Shader;
+        std::shared_ptr<Graphics::Renderer::VertexArray> m_TriangleVertexArray;
+        std::shared_ptr<Graphics::Renderer::VertexArray> m_SquareVertexArray;
+
+        std::shared_ptr<Graphics::Renderer::Shader> m_TriangleShader;
+        std::shared_ptr<Graphics::Renderer::Shader> m_SquareShader;
     };
 
     // To be defined in client

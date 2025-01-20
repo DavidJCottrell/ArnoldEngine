@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace AE::Graphics
+namespace AE::Graphics::Renderer
 {
   /**
    * @class Shader

@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-namespace AE::Platform::Render::OpenGL
+namespace AE::Platform::OpenGL
 {
     // -------------------- VertexBuffer --------------------
     OpenGLVertexBuffer::OpenGLVertexBuffer(const float* vertices, const uint32_t size)

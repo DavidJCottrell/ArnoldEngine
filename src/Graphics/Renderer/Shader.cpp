@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 
 
-AE::Graphics::Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
+AE::Graphics::Renderer::Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
 {
 	// Create an empty vertex shader handle
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -106,17 +106,17 @@ AE::Graphics::Shader::Shader(const std::string& vertexSrc, const std::string& fr
 	glDetachShader(m_RendererID, fragmentShader);
 }
 
-AE::Graphics::Shader::~Shader()
+AE::Graphics::Renderer::Shader::~Shader()
 {
 	glDeleteProgram(m_RendererID);
 }
 
-void AE::Graphics::Shader::Bind() const
+void AE::Graphics::Renderer::Shader::Bind() const
 {
 	glUseProgram(m_RendererID);
 }
 
-void AE::Graphics::Shader::Unbind() const
+void AE::Graphics::Renderer::Shader::Unbind() const
 {
 	glUseProgram(0);
 }
