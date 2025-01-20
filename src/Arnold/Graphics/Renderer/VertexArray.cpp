@@ -2,7 +2,7 @@
 #include "VertexArray.h"
 
 #include "Renderer.h"
-#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include "Platform/RenderingAPI/OpenGL/OpenGLVertexArray.h"
 
 namespace AE::Graphics::Renderer
 {

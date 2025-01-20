@@ -81,10 +81,10 @@ target_link_libraries(imgui PUBLIC glfw glad)
 # Platform-Specific Source Files
 # =============================================================================
 set(RENDERER_SOURCES
-        src/Platform/OpenGL/OpenGLContext.cpp
-        src/Platform/OpenGL/OpenGLBuffer.cpp
-        src/Platform/OpenGL/OpenGLVertexArray.cpp
-        src/Platform/OpenGL/OpenGLRendererAPI.cpp
+        src/Platform/RenderingAPI/OpenGL/OpenGLContext.cpp
+        src/Platform/RenderingAPI/OpenGL/OpenGLBuffer.cpp
+        src/Platform/RenderingAPI/OpenGL/OpenGLVertexArray.cpp
+        src/Platform/RenderingAPI/OpenGL/OpenGLRendererAPI.cpp
 )
 
 # Platform-specific files

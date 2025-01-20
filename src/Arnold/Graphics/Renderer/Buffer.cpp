@@ -1,7 +1,7 @@
 #include "aepch.h"
 #include "Buffer.h"
 
-#include "Platform/OpenGL/OpenGLBuffer.h"
+#include "Platform/RenderingAPI/OpenGL/OpenGLBuffer.h"
 #include "Renderer.h"
 
 namespace AE::Graphics::Renderer

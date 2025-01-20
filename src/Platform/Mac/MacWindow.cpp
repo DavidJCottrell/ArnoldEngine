@@ -9,7 +9,7 @@
 #include "Arnold/Events/ApplicationEvent.h"
 #include "Arnold/Events/MouseEvent.h"
 #include "Arnold/Events/KeyEvent.h"
-#include "Platform/OpenGL/OpenGLContext.h"
+#include "Platform/RenderingAPI/OpenGL/OpenGLContext.h"
 
 namespace AE::Platform::Mac
 {

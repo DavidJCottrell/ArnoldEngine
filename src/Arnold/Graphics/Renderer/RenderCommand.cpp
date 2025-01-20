@@ -1,7 +1,7 @@
 #include "aepch.h"
 #include "RenderCommand.h"
 
-#include "Platform/OpenGL/OpenGLRendererAPI.h"
+#include "Platform/RenderingAPI/OpenGL/OpenGLRendererAPI.h"
 
 namespace AE::Graphics::Renderer
 {

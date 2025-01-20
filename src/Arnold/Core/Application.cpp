@@ -6,7 +6,6 @@
 #include "Window.h"
 #include "Arnold/Events/ApplicationEvent.h"
 
-
 namespace AE::Core
 {
     Application* Application::s_Instance = nullptr;
