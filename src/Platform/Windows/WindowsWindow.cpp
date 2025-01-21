@@ -1,15 +1,14 @@
 #include "aepch.h"
-
 #include "WindowsWindow.h"
 
-#include <Core/Input.h>
-#include <Core/KeyCodes.h>
-#include <glad/glad.h>
+#include "Arnold/Core/Input.h"
+#include "Arnold/Core/KeyCodes.h"
+#include "Arnold/Events/ApplicationEvent.h"
+#include "Arnold/Events/MouseEvent.h"
+#include "Arnold/Events/KeyEvent.h"
+#include "Platform/RenderingAPI/OpenGL/OpenGLContext.h"
 
-#include "Events/ApplicationEvent.h"
-#include "Events/MouseEvent.h"
-#include "Events/KeyEvent.h"
-#include "Platform/OpenGL/OpenGLContext.h"
+#include <glad/glad.h>
 
 namespace AE::Platform::Windows
 {
