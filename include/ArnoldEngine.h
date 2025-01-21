@@ -10,6 +10,16 @@
 #include "Arnold/Core/KeyCodes.h"
 #include "Arnold/Core/MouseButtonCodes.h"
 
+// --- Rendering ---
+#include "Arnold/Graphics/Renderer/Renderer.h"
+#include "Arnold/Graphics/Renderer/RenderCommand.h"
+
+#include "Arnold/Graphics/Renderer/Buffer.h"
+#include "Arnold/Graphics/Renderer/Shader.h"
+#include "Arnold/Graphics/Renderer/VertexArray.h"
+
+#include "Arnold/Graphics/Renderer/OrthographicCamera.h"
+
 // --- Entry Point ---
 #ifdef AE_MAIN
 #include "Arnold/Core/EntryPoint.h"

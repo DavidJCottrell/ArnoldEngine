@@ -46,7 +46,6 @@ namespace AE::Core
 
     private:
         bool OnWindowClose(Events::WindowCloseEvent& e);
-        bool OnKeyEvent(Events::KeyEvent& e);
 
         std::unique_ptr<Window> m_Window;
         Graphics::UI::ImGuiLayer* m_ImGuiLayer;
@@ -54,14 +53,6 @@ namespace AE::Core
         LayerStack m_LayerStack;
 
         static Application* s_Instance;
-
-        std::shared_ptr<Graphics::Renderer::VertexArray> m_TriangleVertexArray;
-        std::shared_ptr<Graphics::Renderer::VertexArray> m_SquareVertexArray;
-
-        std::shared_ptr<Graphics::Renderer::Shader> m_TriangleShader;
-        std::shared_ptr<Graphics::Renderer::Shader> m_SquareShader;
-
-        Graphics::Renderer::OrthographicCamera m_Camera;
     };
 
     // To be defined in client
