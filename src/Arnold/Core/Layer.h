@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Timestep.h"
 #include "Arnold/Events/Event.h"
 
 namespace AE::Core
@@ -31,7 +32,7 @@ namespace AE::Core
         {
         }
 
-        virtual void OnUpdate()
+        virtual void OnUpdate(Timestep ts)
         {
         }
 

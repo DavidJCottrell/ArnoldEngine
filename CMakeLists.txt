@@ -116,6 +116,7 @@ set(CORE_SOURCES
         src/Arnold/Core/Window.cpp
         src/Arnold/Core/Layer.cpp
         src/Arnold/Core/LayerStack.cpp
+        src/Arnold/Core/Timestep.h
 )
 
 set(GRAPHICS_SOURCES

@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Arnold/Graphics/Renderer/Renderer.h"
 #include "Arnold/Events/ApplicationEvent.h"
+#include "GLFW/glfw3.h"
 
 namespace AE::Core
 {
@@ -33,9 +34,13 @@ namespace AE::Core
         AE_INFO("Application running...");
         while (m_Running)
         {
+            const auto time = static_cast<float>(glfwGetTime()); // TODO: Move to platform specific implementation
+            const Timestep timestep(time - m_LastFrameTime);
+            m_LastFrameTime = time;
+
             // Update each layer
             for (Layer* layer : m_LayerStack)
-                layer->OnUpdate();
+                layer->OnUpdate(timestep);
 
             // Render ImGui UI
             m_ImGuiLayer->Begin();

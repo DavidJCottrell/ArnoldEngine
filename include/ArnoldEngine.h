@@ -5,6 +5,8 @@
 #include "Arnold/Core/Log.h"
 #include "Arnold/Graphics/UI/ImGuiLayer.h"
 
+#include "Arnold/Core/Timestep.h"
+
 // --- Input ---
 #include "Arnold/Core/Input.h"
 #include "Arnold/Core/KeyCodes.h"

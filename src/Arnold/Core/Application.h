@@ -4,6 +4,7 @@
 #include "LayerStack.h"
 #include "Window.h"
 #include "Arnold/Events/ApplicationEvent.h"
+#include "Arnold/Core/Timestep.h"
 
 namespace AE::Core
 {
@@ -46,6 +47,8 @@ namespace AE::Core
         Graphics::UI::ImGuiLayer* m_ImGuiLayer;
         bool m_Running = true;
         LayerStack m_LayerStack;
+        float m_LastFrameTime = 0.0f;
+
 
         static Application* s_Instance;
     };
