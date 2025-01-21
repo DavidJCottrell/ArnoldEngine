@@ -39,10 +39,14 @@ namespace AE::Graphics::Renderer
         * @brief Submits a vertex array for rendering
         * @param shader The shader used to render the vertex array
         * @param vertexArray The vertex array to be rendered
+        * @param transform The position in the world
         *
         * Queues the given geometry for rendering in the current scene.
         */
-        static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+        static void Submit(const std::shared_ptr<Shader>& shader,
+                           const std::shared_ptr<VertexArray>& vertexArray,
+                           const glm::mat4& transform = glm::mat4(1.0f)
+        );
 
         /**
          * @brief Gets the current graphics API
