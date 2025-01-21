@@ -1,14 +1,9 @@
 #pragma once
 
-#include <Arnold/Events/KeyEvent.h>
-
 #include "Core.h"
 #include "LayerStack.h"
 #include "Window.h"
 #include "Arnold/Events/ApplicationEvent.h"
-#include "Arnold/Graphics/Renderer/OrthographicCamera.h"
-#include "Arnold/Graphics/Renderer/Shader.h"
-#include "Arnold/Graphics/Renderer/VertexArray.h"
 
 namespace AE::Core
 {
