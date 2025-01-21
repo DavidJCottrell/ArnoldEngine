@@ -1,6 +1,8 @@
 #pragma once
 
+#include "OrthographicCamera.h"
 #include "RenderCommand.h"
+#include "Shader.h"
 
 namespace AE::Graphics::Renderer
 {
@@ -24,7 +26,7 @@ namespace AE::Graphics::Renderer
          *
          * Sets up any necessary state for beginning a new frame/scene.
          */
-        static void BeginScene();
+        static void BeginScene(const OrthographicCamera& camera);
 
         /**
          * @brief Ends the current scene
@@ -35,17 +37,26 @@ namespace AE::Graphics::Renderer
 
         /**
         * @brief Submits a vertex array for rendering
+        * @param shader The shader used to render the vertex array
         * @param vertexArray The vertex array to be rendered
         *
         * Queues the given geometry for rendering in the current scene.
         */
-        static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+        static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
 
         /**
          * @brief Gets the current graphics API
          * @return The active rendering API type
          */
         static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
+
+    private:
+        struct SceneData
+        {
+            glm::mat4 ViewProjectionMatrix;
+        };
+
+        static SceneData* m_SceneData;
     };
 }
 

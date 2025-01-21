@@ -1,8 +1,8 @@
-#include "Arnold/Events/Event.h"
 #include <gtest/gtest.h>
+#include "Arnold/Events/Event.h"
 #include "Arnold/Events/ApplicationEvent.h"
 
-class EventHandlerTest : public ::testing::Test
+class EventHandlerTest : public testing::Test
 {
 protected:
     class TestEvent : public AE::Events::Event

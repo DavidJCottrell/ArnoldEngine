@@ -63,13 +63,13 @@ target_include_directories(glad PUBLIC "${EXTERNAL_DIR}/glad/include")
 # ImGui
 set(IMGUI_PATH "${EXTERNAL_DIR}/imgui")
 add_library(imgui STATIC
-        "${IMGUI_PATH}/imgui.cpp"
-        "${IMGUI_PATH}/imgui_demo.cpp"
-        "${IMGUI_PATH}/imgui_draw.cpp"
-        "${IMGUI_PATH}/imgui_tables.cpp"
-        "${IMGUI_PATH}/imgui_widgets.cpp"
-        "${IMGUI_PATH}/backends/imgui_impl_glfw.cpp"
-        "${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp"
+        ${IMGUI_PATH}/imgui.cpp
+        ${IMGUI_PATH}/imgui_demo.cpp
+        ${IMGUI_PATH}/imgui_draw.cpp
+        ${IMGUI_PATH}/imgui_tables.cpp
+        ${IMGUI_PATH}/imgui_widgets.cpp
+        ${IMGUI_PATH}/backends/imgui_impl_glfw.cpp
+        ${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp
 )
 target_include_directories(imgui PUBLIC
         "${IMGUI_PATH}"
@@ -90,18 +90,18 @@ set(RENDERER_SOURCES
 # Platform-specific files
 if (APPLE)
     list(APPEND PLATFORM_SOURCES
-            "src/Platform/Mac/MacWindow.cpp"
-            "src/Platform/Mac/MacInput.cpp"
+            src/Platform/Mac/MacWindow.cpp
+            src/Platform/Mac/MacInput.cpp
     )
 elseif (WIN32)
     list(APPEND PLATFORM_SOURCES
-            "src/Platform/Windows/WindowsWindow.cpp"
-            "src/Platform/Windows/WindowsInput.cpp"
+            src/Platform/Windows/WindowsWindow.cpp
+            src/Platform/Windows/WindowsInput.cpp
     )
 elseif (UNIX AND NOT APPLE)
     list(APPEND PLATFORM_SOURCES
-            "src/Platform/Linux/LinuxWindow.cpp"
-            "src/Platform/Linux/LinuxInput.cpp"
+            src/Platform/Linux/LinuxWindow.cpp
+            src/Platform/Linux/LinuxInput.cpp
     )
 else ()
     message(FATAL_ERROR "Unsupported platform")
@@ -111,24 +111,24 @@ endif ()
 # Main Library Target
 # =============================================================================
 set(CORE_SOURCES
-        "src/Arnold/Core/Application.cpp"
-        "src/Arnold/Core/Log.cpp"
-        "src/Arnold/Core/Window.cpp"
-        "src/Arnold/Core/Layer.cpp"
-        "src/Arnold/Core/LayerStack.cpp"
+        src/Arnold/Core/Application.cpp
+        src/Arnold/Core/Log.cpp
+        src/Arnold/Core/Window.cpp
+        src/Arnold/Core/Layer.cpp
+        src/Arnold/Core/LayerStack.cpp
 )
 
 set(GRAPHICS_SOURCES
-        "src/Arnold/Graphics/UI/ImGuiLayer.cpp"
-        "src/Arnold/Graphics/UI/ImGuiBuild.cpp"
-        "src/Arnold/Graphics/Renderer/Shader.cpp"
-        "src/Arnold/Graphics/Renderer/Buffer.cpp"
-        "src/Arnold/Graphics/Renderer/Renderer.cpp"
-        "src/Arnold/Graphics/Renderer/VertexArray.cpp"
-        "src/Arnold/Graphics/Renderer/RendererAPI.cpp"
-        "src/Arnold/Graphics/Renderer/RendererAPI.h"
-        "src/Arnold/Graphics/Renderer/RenderCommand.cpp"
-        "src/Arnold/Graphics/Renderer/RenderCommand.h"
+        src/Arnold/Graphics/UI/ImGuiLayer.cpp
+        src/Arnold/Graphics/UI/ImGuiBuild.cpp
+        src/Arnold/Graphics/Renderer/Shader.cpp
+        src/Arnold/Graphics/Renderer/Buffer.cpp
+        src/Arnold/Graphics/Renderer/Renderer.cpp
+        src/Arnold/Graphics/Renderer/VertexArray.cpp
+        src/Arnold/Graphics/Renderer/RendererAPI.cpp
+        src/Arnold/Graphics/Renderer/RendererAPI.h
+        src/Arnold/Graphics/Renderer/RenderCommand.cpp
+        src/Arnold/Graphics/Renderer/RenderCommand.h
         src/Arnold/Graphics/Renderer/OrthographicCamera.cpp
         src/Arnold/Graphics/Renderer/OrthographicCamera.h
 )

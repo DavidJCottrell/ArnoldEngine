@@ -1,9 +1,12 @@
 #pragma once
 
+#include <Arnold/Events/KeyEvent.h>
+
 #include "Core.h"
 #include "LayerStack.h"
 #include "Window.h"
 #include "Arnold/Events/ApplicationEvent.h"
+#include "Arnold/Graphics/Renderer/OrthographicCamera.h"
 #include "Arnold/Graphics/Renderer/Shader.h"
 #include "Arnold/Graphics/Renderer/VertexArray.h"
 
@@ -43,6 +46,7 @@ namespace AE::Core
 
     private:
         bool OnWindowClose(Events::WindowCloseEvent& e);
+        bool OnKeyEvent(Events::KeyEvent& e);
 
         std::unique_ptr<Window> m_Window;
         Graphics::UI::ImGuiLayer* m_ImGuiLayer;
@@ -56,6 +60,8 @@ namespace AE::Core
 
         std::shared_ptr<Graphics::Renderer::Shader> m_TriangleShader;
         std::shared_ptr<Graphics::Renderer::Shader> m_SquareShader;
+
+        Graphics::Renderer::OrthographicCamera m_Camera;
     };
 
     // To be defined in client

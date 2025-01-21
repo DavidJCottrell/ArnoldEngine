@@ -2,7 +2,7 @@
 #include "Arnold/Core/LayerStack.h"
 
 // A simple test layer class for testing
-class TestLayer : public AE::Core::Layer
+class TestLayer final : public AE::Core::Layer
 {
 public:
     TestLayer(const std::string& name) : Layer(name)
@@ -10,7 +10,7 @@ public:
     }
 };
 
-class LayerStackTest : public ::testing::Test
+class LayerStackTest : public testing::Test
 {
 protected:
     AE::Core::LayerStack layerStack;

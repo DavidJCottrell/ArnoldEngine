@@ -2,12 +2,13 @@
 #include "Shader.h"
 
 #include <glad/glad.h>
+#include "glm/gtc/type_ptr.hpp"
 
 
 AE::Graphics::Renderer::Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
 {
 	// Create an empty vertex shader handle
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	const GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
 	// Send the vertex shader source code to GL
 	// Note that std::string's .c_str is NULL character terminated.
@@ -119,4 +120,10 @@ void AE::Graphics::Renderer::Shader::Bind() const
 void AE::Graphics::Renderer::Shader::Unbind() const
 {
 	glUseProgram(0);
+}
+
+void AE::Graphics::Renderer::Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix) const
+{
+	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(matrix));
 }

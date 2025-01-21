@@ -1,6 +1,9 @@
 #include "aepch.h"
 #include "Application.h"
 
+#include <Arnold/Events/KeyEvent.h>
+
+#include "KeyCodes.h"
 #include "Arnold/Graphics/Renderer/Renderer.h"
 
 #include "Window.h"
@@ -10,8 +13,12 @@ namespace AE::Core
 {
     Application* Application::s_Instance = nullptr;
 
-    Application::Application()
+    Application::Application() : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
     {
+        if (s_Instance != nullptr)
+        {
+            throw std::runtime_error("Application already initialized");
+        }
         s_Instance = this;
 
         m_Window = std::unique_ptr<Window>(Window::Create());
@@ -83,6 +90,8 @@ namespace AE::Core
             layout(location = 0) in vec3 a_Position;
             layout(location = 1) in vec4 a_Color;
 
+            uniform mat4 u_ViewProjection;
+
             out vec3 v_Position;
             out vec4 v_Color;
 
@@ -90,7 +99,7 @@ namespace AE::Core
             {
                 v_Position = a_Position;
                 v_Color = a_Color;
-                gl_Position = vec4(a_Position, 1.0);
+                gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
             }
         )";
 
@@ -116,12 +125,13 @@ namespace AE::Core
 
             layout(location = 0) in vec3 a_Position;
 
+            uniform mat4 u_ViewProjection;
             out vec3 v_Position;
 
             void main()
             {
                 v_Position = a_Position;
-                gl_Position = vec4(a_Position, 1.0);
+                gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
             }
         )";
 
@@ -151,13 +161,10 @@ namespace AE::Core
             Graphics::Renderer::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
             Graphics::Renderer::RenderCommand::Clear();
 
-            Graphics::Renderer::Renderer::BeginScene();
+            Graphics::Renderer::Renderer::BeginScene(m_Camera);
 
-            m_SquareShader->Bind();
-            Graphics::Renderer::Renderer::Submit(m_SquareVertexArray);
-
-            m_TriangleShader->Bind();
-            Graphics::Renderer::Renderer::Submit(m_TriangleVertexArray);
+            Graphics::Renderer::Renderer::Submit(m_SquareShader, m_SquareVertexArray);
+            Graphics::Renderer::Renderer::Submit(m_TriangleShader, m_TriangleVertexArray);
 
             Graphics::Renderer::Renderer::EndScene();
 
@@ -180,6 +187,8 @@ namespace AE::Core
         Events::EventHandler handler(e);
 
         handler.TryHandle<Events::WindowCloseEvent>(AE_BIND_EVENT_FN(Application::OnWindowClose));
+
+        handler.TryHandle<Events::KeyPressedEvent>(AE_BIND_EVENT_FN(Application::OnKeyEvent));
 
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
         {
@@ -206,5 +215,32 @@ namespace AE::Core
         AE_CORE_INFO("ArnoldEngine closing...");
         m_Running = false;
         return true;
+    }
+
+    bool Application::OnKeyEvent(Events::KeyEvent& e)
+    {
+        glm::vec3 newPosition = m_Camera.GetPosition();
+        switch (e.GetKeyCode())
+        {
+        case AE_KEY_W:
+            newPosition.y -= 0.5f;
+            m_Camera.SetPosition(newPosition);
+            break;
+        case AE_KEY_S:
+            newPosition.y += 0.5f;
+            m_Camera.SetPosition(newPosition);
+            break;
+        case AE_KEY_A:
+            newPosition.x += 0.5f;
+            m_Camera.SetPosition(newPosition);
+            break;
+        case AE_KEY_D:
+            newPosition.x -= 0.5f;
+            m_Camera.SetPosition(newPosition);
+            break;
+        default: break;
+        }
+
+        return false;
     }
 }

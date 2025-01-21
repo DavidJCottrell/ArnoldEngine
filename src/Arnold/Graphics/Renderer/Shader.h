@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "glm/glm.hpp"
 
 namespace AE::Graphics::Renderer
 {
@@ -27,6 +27,8 @@ namespace AE::Graphics::Renderer
 
     void Bind() const;
     void Unbind() const;
+
+    void UploadUniformMat4(const std::string& name, const glm::mat4& matrix) const;
 
   private:
     uint32_t m_RendererID{};
