@@ -4,7 +4,6 @@
 #include "LayerStack.h"
 #include "Window.h"
 #include "Arnold/Events/ApplicationEvent.h"
-#include "Arnold/Core/Timestep.h"
 
 namespace AE::Core
 {
@@ -41,16 +40,15 @@ namespace AE::Core
         static Application& Get() { return *s_Instance; }
 
     private:
+        static Application* s_Instance;
+        bool m_Running = true;
+
         bool OnWindowClose(Events::WindowCloseEvent& e);
 
         std::unique_ptr<Window> m_Window;
         Graphics::UI::ImGuiLayer* m_ImGuiLayer;
-        bool m_Running = true;
         LayerStack m_LayerStack;
         float m_LastFrameTime = 0.0f;
-
-
-        static Application* s_Instance;
     };
 
     // To be defined in client

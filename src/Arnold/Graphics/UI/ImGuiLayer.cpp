@@ -84,7 +84,7 @@ namespace AE::Graphics::UI
 
     void ImGuiLayer::End()
     {
-        ImGuiIO& io = ImGui::GetIO();
+        const ImGuiIO& io = ImGui::GetIO();
 
         // Rendering
         ImGui::Render();

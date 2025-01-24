@@ -1,6 +1,8 @@
 #include "aepch.h"
 #include "Application.h"
 
+#include <ConfigurationManager.h>
+
 #include "Window.h"
 #include "Arnold/Graphics/Renderer/Renderer.h"
 #include "Arnold/Events/ApplicationEvent.h"
@@ -25,6 +27,17 @@ namespace AE::Core
 
         m_ImGuiLayer = new Graphics::UI::ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
+
+
+        ACM::ConfigurationManager::Initialize(
+            "config.sen",
+            ACM::ConfigurationParameters(
+                true,
+                true
+            )
+        );
+
+        AE_CORE_INFO("Config Value -> {0}", ACM::ConfigurationManager::Get()->GetConfigValue());
     }
 
     Application::~Application() = default;
