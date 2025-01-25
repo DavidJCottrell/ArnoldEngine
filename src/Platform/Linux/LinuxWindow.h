@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Arnold/Graphics/Renderer/Context.h>
+
 #include "Arnold/Core/Window.h"
 #include <GLFW/glfw3.h>
 

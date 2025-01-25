@@ -1,6 +1,6 @@
 #include "LinuxInput.h"
 #include "aepch.h"
-#include "Core/Application.h"
+#include "Arnold/Core/Application.h"
 #include "GLFW/glfw3.h"
 
 AE::Core::Input *AE::Core::Input::s_Instance = new Platform::Linux::LinuxInput();
