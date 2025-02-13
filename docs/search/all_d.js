@@ -5,5 +5,5 @@ var searchData=
   ['setlayout_2',['SetLayout',['../class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html#a3079db7b7ab9c1a3e8d680c2d503530d',1,'AE::Platform::OpenGL::OpenGLVertexBuffer']]],
   ['setvsync_3',['SetVSync',['../class_a_e_1_1_core_1_1_window.html#aa1c54dafb5d1cdd394a7b7b4562eaf9d',1,'AE::Core::Window::SetVSync()'],['../class_a_e_1_1_platform_1_1_linux_1_1_linux_window.html#a3060b8f8031a9416e26514d7f77e6eff',1,'AE::Platform::Linux::LinuxWindow::SetVSync()'],['../class_a_e_1_1_platform_1_1_mac_1_1_mac_window.html#af82da7b8f5e4c108008e5d16245388ad',1,'AE::Platform::Mac::MacWindow::SetVSync()'],['../class_a_e_1_1_platform_1_1_windows_1_1_windows_window.html#aa08671af8d44d1682e574a4b690e7642',1,'AE::Platform::Windows::WindowsWindow::SetVSync()']]],
   ['shader_4',['Shader',['../class_a_e_1_1_graphics_1_1_renderer_1_1_shader.html',1,'AE::Graphics::Renderer']]],
-  ['submit_5',['Submit',['../class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html#a98de266cc75564922e5ca92af3b3e413',1,'AE::Graphics::Renderer::Renderer']]]
+  ['submit_5',['Submit',['../class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html#a187abea970146669f52fd41dde7b8e51',1,'AE::Graphics::Renderer::Renderer']]]
 ];

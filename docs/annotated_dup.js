@@ -7,6 +7,7 @@ var annotated_dup =
         [ "Layer", "class_a_e_1_1_core_1_1_layer.html", null ],
         [ "LayerStack", "class_a_e_1_1_core_1_1_layer_stack.html", "class_a_e_1_1_core_1_1_layer_stack" ],
         [ "Log", "class_a_e_1_1_core_1_1_log.html", null ],
+        [ "Timestep", "class_a_e_1_1_core_1_1_timestep.html", null ],
         [ "Window", "class_a_e_1_1_core_1_1_window.html", "class_a_e_1_1_core_1_1_window" ],
         [ "WindowProps", "struct_a_e_1_1_core_1_1_window_props.html", "struct_a_e_1_1_core_1_1_window_props" ]
       ] ],
@@ -34,6 +35,7 @@ var annotated_dup =
           [ "BufferLayout", "class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout.html", "class_a_e_1_1_graphics_1_1_renderer_1_1_buffer_layout" ],
           [ "Context", "class_a_e_1_1_graphics_1_1_renderer_1_1_context.html", null ],
           [ "IndexBuffer", "class_a_e_1_1_graphics_1_1_renderer_1_1_index_buffer.html", null ],
+          [ "OrthographicCamera", "class_a_e_1_1_graphics_1_1_renderer_1_1_orthographic_camera.html", null ],
           [ "RenderCommand", "class_a_e_1_1_graphics_1_1_renderer_1_1_render_command.html", null ],
           [ "Renderer", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html", null ],
           [ "RendererAPI", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer_a_p_i.html", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer_a_p_i" ],

@@ -12,12 +12,11 @@ namespace AE::Core
 #if defined(__APPLE__)
                 return new Platform::Mac::MacWindow(props);
 #elif defined(_WIN32)
-        return new Platform::Windows::WindowsWindow(props);
+                return new Platform::Windows::WindowsWindow(props);
 #elif defined(__linux__)
         return new Platform::Linux::LinuxWindow(props);
 #else
-        throw std::runtime_error("Linux platform not supported yet!");
-        #error "Platform not supported!"
+        #error "Unknown Platform!"
 #endif
         }
 }

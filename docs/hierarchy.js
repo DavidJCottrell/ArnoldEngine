@@ -38,12 +38,14 @@ var hierarchy =
     ] ],
     [ "AE::Core::LayerStack", "class_a_e_1_1_core_1_1_layer_stack.html", null ],
     [ "AE::Core::Log", "class_a_e_1_1_core_1_1_log.html", null ],
+    [ "AE::Graphics::Renderer::OrthographicCamera", "class_a_e_1_1_graphics_1_1_renderer_1_1_orthographic_camera.html", null ],
     [ "AE::Graphics::Renderer::RenderCommand", "class_a_e_1_1_graphics_1_1_renderer_1_1_render_command.html", null ],
     [ "AE::Graphics::Renderer::Renderer", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer.html", null ],
     [ "AE::Graphics::Renderer::RendererAPI", "class_a_e_1_1_graphics_1_1_renderer_1_1_renderer_a_p_i.html", [
       [ "AE::Platform::OpenGL::OpenGLRendererAPI", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_renderer_a_p_i.html", null ]
     ] ],
     [ "AE::Graphics::Renderer::Shader", "class_a_e_1_1_graphics_1_1_renderer_1_1_shader.html", null ],
+    [ "AE::Core::Timestep", "class_a_e_1_1_core_1_1_timestep.html", null ],
     [ "AE::Graphics::Renderer::VertexArray", "class_a_e_1_1_graphics_1_1_renderer_1_1_vertex_array.html", [
       [ "AE::Platform::OpenGL::OpenGLVertexArray", "class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_array.html", null ]
     ] ],

@@ -9,5 +9,6 @@ var dir_88975bae066853bd382a1a308e237396 =
     [ "LayerStack.h", "_layer_stack_8h.html", "_layer_stack_8h" ],
     [ "Log.h", "_log_8h_source.html", null ],
     [ "MouseButtonCodes.h", "_mouse_button_codes_8h_source.html", null ],
+    [ "Timestep.h", "_timestep_8h_source.html", null ],
     [ "Window.h", "_window_8h.html", "_window_8h" ]
 ];

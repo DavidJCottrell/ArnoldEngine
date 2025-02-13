@@ -5,5 +5,6 @@ var searchData=
   ['openglindexbuffer_2',['OpenGLIndexBuffer',['../class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_index_buffer.html',1,'AE::Platform::OpenGL']]],
   ['openglrendererapi_3',['OpenGLRendererAPI',['../class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_renderer_a_p_i.html',1,'AE::Platform::OpenGL']]],
   ['openglvertexarray_4',['OpenGLVertexArray',['../class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_array.html',1,'AE::Platform::OpenGL']]],
-  ['openglvertexbuffer_5',['OpenGLVertexBuffer',['../class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html',1,'AE::Platform::OpenGL']]]
+  ['openglvertexbuffer_5',['OpenGLVertexBuffer',['../class_a_e_1_1_platform_1_1_open_g_l_1_1_open_g_l_vertex_buffer.html',1,'AE::Platform::OpenGL']]],
+  ['orthographiccamera_6',['OrthographicCamera',['../class_a_e_1_1_graphics_1_1_renderer_1_1_orthographic_camera.html',1,'AE::Graphics::Renderer']]]
 ];
