@@ -175,4 +175,10 @@ namespace AE::Platform::Linux
     }
 
     bool LinuxWindow::IsVSync() const { return m_Data.VSync; }
+
+    void LinuxWindow::SetCursorMode(const Core::CursorMode mode)
+    {
+        glfwSetInputMode(m_Window, GLFW_CURSOR,
+            mode == Core::CursorMode::Captured ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+    }
 }

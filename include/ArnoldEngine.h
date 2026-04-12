@@ -21,6 +21,8 @@
 #include "Arnold/Graphics/Renderer/VertexArray.h"
 
 #include "Arnold/Graphics/Renderer/OrthographicCamera.h"
+#include "Arnold/Graphics/Renderer/Camera.h"
+#include "Arnold/Graphics/Renderer/PerspectiveCamera.h"
 
 // --- Entry Point ---
 #ifdef AE_MAIN

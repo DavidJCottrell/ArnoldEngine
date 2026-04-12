@@ -37,6 +37,7 @@ namespace AE::Platform::Linux
         void SetEventCallback(const EventCallbackFn &callback) override { m_Data.EventCallback = callback; }
         void SetVSync(bool enabled) override;
         [[nodiscard]] bool IsVSync() const override;
+        void SetCursorMode(CursorMode mode) override;
 
         [[nodiscard]] void *GetNativeWindow() const override { return m_Window; };
 

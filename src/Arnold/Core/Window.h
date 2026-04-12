@@ -36,6 +36,15 @@ namespace AE::Core
     };
 
     /**
+     * @brief Controls the mouse cursor visibility and capture state
+     */
+    enum class CursorMode
+    {
+        Normal   = 0,  ///< Cursor visible and free-moving
+        Captured = 1   ///< Cursor hidden and locked (for FPS mouse look)
+    };
+
+    /**
      * @class Window
      * @brief Abstract base class for cross-platform window management
      *
@@ -90,6 +99,13 @@ namespace AE::Core
          * @return True if VSync is enabled, false otherwise
          */
         [[nodiscard]] virtual bool IsVSync() const = 0;
+
+        /**
+         * @brief Sets the cursor capture mode
+         * @param mode CursorMode::Captured locks and hides the cursor (FPS mode);
+         *             CursorMode::Normal restores the standard cursor
+         */
+        virtual void SetCursorMode(CursorMode mode) = 0;
 
         /**
          * @brief Creates a platform-specific window instance

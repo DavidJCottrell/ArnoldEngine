@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Camera.h"
 #include "glm/glm.hpp"
 
 namespace AE::Graphics::Renderer
 {
-    class OrthographicCamera
+    class OrthographicCamera : public Camera
     {
     public:
         OrthographicCamera(float left, float right, float bottom, float top);
@@ -27,7 +28,7 @@ namespace AE::Graphics::Renderer
 
         [[nodiscard]] const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
         [[nodiscard]] const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
-        [[nodiscard]] const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+        [[nodiscard]] const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
 
     private:
         void RecalculateViewMatrix();

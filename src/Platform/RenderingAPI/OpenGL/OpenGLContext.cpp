@@ -28,6 +28,8 @@ namespace AE::Platform::OpenGL
         AE_CORE_INFO("  OpenGL Vendor: {0}", (const char*)glGetString(GL_VENDOR));
         AE_CORE_INFO("  OpenGL Renderer: {0}", (const char*)glGetString(GL_RENDERER));
         AE_CORE_INFO("  OpenGL Version: {0}", (const char*)glGetString(GL_VERSION));
+
+        glEnable(GL_DEPTH_TEST);
     }
 
     void OpenGLContext::SwapBuffers()

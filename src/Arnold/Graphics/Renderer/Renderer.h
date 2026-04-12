@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OrthographicCamera.h"
+#include "Camera.h"
 #include "RenderCommand.h"
 #include "Shader.h"
 
@@ -26,7 +26,7 @@ namespace AE::Graphics::Renderer
          *
          * Sets up any necessary state for beginning a new frame/scene.
          */
-        static void BeginScene(const OrthographicCamera& camera);
+        static void BeginScene(const Camera& camera);
 
         /**
          * @brief Ends the current scene

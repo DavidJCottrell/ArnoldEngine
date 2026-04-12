@@ -5,7 +5,7 @@ namespace AE::Graphics::Renderer
 {
     Renderer::SceneData* Renderer::m_SceneData = new SceneData;
 
-    void Renderer::BeginScene(const OrthographicCamera& camera)
+    void Renderer::BeginScene(const Camera& camera)
     {
         m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
     }

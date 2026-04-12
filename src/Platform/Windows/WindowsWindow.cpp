@@ -182,4 +182,10 @@ namespace AE::Platform::Windows
     }
 
     bool WindowsWindow::IsVSync() const { return m_Data.VSync; }
+
+    void WindowsWindow::SetCursorMode(const Core::CursorMode mode)
+    {
+        glfwSetInputMode(m_Window, GLFW_CURSOR,
+            mode == Core::CursorMode::Captured ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+    }
 }

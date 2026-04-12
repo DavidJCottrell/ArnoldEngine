@@ -181,4 +181,10 @@ namespace AE::Platform::Mac
     }
 
     bool MacWindow::IsVSync() const { return m_Data.VSync; }
+
+    void MacWindow::SetCursorMode(const Core::CursorMode mode)
+    {
+        glfwSetInputMode(m_Window, GLFW_CURSOR,
+            mode == Core::CursorMode::Captured ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+    }
 }
