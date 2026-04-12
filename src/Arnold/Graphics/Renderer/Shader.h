@@ -1,6 +1,8 @@
 #pragma once
 
 #include "glm/glm.hpp"
+#include <memory>
+#include <string>
 
 namespace AE::Graphics::Renderer
 {
@@ -30,6 +32,25 @@ namespace AE::Graphics::Renderer
 
     void UploadUniformInt(const std::string& name, int value) const;
     void UploadUniformMat4(const std::string& name, const glm::mat4& matrix) const;
+
+    /**
+     * @brief Load a shader from a single .glsl file containing both stages.
+     *
+     * The file must contain a `#type vertex` line before the vertex source
+     * and a `#type fragment` line before the fragment source. Order does not matter.
+     *
+     * Example file layout:
+     * @code
+     * #type vertex
+     * #version 330 core
+     * ...
+     *
+     * #type fragment
+     * #version 330 core
+     * ...
+     * @endcode
+     */
+    static std::shared_ptr<Shader> Create(const std::string& filepath);
 
   private:
     uint32_t m_RendererID{};

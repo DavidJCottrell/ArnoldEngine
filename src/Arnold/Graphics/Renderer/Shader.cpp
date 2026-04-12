@@ -1,6 +1,7 @@
 #include "aepch.h"
 #include "Shader.h"
 
+#include <fstream>
 #include <glad/glad.h>
 #include "glm/gtc/type_ptr.hpp"
 
@@ -132,4 +133,58 @@ void AE::Graphics::Renderer::Shader::UploadUniformMat4(const std::string& name, 
 {
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 	glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(matrix));
+}
+
+std::shared_ptr<AE::Graphics::Renderer::Shader> AE::Graphics::Renderer::Shader::Create(const std::string& filepath)
+{
+	std::ifstream file(filepath);
+	if (!file.is_open())
+	{
+		AE_CORE_ERROR("Failed to open shader file: {0}", filepath);
+		return nullptr;
+	}
+
+	std::unordered_map<std::string, std::string> sources;
+	std::string currentType;
+	std::string line;
+	std::ostringstream ss;
+
+	while (std::getline(file, line))
+	{
+		if (line.find("#type") != std::string::npos)
+		{
+			if (!currentType.empty())
+				sources[currentType] = ss.str();
+
+			ss.str("");
+			ss.clear();
+
+			if (line.find("vertex") != std::string::npos)
+				currentType = "vertex";
+			else if (line.find("fragment") != std::string::npos)
+				currentType = "fragment";
+			else
+				AE_CORE_WARN("Unknown #type directive in shader file: {0}", filepath);
+		}
+		else if (!currentType.empty())
+		{
+			ss << line << '\n';
+		}
+	}
+
+	if (!currentType.empty())
+		sources[currentType] = ss.str();
+
+	if (sources.find("vertex") == sources.end())
+	{
+		AE_CORE_ERROR("Shader file missing #type vertex section: {0}", filepath);
+		return nullptr;
+	}
+	if (sources.find("fragment") == sources.end())
+	{
+		AE_CORE_ERROR("Shader file missing #type fragment section: {0}", filepath);
+		return nullptr;
+	}
+
+	return std::make_shared<Shader>(sources.at("vertex"), sources.at("fragment"));
 }
