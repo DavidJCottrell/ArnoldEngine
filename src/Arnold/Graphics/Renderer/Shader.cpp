@@ -122,6 +122,12 @@ void AE::Graphics::Renderer::Shader::Unbind() const
 	glUseProgram(0);
 }
 
+void AE::Graphics::Renderer::Shader::UploadUniformInt(const std::string& name, const int value) const
+{
+	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniform1i(location, value);
+}
+
 void AE::Graphics::Renderer::Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix) const
 {
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());

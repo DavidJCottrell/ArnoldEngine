@@ -85,6 +85,8 @@ set(RENDERER_SOURCES
         src/Platform/RenderingAPI/OpenGL/OpenGLBuffer.cpp
         src/Platform/RenderingAPI/OpenGL/OpenGLVertexArray.cpp
         src/Platform/RenderingAPI/OpenGL/OpenGLRendererAPI.cpp
+        src/Platform/RenderingAPI/OpenGL/OpenGLTexture2D.cpp
+        src/Platform/RenderingAPI/OpenGL/OpenGLTexture2D.h
 )
 
 # Platform-specific files
@@ -135,6 +137,8 @@ set(GRAPHICS_SOURCES
         src/Arnold/Graphics/Renderer/Camera.h
         src/Arnold/Graphics/Renderer/PerspectiveCamera.cpp
         src/Arnold/Graphics/Renderer/PerspectiveCamera.h
+        src/Arnold/Graphics/Renderer/Texture.cpp
+        src/Arnold/Graphics/Renderer/Texture.h
 )
 
 add_library(${PROJECT_NAME} STATIC
@@ -149,6 +153,7 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE src/aepch.h)
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+        $<BUILD_INTERFACE:${EXTERNAL_DIR}/stb>
         $<INSTALL_INTERFACE:include>
 )
 
