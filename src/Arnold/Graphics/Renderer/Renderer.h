@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Camera.h"
+#include "Mesh.h"
 #include "RenderCommand.h"
 #include "Shader.h"
 
@@ -36,15 +37,15 @@ namespace AE::Graphics::Renderer
         static void EndScene();
 
         /**
-        * @brief Submits a vertex array for rendering
-        * @param shader The shader used to render the vertex array
-        * @param vertexArray The vertex array to be rendered
-        * @param transform The position in the world
+        * @brief Submits a mesh for rendering
+        * @param shader    The shader used to render the mesh
+        * @param mesh      The mesh to be rendered
+        * @param transform World-space transform matrix
         *
-        * Queues the given geometry for rendering in the current scene.
+        * Queues the given mesh for rendering in the current scene.
         */
         static void Submit(const std::shared_ptr<Shader>& shader,
-                           const std::shared_ptr<VertexArray>& vertexArray,
+                           const std::shared_ptr<Mesh>& mesh,
                            const glm::mat4& transform = glm::mat4(1.0f)
         );
 

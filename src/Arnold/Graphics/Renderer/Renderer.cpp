@@ -15,7 +15,7 @@ namespace AE::Graphics::Renderer
     }
 
     void Renderer::Submit(const std::shared_ptr<Shader>& shader,
-                          const std::shared_ptr<VertexArray>& vertexArray,
+                          const std::shared_ptr<Mesh>& mesh,
                           const glm::mat4& transform
     )
     {
@@ -23,6 +23,7 @@ namespace AE::Graphics::Renderer
         shader->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
         shader->UploadUniformMat4("u_Transform", transform);
 
+        const auto& vertexArray = mesh->GetVertexArray();
         vertexArray->Bind();
         RenderCommand::DrawIndexed(vertexArray);
     }

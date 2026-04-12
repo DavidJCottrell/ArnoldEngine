@@ -23,6 +23,7 @@
 #include "Arnold/Graphics/Renderer/OrthographicCamera.h"
 #include "Arnold/Graphics/Renderer/Camera.h"
 #include "Arnold/Graphics/Renderer/PerspectiveCamera.h"
+#include "Arnold/Graphics/Renderer/Mesh.h"
 #include "Arnold/Graphics/Renderer/Texture.h"
 
 // --- Entry Point ---
