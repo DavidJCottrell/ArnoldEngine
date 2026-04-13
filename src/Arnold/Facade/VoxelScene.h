@@ -11,6 +11,7 @@
 #include "Arnold/World/Raycast.h"
 #include "Arnold/Graphics/Renderer/FpsCameraController.h"
 #include "Arnold/Graphics/Renderer/Material.h"
+#include "Arnold/Graphics/Renderer/Mesh.h"
 #include "Arnold/Graphics/Renderer/Shader.h"
 #include "Arnold/Graphics/Renderer/VertexArray.h"
 
@@ -93,6 +94,8 @@ namespace AE
     private:
         void InitMaterial();
         void InitHighlightVAO();
+        void InitSky();
+        void RenderSky();
         void RenderHighlight();
         bool OnMouseButtonPressed(Events::MouseButtonPressedEvent& e);
         bool OnKeyPressed(Events::KeyPressedEvent& e);
@@ -101,6 +104,8 @@ namespace AE
         World::World                                      m_World;
         Graphics::Renderer::FpsCameraController           m_CameraController;
         std::shared_ptr<Graphics::Renderer::Material>     m_Material;
+        std::shared_ptr<Graphics::Renderer::Material>     m_SkyMaterial;
+        std::shared_ptr<Graphics::Renderer::Mesh>         m_SkyMesh;
         std::shared_ptr<Graphics::Renderer::Shader>       m_HighlightShader;
         std::unique_ptr<Graphics::Renderer::VertexArray>  m_HighlightVAO;
 

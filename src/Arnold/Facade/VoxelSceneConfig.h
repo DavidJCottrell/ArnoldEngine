@@ -4,10 +4,52 @@
 #include <functional>
 #include <string>
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 namespace AE::World { class World; }
 
 namespace AE
 {
+    /**
+     * @brief Sky and atmosphere configuration.
+     *
+     * Controls the procedural sky gradient and sun disc rendered behind the terrain.
+     * All colours are linear RGB. sunDirection is normalised automatically at scene init.
+     *
+     * Example:
+     * @code
+     * .sky = { .zenithColor = {0.05f, 0.15f, 0.45f}, .sunSize = 0.008f }
+     * @endcode
+     */
+    struct SkySettings
+    {
+        /** Set to false to disable sky rendering entirely (background stays clear colour). */
+        bool enabled = true;
+
+        /** Colour at the top of the sky dome. */
+        glm::vec3 zenithColor  = {0.10f, 0.40f, 0.80f};
+
+        /** Colour at the horizon. */
+        glm::vec3 horizonColor = {0.60f, 0.80f, 1.00f};
+
+        /** Colour of the lower hemisphere (below horizon). */
+        glm::vec3 groundColor  = {0.25f, 0.20f, 0.15f};
+
+        /** World-space direction toward the sun. Normalised automatically at init. */
+        glm::vec3 sunDirection = {0.60f, 1.00f, 0.40f};
+
+        /** Sun disc colour. */
+        glm::vec3 sunColor     = {1.00f, 0.95f, 0.80f};
+
+        /** Controls the angular size of the sun disc (0.005 = small, 0.02 = large). */
+        float sunSize = 0.005f;
+
+        /** Path to the sky .glsl shader file. */
+        std::string skyShaderPath = "assets/shaders/sky.glsl";
+    };
+
+
     /**
      * @brief Configuration for a VoxelScene.
      *
@@ -51,6 +93,11 @@ namespace AE
 
         /** Initial aspect ratio. Updated automatically on window resize. */
         float aspectRatio = 1280.0f / 720.0f;
+
+        // --- Sky ---
+
+        /** Procedural sky / atmosphere settings. */
+        SkySettings sky;
 
         // --- Shaders ---
 

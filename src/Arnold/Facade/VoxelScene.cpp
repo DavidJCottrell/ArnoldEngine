@@ -46,6 +46,30 @@ namespace AE
 
         InitMaterial();
         InitHighlightVAO();
+        InitSky();
+    }
+
+    void VoxelScene::InitSky()
+    {
+        const auto& s = m_Config.sky;
+        if (!s.enabled) return;
+
+        auto shader = Graphics::Renderer::Shader::Create(s.skyShaderPath);
+        if (!shader)
+        {
+            AE_CORE_ERROR("VoxelScene: sky shader failed to load — check working directory and path '{0}'", s.skyShaderPath);
+            return;
+        }
+
+        m_SkyMaterial = Graphics::Renderer::Material::Create(shader);
+        m_SkyMaterial->SetFloat3("u_ZenithColor",  s.zenithColor);
+        m_SkyMaterial->SetFloat3("u_HorizonColor", s.horizonColor);
+        m_SkyMaterial->SetFloat3("u_GroundColor",  s.groundColor);
+        m_SkyMaterial->SetFloat3("u_SunDirection", glm::normalize(s.sunDirection));
+        m_SkyMaterial->SetFloat3("u_SunColor",     s.sunColor);
+        m_SkyMaterial->SetFloat ("u_SunSize",      s.sunSize);
+
+        m_SkyMesh = Graphics::Renderer::Mesh::CreateCube();
     }
 
     void VoxelScene::InitMaterial()
@@ -156,10 +180,36 @@ namespace AE
         m_Mode = mode;
     }
 
+    void VoxelScene::RenderSky()
+    {
+        if (!m_SkyMaterial || !m_SkyMesh) return;
+
+        const auto& cam = m_CameraController.GetCamera();
+
+        // Strip translation from the view matrix so the skybox stays centred on the camera
+        glm::mat4 skyVP = cam.GetProjectionMatrix()
+                        * glm::mat4(glm::mat3(cam.GetViewMatrix()));
+        m_SkyMaterial->SetMat4("u_ViewProjection", skyVP);
+
+        glDepthMask(GL_FALSE);
+        glDepthFunc(GL_LEQUAL);  // sky vertices are forced to z=1.0 (far plane)
+
+        m_SkyMaterial->Bind();
+        auto& vao = m_SkyMesh->GetVertexArray();
+        vao->Bind();
+        Graphics::Renderer::RenderCommand::DrawIndexed(vao);
+        vao->UnBind();
+
+        glDepthFunc(GL_LESS);
+        glDepthMask(GL_TRUE);
+    }
+
     void VoxelScene::Render()
     {
         Graphics::Renderer::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
         Graphics::Renderer::RenderCommand::Clear();
+
+        RenderSky();
 
         if (!m_Material) return;
 
