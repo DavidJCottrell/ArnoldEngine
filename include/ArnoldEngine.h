@@ -32,6 +32,7 @@
 #include "Arnold/World/Chunk.h"
 #include "Arnold/World/ChunkMeshBuilder.h"
 #include "Arnold/World/World.h"
+#include "Arnold/World/WorldGenerator.h"
 
 // --- Entry Point ---
 #ifdef AE_MAIN

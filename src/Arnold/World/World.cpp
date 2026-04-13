@@ -11,27 +11,12 @@ namespace AE::World
     World::World()
     {
         m_Chunks.reserve(WORLD_SIZE * WORLD_SIZE);
-
-        // Pass 1: populate block data for all chunks
         for (int cx = 0; cx < WORLD_SIZE; ++cx)
         for (int cz = 0; cz < WORLD_SIZE; ++cz)
         {
             ChunkEntry entry;
             entry.worldPos = glm::vec3(cx * Chunk::SIZE, 0.0f, cz * Chunk::SIZE);
-
-            for (int x = 0; x < Chunk::SIZE; ++x)
-            for (int z = 0; z < Chunk::SIZE; ++z)
-                entry.chunk.SetBlock(x, 0, z, BlockType::Grass);
-
             m_Chunks.push_back(std::move(entry));
-        }
-
-        // Pass 2: build meshes now that all neighbor block data is available
-        for (int cx = 0; cx < WORLD_SIZE; ++cx)
-        for (int cz = 0; cz < WORLD_SIZE; ++cz)
-        {
-            ChunkEntry* entry = GetChunkEntry(cx, cz);
-            entry->mesh = ChunkMeshBuilder::Build(entry->chunk, MakeNeighbors(cx, cz));
         }
     }
 

@@ -153,6 +153,8 @@ set(WORLD_SOURCES
         src/Arnold/World/ChunkMeshBuilder.cpp
         src/Arnold/World/World.h
         src/Arnold/World/World.cpp
+        src/Arnold/World/WorldGenerator.h
+        src/Arnold/World/WorldGenerator.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC
