@@ -9,10 +9,7 @@ namespace AE::World
     class WorldGenerator
     {
     public:
-        /** Fills the world with a flat single-layer of Grass. */
-        static void GenerateFlat(World& world);
-
-        /** Fills the world with a noise-based heightmap: Grass surface, Dirt subsurface, Stone below. */
+        /** Fills every chunk's density field with procedural terrain using FBM noise. */
         static void GenerateTerrain(World& world, uint32_t seed = 0);
     };
 }

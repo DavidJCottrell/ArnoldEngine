@@ -7,7 +7,7 @@
 
 namespace AE::World
 {
-    /** Optional neighbor chunks passed to ChunkMeshBuilder::Build for cross-chunk face culling. */
+    /** Neighbor chunks supplied to ChunkMeshBuilder::Build for seamless boundary rendering. */
     struct ChunkNeighbors
     {
         const Chunk* px = nullptr;  // +X neighbor
@@ -20,17 +20,14 @@ namespace AE::World
     {
     public:
         /**
-         * @brief Build a Mesh from the visible faces of a chunk.
+         * @brief Build a smooth mesh from the chunk's stored density field using marching cubes.
          *
-         * A face is only emitted when the neighbouring block is Air or outside the world.
-         * Pass neighbor chunks to correctly cull faces at chunk boundaries; a null neighbor
-         * pointer means that boundary is a world edge (face is always emitted).
+         * Iterates all SIZE³ cells. Each cell reads corners from the chunk's 17³ density array,
+         * which already includes a one-voxel overlap with the neighboring chunks — so
+         * ChunkNeighbors are only needed for the gradient-normal computation at boundary vertices.
          *
-         * @return A Mesh ready for Renderer::Submit, or nullptr if the chunk is entirely Air.
+         * @return A Mesh ready for Renderer::Submit, or nullptr if the chunk is entirely solid/air.
          */
-        /** Number of tiles in the texture atlas — must match TextureAtlas::TILE_COUNT. */
-        static constexpr int ATLAS_TILE_COUNT = 3;
-
         static std::shared_ptr<AE::Graphics::Renderer::Mesh> Build(
             const Chunk&          chunk,
             const ChunkNeighbors& neighbors = ChunkNeighbors{});

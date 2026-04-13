@@ -5,6 +5,7 @@
 #include "Arnold/Graphics/Renderer/Renderer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <cmath>
 
 namespace AE::World
 {
@@ -20,6 +21,10 @@ namespace AE::World
         }
     }
 
+    // ----------------------------------------------------------------
+    //  Rendering
+    // ----------------------------------------------------------------
+
     void World::Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material)
     {
         for (int cx = 0; cx < WORLD_SIZE; ++cx)
@@ -32,52 +37,43 @@ namespace AE::World
                 entry->mesh  = ChunkMeshBuilder::Build(entry->chunk, MakeNeighbors(cx, cz));
                 entry->dirty = false;
             }
+            if (!entry->mesh) continue;
 
-            if (!entry->mesh)
-                continue;
-
-            const glm::mat4 transform = glm::translate(glm::mat4(1.0f), entry->worldPos);
+            const glm::mat4 transform =
+                glm::translate(glm::mat4(1.0f), entry->worldPos * m_BlockScale)
+              * glm::scale(glm::mat4(1.0f), glm::vec3(m_BlockScale));
             AE::Graphics::Renderer::Renderer::Submit(material, entry->mesh, transform);
         }
     }
 
-    BlockType World::GetBlock(int worldX, int worldY, int worldZ) const
+    // ----------------------------------------------------------------
+    //  Chunk access
+    // ----------------------------------------------------------------
+
+    Chunk& World::GetChunk(int cx, int cz)
     {
-        if (worldX < 0 || worldY < 0 || worldZ < 0 || worldY >= Chunk::SIZE)
-            return BlockType::Air;
-        const int cx = worldX / Chunk::SIZE;
-        const int cz = worldZ / Chunk::SIZE;
-        const ChunkEntry* entry = const_cast<World*>(this)->GetChunkEntry(cx, cz);
-        if (!entry) return BlockType::Air;
-        return entry->chunk.GetBlock(worldX % Chunk::SIZE, worldY, worldZ % Chunk::SIZE);
+        return m_Chunks[cx * WORLD_SIZE + cz].chunk;
     }
-
-    void World::SetBlock(int worldX, int worldY, int worldZ, BlockType type)
+    const Chunk& World::GetChunk(int cx, int cz) const
     {
-        if (worldX < 0 || worldY < 0 || worldZ < 0 || worldY >= Chunk::SIZE)
-            return;
-        const int cx = worldX / Chunk::SIZE;
-        const int cz = worldZ / Chunk::SIZE;
-        ChunkEntry* entry = GetChunkEntry(cx, cz);
-        if (!entry) return;
-        const int lx = worldX % Chunk::SIZE;
-        const int lz = worldZ % Chunk::SIZE;
-        if (!entry->chunk.IsInBounds(lx, worldY, lz)) return;
-        entry->chunk.SetBlock(lx, worldY, lz, type);
-        entry->dirty = true;
-
-        // If the changed block is on a chunk boundary, the neighbor must also remesh
-        if (lx == 0)               if (auto* nbr = GetChunkEntry(cx - 1, cz)) nbr->dirty = true;
-        if (lx == Chunk::SIZE - 1) if (auto* nbr = GetChunkEntry(cx + 1, cz)) nbr->dirty = true;
-        if (lz == 0)               if (auto* nbr = GetChunkEntry(cx, cz - 1)) nbr->dirty = true;
-        if (lz == Chunk::SIZE - 1) if (auto* nbr = GetChunkEntry(cx, cz + 1)) nbr->dirty = true;
+        return m_Chunks[cx * WORLD_SIZE + cz].chunk;
     }
 
     World::ChunkEntry* World::GetChunkEntry(int cx, int cz)
     {
-        if (cx < 0 || cx >= WORLD_SIZE || cz < 0 || cz >= WORLD_SIZE)
-            return nullptr;
+        if (cx < 0 || cx >= WORLD_SIZE || cz < 0 || cz >= WORLD_SIZE) return nullptr;
         return &m_Chunks[cx * WORLD_SIZE + cz];
+    }
+    const World::ChunkEntry* World::GetChunkEntry(int cx, int cz) const
+    {
+        if (cx < 0 || cx >= WORLD_SIZE || cz < 0 || cz >= WORLD_SIZE) return nullptr;
+        return &m_Chunks[cx * WORLD_SIZE + cz];
+    }
+
+    void World::MarkAllDirty()
+    {
+        for (auto& entry : m_Chunks)
+            entry.dirty = true;
     }
 
     ChunkNeighbors World::MakeNeighbors(int cx, int cz)
@@ -88,5 +84,88 @@ namespace AE::World
         if (auto* e = GetChunkEntry(cx, cz + 1)) n.pz = &e->chunk;
         if (auto* e = GetChunkEntry(cx, cz - 1)) n.nz = &e->chunk;
         return n;
+    }
+
+    // ----------------------------------------------------------------
+    //  Density helpers
+    // ----------------------------------------------------------------
+
+    float World::GetDensityAtPos(int wx, int wy, int wz) const
+    {
+        if (wy < 0) return  10.0f;   // below world = solid
+        if (wy > Chunk::SIZE) return -10.0f;  // above world = air
+        const int cx = wx / Chunk::SIZE;
+        const int cz = wz / Chunk::SIZE;
+        const int lx = wx % Chunk::SIZE;
+        const int lz = wz % Chunk::SIZE;
+        const ChunkEntry* e = GetChunkEntry(cx, cz);
+        if (!e) return -10.0f;
+        return e->chunk.GetDensity(lx, wy, lz);
+    }
+
+    void World::SetDensityAtPos(int wx, int wy, int wz, float v)
+    {
+        if (wy < 0 || wy > Chunk::SIZE) return;
+
+        auto update = [&](int cx, int cz, int lx, int lz) {
+            if (cx < 0 || cx >= WORLD_SIZE || cz < 0 || cz >= WORLD_SIZE) return;
+            if (lx < 0 || lx > Chunk::SIZE || lz < 0 || lz > Chunk::SIZE) return;
+            if (auto* e = GetChunkEntry(cx, cz)) {
+                e->chunk.SetDensity(lx, wy, lz, v);
+                e->dirty = true;
+            }
+        };
+
+        const int cx = wx / Chunk::SIZE;
+        const int cz = wz / Chunk::SIZE;
+        const int lx = wx % Chunk::SIZE;
+        const int lz = wz % Chunk::SIZE;
+
+        // Update the owning chunk
+        update(cx, cz, lx, lz);
+
+        // Also update the boundary copies stored in neighboring chunks
+        if (lx == 0 && cx > 0) update(cx - 1, cz, Chunk::SIZE, lz);
+        if (lz == 0 && cz > 0) update(cx, cz - 1, lx, Chunk::SIZE);
+        if (lx == 0 && lz == 0 && cx > 0 && cz > 0)
+            update(cx - 1, cz - 1, Chunk::SIZE, Chunk::SIZE);
+    }
+
+    float World::SampleDensity(float wx, float wy, float wz) const
+    {
+        if (wy < 0.0f) return  10.0f;
+        if (wy > static_cast<float>(Chunk::SIZE)) return -10.0f;
+
+        const int ix = static_cast<int>(std::floor(wx));
+        const int iy = static_cast<int>(std::floor(wy));
+        const int iz = static_cast<int>(std::floor(wz));
+        const float fx = wx - ix, fy = wy - iy, fz = wz - iz;
+
+        auto G = [&](int x, int y, int z) { return GetDensityAtPos(x, y, z); };
+
+        return G(ix,  iy,  iz  )*(1-fx)*(1-fy)*(1-fz)
+             + G(ix+1,iy,  iz  )*   fx *(1-fy)*(1-fz)
+             + G(ix,  iy+1,iz  )*(1-fx)*   fy *(1-fz)
+             + G(ix+1,iy+1,iz  )*   fx *   fy *(1-fz)
+             + G(ix,  iy,  iz+1)*(1-fx)*(1-fy)*   fz
+             + G(ix+1,iy,  iz+1)*   fx *(1-fy)*   fz
+             + G(ix,  iy+1,iz+1)*(1-fx)*   fy *   fz
+             + G(ix+1,iy+1,iz+1)*   fx *   fy *   fz;
+    }
+
+    void World::ModifyDensity(glm::vec3 center, float radius, float delta)
+    {
+        const int iR = static_cast<int>(std::ceil(radius));
+        const glm::ivec3 c = glm::ivec3(glm::round(center));
+
+        for (int dx = -iR; dx <= iR; ++dx)
+        for (int dy = -iR; dy <= iR; ++dy)
+        for (int dz = -iR; dz <= iR; ++dz)
+        {
+            if (glm::length(glm::vec3(dx, dy, dz)) > radius) continue;
+            const int wx = c.x + dx, wy = c.y + dy, wz = c.z + dz;
+            const float cur = GetDensityAtPos(wx, wy, wz);
+            SetDensityAtPos(wx, wy, wz, cur + delta);
+        }
     }
 }

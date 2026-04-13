@@ -1,0 +1,91 @@
+#pragma once
+
+#include "VoxelSceneConfig.h"
+
+#include "Arnold/Core/Timestep.h"
+#include "Arnold/Events/Event.h"
+#include "Arnold/Events/MouseEvent.h"
+#include "Arnold/Events/KeyEvent.h"
+#include "Arnold/World/World.h"
+#include "Arnold/World/Raycast.h"
+#include "Arnold/Graphics/Renderer/FpsCameraController.h"
+#include "Arnold/Graphics/Renderer/Material.h"
+#include "Arnold/Graphics/Renderer/Shader.h"
+#include "Arnold/Graphics/Renderer/VertexArray.h"
+
+#include <functional>
+#include <memory>
+#include <unordered_map>
+
+namespace AE
+{
+    /** Callback invoked when a registered key is pressed. */
+    using KeyCallback = std::function<void()>;
+
+    /**
+     * @brief Owns all runtime objects for a voxel scene.
+     *
+     * VoxelScene bundles the World, FPS camera, material/shader pipeline,
+     * per-frame density raycasting, and sphere-based dig/fill editing.
+     * It is NOT a Layer. VoxelLayer owns a VoxelScene and delegates to it.
+     */
+    class VoxelScene
+    {
+    public:
+        explicit VoxelScene(const VoxelSceneConfig& config = {});
+
+        VoxelScene(const VoxelScene&)            = delete;
+        VoxelScene& operator=(const VoxelScene&) = delete;
+
+        // ----------------------------------------------------------------
+        //  Frame lifecycle
+        // ----------------------------------------------------------------
+
+        void Update(Core::Timestep ts);
+        void Render();
+        void RenderImGui();
+        void OnEvent(Events::Event& e);
+
+        // ----------------------------------------------------------------
+        //  User-extensibility
+        // ----------------------------------------------------------------
+
+        void RegisterKeyCallback(int keyCode, KeyCallback cb);
+
+        // ----------------------------------------------------------------
+        //  Accessors
+        // ----------------------------------------------------------------
+
+        World::World&       GetWorld()       { return m_World; }
+        const World::World& GetWorld() const { return m_World; }
+
+        Graphics::Renderer::FpsCameraController&       GetCamera()       { return m_CameraController; }
+        const Graphics::Renderer::FpsCameraController& GetCamera() const { return m_CameraController; }
+
+        float GetBlockScale() const { return m_Config.blockScale; }
+
+        void  SetEditRadius(float r) { m_EditRadius = r; }
+        float GetEditRadius()  const { return m_EditRadius; }
+
+        const World::RaycastResult& GetLastRaycast() const { return m_RaycastResult; }
+
+    private:
+        void InitMaterial();
+        void InitHighlightVAO();
+        void RenderHighlight();
+        bool OnMouseButtonPressed(Events::MouseButtonPressedEvent& e);
+        bool OnKeyPressed(Events::KeyPressedEvent& e);
+
+        VoxelSceneConfig                                  m_Config;
+        World::World                                      m_World;
+        Graphics::Renderer::FpsCameraController           m_CameraController;
+        std::shared_ptr<Graphics::Renderer::Material>     m_Material;
+        std::shared_ptr<Graphics::Renderer::Shader>       m_HighlightShader;
+        std::unique_ptr<Graphics::Renderer::VertexArray>  m_HighlightVAO;
+
+        World::RaycastResult                              m_RaycastResult;
+        float                                             m_EditRadius = 2.0f;
+
+        std::unordered_map<int, KeyCallback> m_KeyCallbacks;
+    };
+}

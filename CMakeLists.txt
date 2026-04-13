@@ -157,6 +157,16 @@ set(WORLD_SOURCES
         src/Arnold/World/World.cpp
         src/Arnold/World/WorldGenerator.h
         src/Arnold/World/WorldGenerator.cpp
+        src/Arnold/World/Raycast.h
+        src/Arnold/World/Raycast.cpp
+)
+
+set(FACADE_SOURCES
+        src/Arnold/Facade/VoxelSceneConfig.h
+        src/Arnold/Facade/VoxelScene.h
+        src/Arnold/Facade/VoxelScene.cpp
+        src/Arnold/Facade/VoxelLayer.h
+        src/Arnold/Facade/VoxelLayer.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC
@@ -164,6 +174,7 @@ add_library(${PROJECT_NAME} STATIC
         ${GRAPHICS_SOURCES}
         ${RENDERER_SOURCES}
         ${WORLD_SOURCES}
+        ${FACADE_SOURCES}
         ${PLATFORM_SOURCES}
 )
 

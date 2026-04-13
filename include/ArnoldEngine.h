@@ -31,9 +31,13 @@
 
 // --- World ---
 #include "Arnold/World/Chunk.h"
-#include "Arnold/World/ChunkMeshBuilder.h"
 #include "Arnold/World/World.h"
-#include "Arnold/World/WorldGenerator.h"
+#include "Arnold/World/Raycast.h"
+
+// --- High-level Facade ---
+#include "Arnold/Facade/VoxelSceneConfig.h"
+#include "Arnold/Facade/VoxelScene.h"
+#include "Arnold/Facade/VoxelLayer.h"
 
 // --- Entry Point ---
 #ifdef AE_MAIN
