@@ -18,8 +18,11 @@ namespace AE::World
 
         World();
 
-        /** Submit all chunk meshes to the renderer. Must be called between BeginScene/EndScene. */
-        void Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material);
+        /** Submit visible chunk meshes to the renderer (frustum-culled).
+         *  Rebuilds any dirty chunk meshes synchronously first.
+         *  Must be called between BeginScene / EndScene. */
+        void Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material,
+                    const glm::mat4& viewProjection);
 
         // ----------------------------------------------------------------
         //  Density field access

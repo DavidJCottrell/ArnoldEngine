@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VoxelSceneConfig.h"
+#include "PlayerController.h"
 
 #include "Arnold/Core/Timestep.h"
 #include "Arnold/Events/Event.h"
@@ -21,6 +22,9 @@ namespace AE
 {
     /** Callback invoked when a registered key is pressed. */
     using KeyCallback = std::function<void()>;
+
+    /** Controls whether the scene is in free-fly editor mode or physics-based play mode. */
+    enum class SceneMode { Editor, Play };
 
     /**
      * @brief Owns all runtime objects for a voxel scene.
@@ -69,6 +73,19 @@ namespace AE
 
         const World::RaycastResult& GetLastRaycast() const { return m_RaycastResult; }
 
+        // ----------------------------------------------------------------
+        //  Mode (Editor / Play)
+        // ----------------------------------------------------------------
+
+        SceneMode GetMode()        const { return m_Mode; }
+
+        /** Switch between editor free-fly and physics-based play.
+         *  On Editor→Play the player is seeded at the current camera position. */
+        void SetMode(SceneMode mode);
+
+        PlayerController&       GetPlayerController()       { return m_PlayerController; }
+        const PlayerController& GetPlayerController() const { return m_PlayerController; }
+
     private:
         void InitMaterial();
         void InitHighlightVAO();
@@ -85,6 +102,9 @@ namespace AE
 
         World::RaycastResult                              m_RaycastResult;
         float                                             m_EditRadius = 2.0f;
+
+        SceneMode        m_Mode = SceneMode::Editor;
+        PlayerController m_PlayerController;
 
         std::unordered_map<int, KeyCallback> m_KeyCallbacks;
     };

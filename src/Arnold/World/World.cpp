@@ -2,6 +2,7 @@
 #include "World.h"
 
 #include "Arnold/World/ChunkMeshBuilder.h"
+#include "Arnold/World/Frustum.h"
 #include "Arnold/Graphics/Renderer/Renderer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -25,24 +26,40 @@ namespace AE::World
     //  Rendering
     // ----------------------------------------------------------------
 
-    void World::Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material)
+    void World::Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material,
+                       const glm::mat4& viewProjection)
     {
+        // ----------------------------------------------------------------
+        //  Rebuild dirty chunk meshes (synchronous)
+        // ----------------------------------------------------------------
         for (int cx = 0; cx < WORLD_SIZE; ++cx)
         for (int cz = 0; cz < WORLD_SIZE; ++cz)
         {
-            ChunkEntry* entry = GetChunkEntry(cx, cz);
+            ChunkEntry* e = GetChunkEntry(cx, cz);
+            if (!e->dirty) continue;
+            e->mesh  = ChunkMeshBuilder::Build(e->chunk, MakeNeighbors(cx, cz));
+            e->dirty = false;
+        }
 
-            if (entry->dirty)
-            {
-                entry->mesh  = ChunkMeshBuilder::Build(entry->chunk, MakeNeighbors(cx, cz));
-                entry->dirty = false;
-            }
-            if (!entry->mesh) continue;
+        // ----------------------------------------------------------------
+        //  Frustum-cull and submit visible meshes
+        // ----------------------------------------------------------------
+        const auto planes = Frustum::ExtractPlanes(viewProjection);
+
+        for (int cx = 0; cx < WORLD_SIZE; ++cx)
+        for (int cz = 0; cz < WORLD_SIZE; ++cz)
+        {
+            ChunkEntry* e = GetChunkEntry(cx, cz);
+            if (!e->mesh) continue;
+
+            const glm::vec3 wMin = e->worldPos * m_BlockScale;
+            const glm::vec3 wMax = (e->worldPos + glm::vec3(Chunk::SIZE)) * m_BlockScale;
+            if (!Frustum::IsAABBVisible(planes, wMin, wMax)) continue;
 
             const glm::mat4 transform =
-                glm::translate(glm::mat4(1.0f), entry->worldPos * m_BlockScale)
+                glm::translate(glm::mat4(1.0f), wMin)
               * glm::scale(glm::mat4(1.0f), glm::vec3(m_BlockScale));
-            AE::Graphics::Renderer::Renderer::Submit(material, entry->mesh, transform);
+            AE::Graphics::Renderer::Renderer::Submit(material, e->mesh, transform);
         }
     }
 

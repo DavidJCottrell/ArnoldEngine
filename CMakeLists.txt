@@ -167,6 +167,8 @@ set(FACADE_SOURCES
         src/Arnold/Facade/VoxelScene.cpp
         src/Arnold/Facade/VoxelLayer.h
         src/Arnold/Facade/VoxelLayer.cpp
+        src/Arnold/Facade/PlayerController.h
+        src/Arnold/Facade/PlayerController.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC

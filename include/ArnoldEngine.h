@@ -38,6 +38,7 @@
 #include "Arnold/Facade/VoxelSceneConfig.h"
 #include "Arnold/Facade/VoxelScene.h"
 #include "Arnold/Facade/VoxelLayer.h"
+#include "Arnold/Facade/PlayerController.h"
 
 // --- Entry Point ---
 #ifdef AE_MAIN

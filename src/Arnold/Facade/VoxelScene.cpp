@@ -1,7 +1,9 @@
 #include "aepch.h"
 #include "VoxelScene.h"
+#include "PlayerController.h"
 
 #include "Arnold/Core/MouseButtonCodes.h"
+#include "Arnold/Core/KeyCodes.h"
 #include "Arnold/World/WorldGenerator.h"
 #include "Arnold/Graphics/Renderer/Renderer.h"
 #include "Arnold/Graphics/Renderer/RenderCommand.h"
@@ -88,16 +90,47 @@ namespace AE
 
     void VoxelScene::Update(Core::Timestep ts)
     {
-        m_CameraController.OnUpdate(ts);
+        if (m_Mode == SceneMode::Editor)
+        {
+            // Free-fly camera
+            m_CameraController.OnUpdate(ts);
 
-        // Raycast in block-index space (camera is in world-space, divide by blockScale)
-        const auto& cam = m_CameraController.GetCamera();
-        const float inv = 1.0f / m_Config.blockScale;
-        m_RaycastResult = World::Raycast(
-            m_World,
-            cam.GetPosition() * inv,
-            cam.GetForward(),
-            5.0f);
+            // Raycast for edit cursor (editor only)
+            const auto& cam = m_CameraController.GetCamera();
+            m_RaycastResult = World::Raycast(
+                m_World,
+                cam.GetPosition() * (1.0f / m_Config.blockScale),
+                cam.GetForward(),
+                5.0f);
+        }
+        else
+        {
+            // Physics-based player — drives camera position
+            m_PlayerController.Update(
+                ts,
+                m_World,
+                m_CameraController.GetCamera(),
+                m_Config.blockScale,
+                m_CameraController.IsCursorCaptured());
+
+            m_RaycastResult = {};
+        }
+    }
+
+    void VoxelScene::SetMode(SceneMode mode)
+    {
+        if (mode == m_Mode) return;
+
+        if (mode == SceneMode::Play)
+        {
+            // Seed the player foot at the current camera position so the view
+            // doesn't jump when switching modes.
+            const glm::vec3 camBlock =
+                m_CameraController.GetCamera().GetPosition() * (1.0f / m_Config.blockScale);
+            m_PlayerController.SetPosition(camBlock - glm::vec3(0.f, PlayerController::k_EyeHeight, 0.f));
+        }
+
+        m_Mode = mode;
     }
 
     void VoxelScene::Render()
@@ -107,8 +140,8 @@ namespace AE
 
         const auto& cam = m_CameraController.GetCamera();
         Graphics::Renderer::Renderer::BeginScene(cam);
-        m_World.Render(m_Material);
-        if (m_RaycastResult.hit)
+        m_World.Render(m_Material, cam.GetViewProjectionMatrix());
+        if (m_Mode == SceneMode::Editor && m_RaycastResult.hit)
             RenderHighlight();
         Graphics::Renderer::Renderer::EndScene();
     }
@@ -138,46 +171,72 @@ namespace AE
 
     void VoxelScene::RenderImGui()
     {
-        // Crosshair
-        ImDrawList* dl = ImGui::GetForegroundDrawList();
-        const ImVec2 c = ImGui::GetMainViewport()->GetCenter();
-        const ImU32 white = IM_COL32(255, 255, 255, 200);
-        dl->AddLine({c.x - 10, c.y}, {c.x + 10, c.y}, white, 2.0f);
-        dl->AddLine({c.x, c.y - 10}, {c.x, c.y + 10}, white, 2.0f);
+        // Crosshair (editor mode only)
+        if (m_Mode == SceneMode::Editor)
+        {
+            ImDrawList* dl = ImGui::GetForegroundDrawList();
+            const ImVec2 c = ImGui::GetMainViewport()->GetCenter();
+            const ImU32 white = IM_COL32(255, 255, 255, 200);
+            dl->AddLine({c.x - 10, c.y}, {c.x + 10, c.y}, white, 2.0f);
+            dl->AddLine({c.x, c.y - 10}, {c.x, c.y + 10}, white, 2.0f);
+        }
 
         const auto& cam = m_CameraController.GetCamera();
-        ImGui::Begin("Camera");
-        ImGui::Text("Position: (%.2f, %.2f, %.2f)",
+        ImGui::Begin("Scene");
+
+        ImGui::Text("Mode: %s  [F5 to toggle]",
+            m_Mode == SceneMode::Editor ? "Editor" : "Play");
+        ImGui::Separator();
+
+        ImGui::Text("Camera: (%.2f, %.2f, %.2f)",
             cam.GetPosition().x, cam.GetPosition().y, cam.GetPosition().z);
         ImGui::Text("Yaw: %.1f  Pitch: %.1f", cam.GetYaw(), cam.GetPitch());
-        ImGui::Separator();
         ImGui::Text("Cursor: %s  [ESC to toggle]",
             m_CameraController.IsCursorCaptured() ? "Captured" : "Normal");
-        ImGui::Separator();
-        if (m_RaycastResult.hit)
+
+        if (m_Mode == SceneMode::Editor)
         {
-            ImGui::Text("Hit: (%.1f, %.1f, %.1f)",
-                m_RaycastResult.hitPos.x,
-                m_RaycastResult.hitPos.y,
-                m_RaycastResult.hitPos.z);
-            ImGui::Text("Edit radius: %.1f  [LMB=dig  RMB=fill]", m_EditRadius);
+            ImGui::Separator();
+            if (m_RaycastResult.hit)
+            {
+                ImGui::Text("Hit: (%.1f, %.1f, %.1f)",
+                    m_RaycastResult.hitPos.x,
+                    m_RaycastResult.hitPos.y,
+                    m_RaycastResult.hitPos.z);
+                ImGui::Text("Edit radius: %.1f  [LMB=dig  RMB=fill]", m_EditRadius);
+            }
+            else
+            {
+                ImGui::Text("Hit: (none)");
+            }
         }
         else
         {
-            ImGui::Text("Hit: (none)");
+            ImGui::Separator();
+            const glm::vec3 p = m_PlayerController.GetPosition();
+            ImGui::Text("Player: (%.1f, %.1f, %.1f)", p.x, p.y, p.z);
+            ImGui::Text("On ground: %s", m_PlayerController.IsOnGround() ? "yes" : "no");
         }
+
         ImGui::End();
     }
 
     void VoxelScene::OnEvent(Events::Event& e)
     {
+        // Camera controller always receives events in both modes:
+        // mouse look, ESC cursor toggle, and window resize are universal.
         m_CameraController.OnEvent(e);
 
         Events::EventHandler handler(e);
-        handler.TryHandle<Events::MouseButtonPressedEvent>(
-            [this](Events::MouseButtonPressedEvent& ev) { return OnMouseButtonPressed(ev); });
         handler.TryHandle<Events::KeyPressedEvent>(
             [this](Events::KeyPressedEvent& ev) { return OnKeyPressed(ev); });
+
+        // Dig / fill editing is editor-only
+        if (m_Mode == SceneMode::Editor)
+        {
+            handler.TryHandle<Events::MouseButtonPressedEvent>(
+                [this](Events::MouseButtonPressedEvent& ev) { return OnMouseButtonPressed(ev); });
+        }
     }
 
     // ----------------------------------------------------------------
@@ -208,6 +267,13 @@ namespace AE
 
     bool VoxelScene::OnKeyPressed(Events::KeyPressedEvent& e)
     {
+        // F5 toggles between Editor and Play mode
+        if (e.GetKeyCode() == AE_KEY_F5)
+        {
+            SetMode(m_Mode == SceneMode::Editor ? SceneMode::Play : SceneMode::Editor);
+            return true;
+        }
+
         const auto it = m_KeyCallbacks.find(e.GetKeyCode());
         if (it != m_KeyCallbacks.end())
             it->second();
