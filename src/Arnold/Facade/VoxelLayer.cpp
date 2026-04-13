@@ -30,4 +30,9 @@ namespace AE
     {
         m_Scene.RegisterKeyCallback(keyCode, std::move(cb));
     }
+
+    void VoxelLayer::SetPlayerController(std::shared_ptr<PlayerController> controller)
+    {
+        m_Scene.SetPlayerController(std::move(controller));
+    }
 }

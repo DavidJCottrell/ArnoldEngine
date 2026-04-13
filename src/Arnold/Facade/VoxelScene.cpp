@@ -106,15 +106,21 @@ namespace AE
         else
         {
             // Physics-based player — drives camera position
-            m_PlayerController.Update(
-                ts,
-                m_World,
-                m_CameraController.GetCamera(),
-                m_Config.blockScale,
-                m_CameraController.IsCursorCaptured());
+            if (m_PlayerController)
+                m_PlayerController->Update(
+                    ts,
+                    m_World,
+                    m_CameraController.GetCamera(),
+                    m_Config.blockScale,
+                    m_CameraController.IsCursorCaptured());
 
             m_RaycastResult = {};
         }
+    }
+
+    void VoxelScene::SetPlayerController(std::shared_ptr<PlayerController> controller)
+    {
+        m_PlayerController = std::move(controller);
     }
 
     void VoxelScene::SetMode(SceneMode mode)
@@ -123,11 +129,18 @@ namespace AE
 
         if (mode == SceneMode::Play)
         {
+            if (!m_PlayerController)
+            {
+                AE_WARN("Cannot enter Play mode: no PlayerController registered. "
+                        "Call SetPlayerController() before switching modes.");
+                return;
+            }
+
             // Seed the player foot at the current camera position so the view
             // doesn't jump when switching modes.
             const glm::vec3 camBlock =
                 m_CameraController.GetCamera().GetPosition() * (1.0f / m_Config.blockScale);
-            m_PlayerController.SetPosition(camBlock - glm::vec3(0.f, PlayerController::k_EyeHeight, 0.f));
+            m_PlayerController->SetPosition(camBlock - glm::vec3(0.f, PlayerController::k_EyeHeight, 0.f));
         }
 
         m_Mode = mode;
@@ -231,21 +244,28 @@ namespace AE
         {
             if (ImGui::CollapsingHeader("Player", ImGuiTreeNodeFlags_DefaultOpen))
             {
-                const glm::vec3 p = m_PlayerController.GetPosition();
-                ImGui::Text("Foot: (%.1f, %.1f, %.1f)", p.x, p.y, p.z);
-                ImGui::Text("On Ground: %s", m_PlayerController.IsOnGround() ? "yes" : "no");
+                if (m_PlayerController)
+                {
+                    const glm::vec3 p = m_PlayerController->GetPosition();
+                    ImGui::Text("Foot: (%.1f, %.1f, %.1f)", p.x, p.y, p.z);
+                    ImGui::Text("On Ground: %s", m_PlayerController->IsOnGround() ? "yes" : "no");
 
-                float ms = m_PlayerController.GetMoveSpeed();
-                if (ImGui::DragFloat("Move Speed##player", &ms, 0.1f, 0.1f, 30.f, "%.1f"))
-                    m_PlayerController.SetMoveSpeed(ms);
+                    float ms = m_PlayerController->GetMoveSpeed();
+                    if (ImGui::DragFloat("Move Speed##player", &ms, 0.1f, 0.1f, 30.f, "%.1f"))
+                        m_PlayerController->SetMoveSpeed(ms);
 
-                float js = m_PlayerController.GetJumpSpeed();
-                if (ImGui::DragFloat("Jump Speed", &js, 0.1f, 1.f, 20.f, "%.1f"))
-                    m_PlayerController.SetJumpSpeed(js);
+                    float js = m_PlayerController->GetJumpSpeed();
+                    if (ImGui::DragFloat("Jump Speed", &js, 0.1f, 1.f, 20.f, "%.1f"))
+                        m_PlayerController->SetJumpSpeed(js);
 
-                float grav = m_PlayerController.GetGravity();
-                if (ImGui::DragFloat("Gravity", &grav, 0.5f, -50.f, 0.f, "%.1f"))
-                    m_PlayerController.SetGravity(grav);
+                    float grav = m_PlayerController->GetGravity();
+                    if (ImGui::DragFloat("Gravity", &grav, 0.5f, -50.f, 0.f, "%.1f"))
+                        m_PlayerController->SetGravity(grav);
+                }
+                else
+                {
+                    ImGui::TextDisabled("No player registered");
+                }
             }
         }
 

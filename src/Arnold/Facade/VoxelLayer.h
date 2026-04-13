@@ -40,6 +40,10 @@ namespace AE
         /** Register (or replace) a key-press callback. */
         void OnKey(int keyCode, KeyCallback cb);
 
+        /** Register the player controller created by the consumer application.
+         *  Must be called before the scene can enter Play mode (F5). */
+        void SetPlayerController(std::shared_ptr<PlayerController> controller);
+
         World::World&       GetWorld()       { return m_Scene.GetWorld(); }
         const World::World& GetWorld() const { return m_Scene.GetWorld(); }
 

@@ -80,11 +80,15 @@ namespace AE
         SceneMode GetMode()        const { return m_Mode; }
 
         /** Switch between editor free-fly and physics-based play.
-         *  On Editor→Play the player is seeded at the current camera position. */
+         *  Refuses to enter Play mode if no PlayerController has been registered. */
         void SetMode(SceneMode mode);
 
-        PlayerController&       GetPlayerController()       { return m_PlayerController; }
-        const PlayerController& GetPlayerController() const { return m_PlayerController; }
+        /** Register a player controller created by the consumer application.
+         *  Must be called before the scene can enter Play mode. */
+        void SetPlayerController(std::shared_ptr<PlayerController> controller);
+
+        PlayerController*       GetPlayerController()       { return m_PlayerController.get(); }
+        const PlayerController* GetPlayerController() const { return m_PlayerController.get(); }
 
     private:
         void InitMaterial();
@@ -104,8 +108,8 @@ namespace AE
         float                                             m_EditRadius   = 2.0f;
         float                                             m_EditStrength = 5.0f; ///< Density delta per dig/fill click
 
-        SceneMode        m_Mode = SceneMode::Editor;
-        PlayerController m_PlayerController;
+        SceneMode                         m_Mode = SceneMode::Editor;
+        std::shared_ptr<PlayerController> m_PlayerController;  ///< Null until registered by the sandbox
 
         std::unordered_map<int, KeyCallback> m_KeyCallbacks;
     };
