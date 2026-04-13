@@ -137,6 +137,8 @@ set(GRAPHICS_SOURCES
         src/Arnold/Graphics/Renderer/Camera.h
         src/Arnold/Graphics/Renderer/PerspectiveCamera.cpp
         src/Arnold/Graphics/Renderer/PerspectiveCamera.h
+        src/Arnold/Graphics/Renderer/FpsCameraController.h
+        src/Arnold/Graphics/Renderer/FpsCameraController.cpp
         src/Arnold/Graphics/Renderer/Mesh.cpp
         src/Arnold/Graphics/Renderer/Mesh.h
         src/Arnold/Graphics/Renderer/Texture.cpp
