@@ -76,20 +76,20 @@ namespace AE
             // ---- Jump ----
             if (Core::Input::IsKeyPressed(AE_KEY_SPACE) && m_OnGround)
             {
-                m_Velocity.y = k_JumpSpeed;
+                m_Velocity.y = m_JumpSpeed;
                 m_OnGround   = false;
             }
         }
 
         // ---- Apply gravity ----
-        m_Velocity.y += k_Gravity * dt;
+        m_Velocity.y += m_Gravity * dt;
 
         // ---- Integrate position per-axis with collision resolution ----
 
         // X
         {
             glm::vec3 candidate = m_Position;
-            candidate.x += moveDir.x * k_MoveSpeed * dt;
+            candidate.x += moveDir.x * m_MoveSpeed * dt;
             if (!CollidesAt(world, candidate))
                 m_Position.x = candidate.x;
         }
@@ -97,7 +97,7 @@ namespace AE
         // Z
         {
             glm::vec3 candidate = m_Position;
-            candidate.z += moveDir.z * k_MoveSpeed * dt;
+            candidate.z += moveDir.z * m_MoveSpeed * dt;
             if (!CollidesAt(world, candidate))
                 m_Position.z = candidate.z;
         }

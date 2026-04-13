@@ -184,38 +184,78 @@ namespace AE
         const auto& cam = m_CameraController.GetCamera();
         ImGui::Begin("Scene");
 
-        ImGui::Text("Mode: %s  [F5 to toggle]",
-            m_Mode == SceneMode::Editor ? "Editor" : "Play");
-        ImGui::Separator();
+        // ---- Header: FPS + mode ----
+        ImGui::Text("%.1f FPS  (%.2f ms)", ImGui::GetIO().Framerate, 1000.f / ImGui::GetIO().Framerate);
+        ImGui::Text("Mode: %s  [F5 to toggle]", m_Mode == SceneMode::Editor ? "Editor" : "Play");
 
-        ImGui::Text("Camera: (%.2f, %.2f, %.2f)",
-            cam.GetPosition().x, cam.GetPosition().y, cam.GetPosition().z);
-        ImGui::Text("Yaw: %.1f  Pitch: %.1f", cam.GetYaw(), cam.GetPitch());
-        ImGui::Text("Cursor: %s  [ESC to toggle]",
-            m_CameraController.IsCursorCaptured() ? "Captured" : "Normal");
+        // ---- Camera ----
+        if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::Text("Pos: (%.2f, %.2f, %.2f)",
+                cam.GetPosition().x, cam.GetPosition().y, cam.GetPosition().z);
+            ImGui::Text("Yaw: %.1f  Pitch: %.1f", cam.GetYaw(), cam.GetPitch());
 
+            float speed = m_CameraController.GetMoveSpeed();
+            if (ImGui::DragFloat("Move Speed##cam", &speed, 0.1f, 0.1f, 100.f, "%.1f"))
+                m_CameraController.SetMoveSpeed(speed);
+
+            ImGui::Text("Cursor: %s  [ESC]",
+                m_CameraController.IsCursorCaptured() ? "Captured" : "Normal");
+        }
+
+        // ---- Edit (editor mode) ----
         if (m_Mode == SceneMode::Editor)
         {
-            ImGui::Separator();
-            if (m_RaycastResult.hit)
+            if (ImGui::CollapsingHeader("Edit", ImGuiTreeNodeFlags_DefaultOpen))
             {
-                ImGui::Text("Hit: (%.1f, %.1f, %.1f)",
-                    m_RaycastResult.hitPos.x,
-                    m_RaycastResult.hitPos.y,
-                    m_RaycastResult.hitPos.z);
-                ImGui::Text("Edit radius: %.1f  [LMB=dig  RMB=fill]", m_EditRadius);
-            }
-            else
-            {
-                ImGui::Text("Hit: (none)");
+                ImGui::DragFloat("Radius",   &m_EditRadius,   0.1f, 0.5f, 20.f, "%.1f");
+                ImGui::DragFloat("Strength", &m_EditStrength, 0.1f, 0.1f, 50.f, "%.1f");
+
+                if (m_RaycastResult.hit)
+                {
+                    const glm::vec3& h = m_RaycastResult.hitPos;
+                    ImGui::Text("Hit: (%.1f, %.1f, %.1f)", h.x, h.y, h.z);
+                    const float d = m_World.SampleDensity(h.x, h.y, h.z);
+                    ImGui::Text("Surface density: %.3f", d);
+                    ImGui::TextDisabled("LMB = dig  |  RMB = fill");
+                }
+                else
+                {
+                    ImGui::Text("Hit: (none)");
+                }
             }
         }
-        else
+
+        // ---- Player (play mode) ----
+        if (m_Mode == SceneMode::Play)
         {
-            ImGui::Separator();
-            const glm::vec3 p = m_PlayerController.GetPosition();
-            ImGui::Text("Player: (%.1f, %.1f, %.1f)", p.x, p.y, p.z);
-            ImGui::Text("On ground: %s", m_PlayerController.IsOnGround() ? "yes" : "no");
+            if (ImGui::CollapsingHeader("Player", ImGuiTreeNodeFlags_DefaultOpen))
+            {
+                const glm::vec3 p = m_PlayerController.GetPosition();
+                ImGui::Text("Foot: (%.1f, %.1f, %.1f)", p.x, p.y, p.z);
+                ImGui::Text("On Ground: %s", m_PlayerController.IsOnGround() ? "yes" : "no");
+
+                float ms = m_PlayerController.GetMoveSpeed();
+                if (ImGui::DragFloat("Move Speed##player", &ms, 0.1f, 0.1f, 30.f, "%.1f"))
+                    m_PlayerController.SetMoveSpeed(ms);
+
+                float js = m_PlayerController.GetJumpSpeed();
+                if (ImGui::DragFloat("Jump Speed", &js, 0.1f, 1.f, 20.f, "%.1f"))
+                    m_PlayerController.SetJumpSpeed(js);
+
+                float grav = m_PlayerController.GetGravity();
+                if (ImGui::DragFloat("Gravity", &grav, 0.5f, -50.f, 0.f, "%.1f"))
+                    m_PlayerController.SetGravity(grav);
+            }
+        }
+
+        // ---- World (collapsed by default) ----
+        if (ImGui::CollapsingHeader("World"))
+        {
+            ImGui::Text("Block scale: %.3f", m_Config.blockScale);
+            ImGui::Text("Grid: %d x %d chunks  (%d total)",
+                World::World::WORLD_SIZE, World::World::WORLD_SIZE,
+                World::World::WORLD_SIZE * World::World::WORLD_SIZE);
         }
 
         ImGui::End();
@@ -250,7 +290,7 @@ namespace AE
 
         if (e.GetMouseButton() == AE_BUTTON_LEFT)
         {
-            m_World.ModifyDensity(m_RaycastResult.hitPos, m_EditRadius, -5.0f);
+            m_World.ModifyDensity(m_RaycastResult.hitPos, m_EditRadius, -m_EditStrength);
             return true;
         }
 
@@ -258,7 +298,7 @@ namespace AE
         {
             // Offset fill centre slightly along the surface normal so we build on top
             const glm::vec3 fillCenter = m_RaycastResult.hitPos + m_RaycastResult.normal * 0.5f;
-            m_World.ModifyDensity(fillCenter, m_EditRadius, +5.0f);
+            m_World.ModifyDensity(fillCenter, m_EditRadius, +m_EditStrength);
             return true;
         }
 

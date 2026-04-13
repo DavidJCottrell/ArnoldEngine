@@ -101,7 +101,8 @@ namespace AE
         std::unique_ptr<Graphics::Renderer::VertexArray>  m_HighlightVAO;
 
         World::RaycastResult                              m_RaycastResult;
-        float                                             m_EditRadius = 2.0f;
+        float                                             m_EditRadius   = 2.0f;
+        float                                             m_EditStrength = 5.0f; ///< Density delta per dig/fill click
 
         SceneMode        m_Mode = SceneMode::Editor;
         PlayerController m_PlayerController;

@@ -22,7 +22,7 @@ namespace AE
     {
     public:
         // ----------------------------------------------------------------
-        //  Tuning constants
+        //  Tuning constants (used as default initialisers)
         // ----------------------------------------------------------------
         static constexpr float k_EyeHeight = 1.6f;   ///< Camera height above foot (blocks)
         static constexpr float k_Height     = 1.8f;   ///< Total capsule height (blocks)
@@ -63,10 +63,22 @@ namespace AE
         /** True when the player is resting on solid ground. */
         bool      IsOnGround()  const { return m_OnGround; }
 
+        // Runtime-tunable physics parameters
+        float GetMoveSpeed() const  { return m_MoveSpeed; }
+        void  SetMoveSpeed(float s) { m_MoveSpeed = s; }
+        float GetJumpSpeed() const  { return m_JumpSpeed; }
+        void  SetJumpSpeed(float s) { m_JumpSpeed = s; }
+        float GetGravity()   const  { return m_Gravity; }
+        void  SetGravity(float g)   { m_Gravity = g; }
+
     private:
         glm::vec3 m_Position{ 0.f };
         glm::vec3 m_Velocity{ 0.f };
         bool      m_OnGround = false;
+
+        float m_MoveSpeed = k_MoveSpeed;
+        float m_JumpSpeed = k_JumpSpeed;
+        float m_Gravity   = k_Gravity;
 
         /**
          * @brief Returns true if the player capsule overlaps solid geometry at `footPos`.
