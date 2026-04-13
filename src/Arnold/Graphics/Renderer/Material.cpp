@@ -23,8 +23,17 @@ namespace AE::Graphics::Renderer
         for (const auto& [name, value] : m_IntUniforms)
             m_Shader->UploadUniformInt(name, value);
 
+        for (const auto& [name, value] : m_FloatUniforms)
+            m_Shader->UploadUniformFloat(name, value);
+
         for (const auto& [name, value] : m_Float3Uniforms)
             m_Shader->UploadUniformFloat3(name, value);
+
+        for (const auto& [name, value] : m_Float4Uniforms)
+            m_Shader->UploadUniformFloat4(name, value);
+
+        for (const auto& [name, value] : m_Mat4Uniforms)
+            m_Shader->UploadUniformMat4(name, value);
     }
 
     void Material::SetTexture(uint32_t slot, const std::shared_ptr<Texture2D>& texture)
@@ -37,8 +46,23 @@ namespace AE::Graphics::Renderer
         m_IntUniforms[name] = value;
     }
 
+    void Material::SetFloat(const std::string& name, float value)
+    {
+        m_FloatUniforms[name] = value;
+    }
+
     void Material::SetFloat3(const std::string& name, const glm::vec3& value)
     {
         m_Float3Uniforms[name] = value;
+    }
+
+    void Material::SetFloat4(const std::string& name, const glm::vec4& value)
+    {
+        m_Float4Uniforms[name] = value;
+    }
+
+    void Material::SetMat4(const std::string& name, const glm::mat4& value)
+    {
+        m_Mat4Uniforms[name] = value;
     }
 }

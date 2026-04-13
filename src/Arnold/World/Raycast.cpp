@@ -38,8 +38,9 @@ namespace AE::World
 
                 const glm::vec3 hit = origin + dir * (0.5f * (tLo + tHi));
 
-                // Outward normal from density gradient (central difference)
-                constexpr float h = 0.1f;
+                // Outward normal from density gradient (central difference).
+                // Step matches ChunkMeshBuilder::ComputeNormal for consistent fill normals.
+                constexpr float h = 0.5f;
                 const float gx = world.SampleDensity(hit.x+h, hit.y,   hit.z  )
                                - world.SampleDensity(hit.x-h, hit.y,   hit.z  );
                 const float gy = world.SampleDensity(hit.x,   hit.y+h, hit.z  )

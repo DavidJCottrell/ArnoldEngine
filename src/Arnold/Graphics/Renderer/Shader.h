@@ -30,9 +30,11 @@ namespace AE::Graphics::Renderer
     void Bind() const;
     void Unbind() const;
 
-    void UploadUniformInt(const std::string& name, int value) const;
+    void UploadUniformInt   (const std::string& name, int value) const;
+    void UploadUniformFloat (const std::string& name, float value) const;
     void UploadUniformFloat3(const std::string& name, const glm::vec3& value) const;
-    void UploadUniformMat4(const std::string& name, const glm::mat4& matrix) const;
+    void UploadUniformFloat4(const std::string& name, const glm::vec4& value) const;
+    void UploadUniformMat4  (const std::string& name, const glm::mat4& matrix) const;
 
     /**
      * @brief Load a shader from a single .glsl file containing both stages.

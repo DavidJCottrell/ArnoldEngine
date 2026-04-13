@@ -21,12 +21,14 @@ namespace AE
         : m_Config(config),
           m_CameraController(config.fov,
                              config.aspectRatio,
-                             config.blockScale * 0.1f,
-                             static_cast<float>(World::World::WORLD_SIZE * World::Chunk::SIZE)
-                                 * config.blockScale * 5.0f)
+                             config.nearClip * config.blockScale,
+                             config.farClip * config.blockScale)
     {
-        // Fill every chunk's density field from the terrain generator
-        World::WorldGenerator::GenerateTerrain(m_World, config.seed);
+        // Fill every chunk's density field — custom generator or built-in FBM terrain
+        if (config.worldGenerator)
+            config.worldGenerator(m_World, config.seed);
+        else
+            World::WorldGenerator::GenerateTerrain(m_World, config.seed);
         m_World.SetBlockScale(config.blockScale);
         m_World.MarkAllDirty();  // trigger mesh builds on first Render()
 
@@ -38,20 +40,22 @@ namespace AE
         m_CameraController.GetCamera().SetPosition({halfWorld, spawnY, halfWorld});
         m_CameraController.SetMoveSpeed(5.0f * config.blockScale);
 
+        m_EditRadius = config.editRadius;
+
         InitMaterial();
         InitHighlightVAO();
     }
 
     void VoxelScene::InitMaterial()
     {
-        auto shader = Graphics::Renderer::Shader::Create("assets/shaders/textured.glsl");
+        auto shader = Graphics::Renderer::Shader::Create(m_Config.terrainShaderPath);
         m_Material  = Graphics::Renderer::Material::Create(shader);
         m_Material->SetFloat3("u_LightDir", glm::normalize(glm::vec3(0.6f, 1.0f, 0.4f)));
     }
 
     void VoxelScene::InitHighlightVAO()
     {
-        m_HighlightShader = Graphics::Renderer::Shader::Create("assets/shaders/highlight.glsl");
+        m_HighlightShader = Graphics::Renderer::Shader::Create(m_Config.highlightShaderPath);
 
         // Unit cube wireframe
         float verts[] = {

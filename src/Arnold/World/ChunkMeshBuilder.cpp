@@ -329,17 +329,30 @@ namespace AE::World
     // ====================================================================
 
     std::shared_ptr<AE::Graphics::Renderer::Mesh> ChunkMeshBuilder::Build(
-        const Chunk& chunk, const ChunkNeighbors& /*neighbors*/)
+        const Chunk& chunk, const ChunkNeighbors& neighbors)
     {
         // Trilinear-interpolate the stored density field at a float local position.
-        // Clamps to [0, SIZE] on each axis.
+        // Reads from neighbor chunks when indices fall outside [0, SIZE] on X or Z.
+        // Y is clamped (no vertical neighbors).
         auto SampleInterp = [&](float lx, float ly, float lz) -> float {
             int ix = (int)std::floor(lx), iy = (int)std::floor(ly), iz = (int)std::floor(lz);
             float fx = lx - ix, fy = ly - iy, fz = lz - iz;
             auto safe = [&](int x, int y, int z) -> float {
-                x = glm::clamp(x, 0, Chunk::SIZE);
                 y = glm::clamp(y, 0, Chunk::SIZE);
-                z = glm::clamp(z, 0, Chunk::SIZE);
+                // X out of bounds — read from X neighbor if available, else clamp
+                if (x < 0)
+                    return neighbors.nx ? neighbors.nx->GetDensity(Chunk::SIZE + x, y, z)
+                                        : chunk.GetDensity(0, y, z);
+                if (x > Chunk::SIZE)
+                    return neighbors.px ? neighbors.px->GetDensity(x - Chunk::SIZE, y, z)
+                                        : chunk.GetDensity(Chunk::SIZE, y, z);
+                // Z out of bounds — read from Z neighbor if available, else clamp
+                if (z < 0)
+                    return neighbors.nz ? neighbors.nz->GetDensity(x, y, Chunk::SIZE + z)
+                                        : chunk.GetDensity(x, y, 0);
+                if (z > Chunk::SIZE)
+                    return neighbors.pz ? neighbors.pz->GetDensity(x, y, z - Chunk::SIZE)
+                                        : chunk.GetDensity(x, y, Chunk::SIZE);
                 return chunk.GetDensity(x, y, z);
             };
             return safe(ix,  iy,  iz  )*(1-fx)*(1-fy)*(1-fz)

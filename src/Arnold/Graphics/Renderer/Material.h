@@ -40,7 +40,10 @@ namespace AE::Graphics::Renderer
 
         void SetTexture(uint32_t slot, const std::shared_ptr<Texture2D>& texture);
         void SetInt    (const std::string& name, int value);
+        void SetFloat  (const std::string& name, float value);
         void SetFloat3 (const std::string& name, const glm::vec3& value);
+        void SetFloat4 (const std::string& name, const glm::vec4& value);
+        void SetMat4   (const std::string& name, const glm::mat4& value);
 
         [[nodiscard]] const std::shared_ptr<Shader>& GetShader() const { return m_Shader; }
 
@@ -50,7 +53,10 @@ namespace AE::Graphics::Renderer
         std::shared_ptr<Shader> m_Shader;
 
         std::unordered_map<uint32_t, std::shared_ptr<Texture2D>> m_Textures;
-        std::unordered_map<std::string, int>                      m_IntUniforms;
-        std::unordered_map<std::string, glm::vec3>                m_Float3Uniforms;
+        std::unordered_map<std::string, int>       m_IntUniforms;
+        std::unordered_map<std::string, float>     m_FloatUniforms;
+        std::unordered_map<std::string, glm::vec3> m_Float3Uniforms;
+        std::unordered_map<std::string, glm::vec4> m_Float4Uniforms;
+        std::unordered_map<std::string, glm::mat4> m_Mat4Uniforms;
     };
 }

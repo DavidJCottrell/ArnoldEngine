@@ -129,6 +129,15 @@ namespace AE::World
         if (lz == 0 && cz > 0) update(cx, cz - 1, lx, Chunk::SIZE);
         if (lx == 0 && lz == 0 && cx > 0 && cz > 0)
             update(cx - 1, cz - 1, Chunk::SIZE, Chunk::SIZE);
+
+        // Mark +X / +Z neighbors dirty when the edited voxel falls within the
+        // gradient sample window (h=0.5) of those chunks' boundary vertices.
+        if (lx == Chunk::SIZE - 1)
+            if (auto* e = GetChunkEntry(cx + 1, cz)) e->dirty = true;
+        if (lz == Chunk::SIZE - 1)
+            if (auto* e = GetChunkEntry(cx, cz + 1)) e->dirty = true;
+        if (lx == Chunk::SIZE - 1 && lz == Chunk::SIZE - 1)
+            if (auto* e = GetChunkEntry(cx + 1, cz + 1)) e->dirty = true;
     }
 
     float World::SampleDensity(float wx, float wy, float wz) const
