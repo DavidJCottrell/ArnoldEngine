@@ -129,6 +129,12 @@ void AE::Graphics::Renderer::Shader::UploadUniformInt(const std::string& name, c
 	glUniform1i(location, value);
 }
 
+void AE::Graphics::Renderer::Shader::UploadUniformFloat3(const std::string& name, const glm::vec3& value) const
+{
+	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniform3f(location, value.x, value.y, value.z);
+}
+
 void AE::Graphics::Renderer::Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix) const
 {
 	const GLint location = glGetUniformLocation(m_RendererID, name.c_str());

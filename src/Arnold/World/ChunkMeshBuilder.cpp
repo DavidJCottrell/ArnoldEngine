@@ -42,6 +42,16 @@ namespace AE::World
             {0.0f, 1.0f},
         };
 
+        // Outward-facing normal for each of the 6 face directions
+        constexpr float k_FaceNormals[6][3] = {
+            { 1,  0,  0},  // +X
+            {-1,  0,  0},  // -X
+            { 0,  1,  0},  // +Y
+            { 0, -1,  0},  // -Y
+            { 0,  0,  1},  // +Z
+            { 0,  0, -1},  // -Z
+        };
+
     } // anonymous namespace
 
     std::shared_ptr<AE::Graphics::Renderer::Mesh> ChunkMeshBuilder::Build(const Chunk& chunk)
@@ -69,11 +79,17 @@ namespace AE::World
 
                 for (int v = 0; v < 4; ++v)
                 {
+                    // Position
                     vertices.push_back(static_cast<float>(x) + k_FaceVerts[f][v * 3 + 0]);
                     vertices.push_back(static_cast<float>(y) + k_FaceVerts[f][v * 3 + 1]);
                     vertices.push_back(static_cast<float>(z) + k_FaceVerts[f][v * 3 + 2]);
+                    // UV
                     vertices.push_back(k_UVs[v][0]);
                     vertices.push_back(k_UVs[v][1]);
+                    // Normal (same for all 4 vertices on this face)
+                    vertices.push_back(k_FaceNormals[f][0]);
+                    vertices.push_back(k_FaceNormals[f][1]);
+                    vertices.push_back(k_FaceNormals[f][2]);
                 }
 
                 indices.insert(indices.end(), {
@@ -90,6 +106,7 @@ namespace AE::World
         const AE::Graphics::Renderer::BufferLayout layout = {
             {AE::Graphics::Renderer::ShaderDataType::Float3, "a_Position"},
             {AE::Graphics::Renderer::ShaderDataType::Float2, "a_TexCoord"},
+            {AE::Graphics::Renderer::ShaderDataType::Float3, "a_Normal"},
         };
 
         return std::make_shared<AE::Graphics::Renderer::Mesh>(vertices, layout, indices);

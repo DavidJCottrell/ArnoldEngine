@@ -24,39 +24,38 @@ namespace AE::Graphics::Renderer
     std::shared_ptr<Mesh> Mesh::CreateCube()
     {
         // 24 vertices: 4 per face x 6 faces
-        // Layout per vertex: Float3 position, Float2 UV
-        // UVs: (0,0) bottom-left to (1,1) top-right, consistent across all faces
+        // Layout per vertex: Float3 position, Float2 UV, Float3 normal
         const std::vector<float> vertices = {
-            // Front (+Z)
-            -0.5f, -0.5f,  0.5f,   0.0f, 0.0f,
-             0.5f, -0.5f,  0.5f,   1.0f, 0.0f,
-             0.5f,  0.5f,  0.5f,   1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,   0.0f, 1.0f,
-            // Back (-Z)
-             0.5f, -0.5f, -0.5f,   0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,   1.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,   1.0f, 1.0f,
-             0.5f,  0.5f, -0.5f,   0.0f, 1.0f,
-            // Top (+Y)
-            -0.5f,  0.5f,  0.5f,   0.0f, 0.0f,
-             0.5f,  0.5f,  0.5f,   1.0f, 0.0f,
-             0.5f,  0.5f, -0.5f,   1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,   0.0f, 1.0f,
-            // Bottom (-Y)
-            -0.5f, -0.5f, -0.5f,   0.0f, 0.0f,
-             0.5f, -0.5f, -0.5f,   1.0f, 0.0f,
-             0.5f, -0.5f,  0.5f,   1.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,   0.0f, 1.0f,
-            // Right (+X)
-             0.5f, -0.5f,  0.5f,   0.0f, 0.0f,
-             0.5f, -0.5f, -0.5f,   1.0f, 0.0f,
-             0.5f,  0.5f, -0.5f,   1.0f, 1.0f,
-             0.5f,  0.5f,  0.5f,   0.0f, 1.0f,
-            // Left (-X)
-            -0.5f, -0.5f, -0.5f,   0.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,   1.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,   1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,   0.0f, 1.0f,
+            // Front (+Z)  normal: (0, 0, 1)
+            -0.5f, -0.5f,  0.5f,   0.0f, 0.0f,   0.0f, 0.0f,  1.0f,
+             0.5f, -0.5f,  0.5f,   1.0f, 0.0f,   0.0f, 0.0f,  1.0f,
+             0.5f,  0.5f,  0.5f,   1.0f, 1.0f,   0.0f, 0.0f,  1.0f,
+            -0.5f,  0.5f,  0.5f,   0.0f, 1.0f,   0.0f, 0.0f,  1.0f,
+            // Back (-Z)   normal: (0, 0, -1)
+             0.5f, -0.5f, -0.5f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+            -0.5f, -0.5f, -0.5f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+            -0.5f,  0.5f, -0.5f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+             0.5f,  0.5f, -0.5f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+            // Top (+Y)    normal: (0, 1, 0)
+            -0.5f,  0.5f,  0.5f,   0.0f, 0.0f,   0.0f,  1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,   1.0f, 0.0f,   0.0f,  1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,   1.0f, 1.0f,   0.0f,  1.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,   0.0f, 1.0f,   0.0f,  1.0f, 0.0f,
+            // Bottom (-Y) normal: (0, -1, 0)
+            -0.5f, -0.5f, -0.5f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+             0.5f, -0.5f, -0.5f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+             0.5f, -0.5f,  0.5f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+            // Right (+X)  normal: (1, 0, 0)
+             0.5f, -0.5f,  0.5f,   0.0f, 0.0f,    1.0f, 0.0f, 0.0f,
+             0.5f, -0.5f, -0.5f,   1.0f, 0.0f,    1.0f, 0.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,   1.0f, 1.0f,    1.0f, 0.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,   0.0f, 1.0f,    1.0f, 0.0f, 0.0f,
+            // Left (-X)   normal: (-1, 0, 0)
+            -0.5f, -0.5f, -0.5f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
         };
 
         // 36 indices: 6 faces x 2 triangles x 3 vertices
@@ -72,6 +71,7 @@ namespace AE::Graphics::Renderer
         const BufferLayout layout = {
             { ShaderDataType::Float3, "a_Position" },
             { ShaderDataType::Float2, "a_TexCoord" },
+            { ShaderDataType::Float3, "a_Normal"   },
         };
 
         return std::make_shared<Mesh>(vertices, layout, indices);
@@ -79,12 +79,12 @@ namespace AE::Graphics::Renderer
 
     std::shared_ptr<Mesh> Mesh::CreateQuad()
     {
-        // Unit quad in the XY plane, facing +Z
+        // Unit quad in the XY plane, facing +Z  normal: (0, 0, 1)
         const std::vector<float> vertices = {
-            -0.5f, -0.5f,  0.0f,   0.0f, 0.0f,
-             0.5f, -0.5f,  0.0f,   1.0f, 0.0f,
-             0.5f,  0.5f,  0.0f,   1.0f, 1.0f,
-            -0.5f,  0.5f,  0.0f,   0.0f, 1.0f,
+            -0.5f, -0.5f,  0.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+             0.5f, -0.5f,  0.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+             0.5f,  0.5f,  0.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f,  0.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
         };
 
         const std::vector<uint32_t> indices = { 0, 1, 2, 2, 3, 0 };
@@ -92,6 +92,7 @@ namespace AE::Graphics::Renderer
         const BufferLayout layout = {
             { ShaderDataType::Float3, "a_Position" },
             { ShaderDataType::Float2, "a_TexCoord" },
+            { ShaderDataType::Float3, "a_Normal"   },
         };
 
         return std::make_shared<Mesh>(vertices, layout, indices);
