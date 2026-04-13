@@ -145,6 +145,8 @@ set(GRAPHICS_SOURCES
         src/Arnold/Graphics/Renderer/Texture.h
         src/Arnold/Graphics/Renderer/Material.h
         src/Arnold/Graphics/Renderer/Material.cpp
+        src/Arnold/Graphics/Renderer/TextureAtlas.h
+        src/Arnold/Graphics/Renderer/TextureAtlas.cpp
 )
 
 set(WORLD_SOURCES

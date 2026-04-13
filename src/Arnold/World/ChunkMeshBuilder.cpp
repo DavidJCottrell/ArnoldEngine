@@ -42,6 +42,16 @@ namespace AE::World
             {0.0f, 1.0f},
         };
 
+        // Maps (BlockType index, face direction) → atlas tile index
+        // Faces: 0=+X, 1=-X, 2=+Y(top), 3=-Y(bot), 4=+Z, 5=-Z
+        // Tiles: Grass=0, Dirt=1, Stone=2
+        constexpr uint8_t k_BlockFaceTile[4][6] = {
+            {0, 0, 0, 0, 0, 0},  // Air (unused)
+            {1, 1, 0, 1, 1, 1},  // Grass: top(+Y)=grass(0), all other=dirt(1)
+            {1, 1, 1, 1, 1, 1},  // Dirt: all=dirt(1)
+            {2, 2, 2, 2, 2, 2},  // Stone: all=stone(2)
+        };
+
         // Outward-facing normal for each of the 6 face directions
         constexpr float k_FaceNormals[6][3] = {
             { 1,  0,  0},  // +X
@@ -64,7 +74,8 @@ namespace AE::World
         for (int y = 0; y < Chunk::SIZE; ++y)
         for (int x = 0; x < Chunk::SIZE; ++x)
         {
-            if (chunk.GetBlock(x, y, z) == BlockType::Air)
+            const BlockType blockType = chunk.GetBlock(x, y, z);
+            if (blockType == BlockType::Air)
                 continue;
 
             for (int f = 0; f < 6; ++f)
@@ -104,8 +115,11 @@ namespace AE::World
                     vertices.push_back(static_cast<float>(x) + k_FaceVerts[f][v * 3 + 0]);
                     vertices.push_back(static_cast<float>(y) + k_FaceVerts[f][v * 3 + 1]);
                     vertices.push_back(static_cast<float>(z) + k_FaceVerts[f][v * 3 + 2]);
-                    // UV
-                    vertices.push_back(k_UVs[v][0]);
+                    // UV — remapped to atlas tile
+                    const int   tileIdx = k_BlockFaceTile[static_cast<int>(blockType)][f];
+                    const float atlasU  = (k_UVs[v][0] + static_cast<float>(tileIdx))
+                                          / static_cast<float>(ATLAS_TILE_COUNT);
+                    vertices.push_back(atlasU);
                     vertices.push_back(k_UVs[v][1]);
                     // Normal (same for all 4 vertices on this face)
                     vertices.push_back(k_FaceNormals[f][0]);

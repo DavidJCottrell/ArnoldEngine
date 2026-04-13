@@ -28,6 +28,9 @@ namespace AE::World
          *
          * @return A Mesh ready for Renderer::Submit, or nullptr if the chunk is entirely Air.
          */
+        /** Number of tiles in the texture atlas — must match TextureAtlas::TILE_COUNT. */
+        static constexpr int ATLAS_TILE_COUNT = 3;
+
         static std::shared_ptr<AE::Graphics::Renderer::Mesh> Build(
             const Chunk&          chunk,
             const ChunkNeighbors& neighbors = ChunkNeighbors{});

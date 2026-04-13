@@ -14,7 +14,7 @@ namespace AE::World
     class World
     {
     public:
-        static constexpr int WORLD_SIZE = 4;  // WORLD_SIZE x WORLD_SIZE chunk grid
+        static constexpr int WORLD_SIZE = 16;  // WORLD_SIZE x WORLD_SIZE chunk grid
 
         /** Generates a flat grass world. Chunk meshes are built immediately. */
         World();

@@ -27,6 +27,7 @@
 #include "Arnold/Graphics/Renderer/Mesh.h"
 #include "Arnold/Graphics/Renderer/Texture.h"
 #include "Arnold/Graphics/Renderer/Material.h"
+#include "Arnold/Graphics/Renderer/TextureAtlas.h"
 
 // --- World ---
 #include "Arnold/World/Chunk.h"
