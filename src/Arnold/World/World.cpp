@@ -12,37 +12,47 @@ namespace AE::World
     {
         m_Chunks.reserve(WORLD_SIZE * WORLD_SIZE);
 
+        // Pass 1: populate block data for all chunks
         for (int cx = 0; cx < WORLD_SIZE; ++cx)
         for (int cz = 0; cz < WORLD_SIZE; ++cz)
         {
             ChunkEntry entry;
+            entry.worldPos = glm::vec3(cx * Chunk::SIZE, 0.0f, cz * Chunk::SIZE);
 
             for (int x = 0; x < Chunk::SIZE; ++x)
             for (int z = 0; z < Chunk::SIZE; ++z)
                 entry.chunk.SetBlock(x, 0, z, BlockType::Grass);
 
-            entry.mesh     = ChunkMeshBuilder::Build(entry.chunk);
-            entry.worldPos = glm::vec3(cx * Chunk::SIZE, 0.0f, cz * Chunk::SIZE);
-
             m_Chunks.push_back(std::move(entry));
+        }
+
+        // Pass 2: build meshes now that all neighbor block data is available
+        for (int cx = 0; cx < WORLD_SIZE; ++cx)
+        for (int cz = 0; cz < WORLD_SIZE; ++cz)
+        {
+            ChunkEntry* entry = GetChunkEntry(cx, cz);
+            entry->mesh = ChunkMeshBuilder::Build(entry->chunk, MakeNeighbors(cx, cz));
         }
     }
 
     void World::Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material)
     {
-        for (auto& entry : m_Chunks)
+        for (int cx = 0; cx < WORLD_SIZE; ++cx)
+        for (int cz = 0; cz < WORLD_SIZE; ++cz)
         {
-            if (entry.dirty)
+            ChunkEntry* entry = GetChunkEntry(cx, cz);
+
+            if (entry->dirty)
             {
-                entry.mesh  = ChunkMeshBuilder::Build(entry.chunk);
-                entry.dirty = false;
+                entry->mesh  = ChunkMeshBuilder::Build(entry->chunk, MakeNeighbors(cx, cz));
+                entry->dirty = false;
             }
 
-            if (!entry.mesh)
+            if (!entry->mesh)
                 continue;
 
-            const glm::mat4 transform = glm::translate(glm::mat4(1.0f), entry.worldPos);
-            AE::Graphics::Renderer::Renderer::Submit(material, entry.mesh, transform);
+            const glm::mat4 transform = glm::translate(glm::mat4(1.0f), entry->worldPos);
+            AE::Graphics::Renderer::Renderer::Submit(material, entry->mesh, transform);
         }
     }
 
@@ -70,6 +80,12 @@ namespace AE::World
         if (!entry->chunk.IsInBounds(lx, worldY, lz)) return;
         entry->chunk.SetBlock(lx, worldY, lz, type);
         entry->dirty = true;
+
+        // If the changed block is on a chunk boundary, the neighbor must also remesh
+        if (lx == 0)               if (auto* nbr = GetChunkEntry(cx - 1, cz)) nbr->dirty = true;
+        if (lx == Chunk::SIZE - 1) if (auto* nbr = GetChunkEntry(cx + 1, cz)) nbr->dirty = true;
+        if (lz == 0)               if (auto* nbr = GetChunkEntry(cx, cz - 1)) nbr->dirty = true;
+        if (lz == Chunk::SIZE - 1) if (auto* nbr = GetChunkEntry(cx, cz + 1)) nbr->dirty = true;
     }
 
     World::ChunkEntry* World::GetChunkEntry(int cx, int cz)
@@ -77,5 +93,15 @@ namespace AE::World
         if (cx < 0 || cx >= WORLD_SIZE || cz < 0 || cz >= WORLD_SIZE)
             return nullptr;
         return &m_Chunks[cx * WORLD_SIZE + cz];
+    }
+
+    ChunkNeighbors World::MakeNeighbors(int cx, int cz)
+    {
+        ChunkNeighbors n;
+        if (auto* e = GetChunkEntry(cx + 1, cz)) n.px = &e->chunk;
+        if (auto* e = GetChunkEntry(cx - 1, cz)) n.nx = &e->chunk;
+        if (auto* e = GetChunkEntry(cx, cz + 1)) n.pz = &e->chunk;
+        if (auto* e = GetChunkEntry(cx, cz - 1)) n.nz = &e->chunk;
+        return n;
     }
 }

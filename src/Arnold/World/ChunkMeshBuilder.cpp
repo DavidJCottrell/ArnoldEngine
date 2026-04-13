@@ -54,7 +54,7 @@ namespace AE::World
 
     } // anonymous namespace
 
-    std::shared_ptr<AE::Graphics::Renderer::Mesh> ChunkMeshBuilder::Build(const Chunk& chunk)
+    std::shared_ptr<AE::Graphics::Renderer::Mesh> ChunkMeshBuilder::Build(const Chunk& chunk, const ChunkNeighbors& neighbors)
     {
         std::vector<float>    vertices;
         std::vector<uint32_t> indices;
@@ -73,8 +73,29 @@ namespace AE::World
                 const int ny = y + k_Dirs[f].dy;
                 const int nz = z + k_Dirs[f].dz;
 
-                // Emit a face only when the neighbour is Air or outside the chunk
-                if (chunk.IsInBounds(nx, ny, nz) && chunk.GetBlock(nx, ny, nz) != BlockType::Air)
+                // Determine the neighbor block — query own chunk or a neighbor chunk at boundaries
+                BlockType neighborBlock = BlockType::Air;  // default: emit face (world edge)
+
+                if (chunk.IsInBounds(nx, ny, nz))
+                {
+                    neighborBlock = chunk.GetBlock(nx, ny, nz);
+                }
+                else
+                {
+                    const Chunk* nbr = nullptr;
+                    int lx = nx, ly = ny, lz = nz;
+
+                    if      (nx < 0)            { nbr = neighbors.nx; lx = Chunk::SIZE - 1; }
+                    else if (nx >= Chunk::SIZE) { nbr = neighbors.px; lx = 0;               }
+                    else if (nz < 0)            { nbr = neighbors.nz; lz = Chunk::SIZE - 1; }
+                    else if (nz >= Chunk::SIZE) { nbr = neighbors.pz; lz = 0;               }
+                    // ny out-of-bounds stays Air (no vertical chunk neighbors)
+
+                    if (nbr)
+                        neighborBlock = nbr->GetBlock(lx, ly, lz);
+                }
+
+                if (neighborBlock != BlockType::Air)
                     continue;
 
                 for (int v = 0; v < 4; ++v)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Arnold/World/Chunk.h"
+#include "Arnold/World/ChunkMeshBuilder.h"
 #include "Arnold/Graphics/Renderer/Material.h"
 #include "Arnold/Graphics/Renderer/Mesh.h"
 
@@ -38,6 +39,9 @@ namespace AE::World
 
         /** Returns a pointer to the ChunkEntry at grid position (cx, cz), or nullptr if out of bounds. */
         ChunkEntry* GetChunkEntry(int cx, int cz);
+
+        /** Builds a Neighbors struct for chunk (cx, cz) from the live chunk grid. */
+        ChunkNeighbors MakeNeighbors(int cx, int cz);
 
         std::vector<ChunkEntry> m_Chunks;
     };
