@@ -28,7 +28,7 @@ namespace AE::World
         }
     }
 
-    void World::Render(const std::shared_ptr<AE::Graphics::Renderer::Shader>& shader)
+    void World::Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material)
     {
         for (const auto& entry : m_Chunks)
         {
@@ -36,7 +36,7 @@ namespace AE::World
                 continue;
 
             const glm::mat4 transform = glm::translate(glm::mat4(1.0f), entry.worldPos);
-            AE::Graphics::Renderer::Renderer::Submit(shader, entry.mesh, transform);
+            AE::Graphics::Renderer::Renderer::Submit(material, entry.mesh, transform);
         }
     }
 }

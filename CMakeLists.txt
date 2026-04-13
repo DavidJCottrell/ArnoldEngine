@@ -143,6 +143,8 @@ set(GRAPHICS_SOURCES
         src/Arnold/Graphics/Renderer/Mesh.h
         src/Arnold/Graphics/Renderer/Texture.cpp
         src/Arnold/Graphics/Renderer/Texture.h
+        src/Arnold/Graphics/Renderer/Material.h
+        src/Arnold/Graphics/Renderer/Material.cpp
 )
 
 set(WORLD_SOURCES

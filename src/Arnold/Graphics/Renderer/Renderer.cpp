@@ -14,14 +14,13 @@ namespace AE::Graphics::Renderer
     {
     }
 
-    void Renderer::Submit(const std::shared_ptr<Shader>& shader,
+    void Renderer::Submit(const std::shared_ptr<Material>& material,
                           const std::shared_ptr<Mesh>& mesh,
-                          const glm::mat4& transform
-    )
+                          const glm::mat4& transform)
     {
-        shader->Bind();
-        shader->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
-        shader->UploadUniformMat4("u_Transform", transform);
+        material->Bind();
+        material->GetShader()->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+        material->GetShader()->UploadUniformMat4("u_Transform", transform);
 
         const auto& vertexArray = mesh->GetVertexArray();
         vertexArray->Bind();

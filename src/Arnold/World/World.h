@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Arnold/World/Chunk.h"
+#include "Arnold/Graphics/Renderer/Material.h"
 #include "Arnold/Graphics/Renderer/Mesh.h"
-#include "Arnold/Graphics/Renderer/Shader.h"
 
 #include <glm/glm.hpp>
 #include <memory>
@@ -19,7 +19,7 @@ namespace AE::World
         World();
 
         /** Submit all chunk meshes to the renderer. Must be called between BeginScene/EndScene. */
-        void Render(const std::shared_ptr<AE::Graphics::Renderer::Shader>& shader);
+        void Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material);
 
     private:
         struct ChunkEntry
