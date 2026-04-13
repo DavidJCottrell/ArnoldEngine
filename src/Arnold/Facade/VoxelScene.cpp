@@ -51,13 +51,23 @@ namespace AE
     void VoxelScene::InitMaterial()
     {
         auto shader = Graphics::Renderer::Shader::Create(m_Config.terrainShaderPath);
-        m_Material  = Graphics::Renderer::Material::Create(shader);
+        if (!shader)
+        {
+            AE_CORE_ERROR("VoxelScene: terrain shader failed to load — check working directory and path '{0}'", m_Config.terrainShaderPath);
+            return;
+        }
+        m_Material = Graphics::Renderer::Material::Create(shader);
         m_Material->SetFloat3("u_LightDir", glm::normalize(glm::vec3(0.6f, 1.0f, 0.4f)));
     }
 
     void VoxelScene::InitHighlightVAO()
     {
         m_HighlightShader = Graphics::Renderer::Shader::Create(m_Config.highlightShaderPath);
+        if (!m_HighlightShader)
+        {
+            AE_CORE_ERROR("VoxelScene: highlight shader failed to load — check working directory and path '{0}'", m_Config.highlightShaderPath);
+            return;
+        }
 
         // Unit cube wireframe
         float verts[] = {
@@ -151,6 +161,8 @@ namespace AE
         Graphics::Renderer::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
         Graphics::Renderer::RenderCommand::Clear();
 
+        if (!m_Material) return;
+
         const auto& cam = m_CameraController.GetCamera();
         Graphics::Renderer::Renderer::BeginScene(cam);
         m_World.Render(m_Material, cam.GetViewProjectionMatrix());
@@ -161,6 +173,8 @@ namespace AE
 
     void VoxelScene::RenderHighlight()
     {
+        if (!m_HighlightShader || !m_HighlightVAO) return;
+
         const float s   = m_Config.blockScale;
         const float r   = m_EditRadius * s;
         const float eps = 0.002f * s;
