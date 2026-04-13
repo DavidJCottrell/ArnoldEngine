@@ -21,13 +21,23 @@ namespace AE::World
         /** Submit all chunk meshes to the renderer. Must be called between BeginScene/EndScene. */
         void Render(const std::shared_ptr<AE::Graphics::Renderer::Material>& material);
 
+        /** Returns the block at world coordinates, or BlockType::Air if out of bounds. */
+        BlockType GetBlock(int worldX, int worldY, int worldZ) const;
+
+        /** Sets the block at world coordinates. Marks the owning chunk dirty for rebuild. */
+        void SetBlock(int worldX, int worldY, int worldZ, BlockType type);
+
     private:
         struct ChunkEntry
         {
             Chunk                                              chunk;
             std::shared_ptr<AE::Graphics::Renderer::Mesh>     mesh;
             glm::vec3                                          worldPos;
+            bool                                               dirty = false;
         };
+
+        /** Returns a pointer to the ChunkEntry at grid position (cx, cz), or nullptr if out of bounds. */
+        ChunkEntry* GetChunkEntry(int cx, int cz);
 
         std::vector<ChunkEntry> m_Chunks;
     };
