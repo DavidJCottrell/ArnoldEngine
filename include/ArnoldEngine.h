@@ -26,6 +26,11 @@
 #include "Arnold/Graphics/Renderer/Mesh.h"
 #include "Arnold/Graphics/Renderer/Texture.h"
 
+// --- World ---
+#include "Arnold/World/Chunk.h"
+#include "Arnold/World/ChunkMeshBuilder.h"
+#include "Arnold/World/World.h"
+
 // --- Entry Point ---
 #ifdef AE_MAIN
 #include "Arnold/Core/EntryPoint.h"

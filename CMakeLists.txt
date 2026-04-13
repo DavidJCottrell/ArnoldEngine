@@ -143,10 +143,19 @@ set(GRAPHICS_SOURCES
         src/Arnold/Graphics/Renderer/Texture.h
 )
 
+set(WORLD_SOURCES
+        src/Arnold/World/Chunk.h
+        src/Arnold/World/ChunkMeshBuilder.h
+        src/Arnold/World/ChunkMeshBuilder.cpp
+        src/Arnold/World/World.h
+        src/Arnold/World/World.cpp
+)
+
 add_library(${PROJECT_NAME} STATIC
         ${CORE_SOURCES}
         ${GRAPHICS_SOURCES}
         ${RENDERER_SOURCES}
+        ${WORLD_SOURCES}
         ${PLATFORM_SOURCES}
 )
 
