@@ -82,6 +82,13 @@ namespace AE
         }
         m_Material = Graphics::Renderer::Material::Create(shader);
         m_Material->SetFloat3("u_LightDir", glm::normalize(glm::vec3(0.6f, 1.0f, 0.4f)));
+
+        // Build and bind the terrain texture atlas [Grass | Dirt | Stone]
+        m_TerrainAtlas = Graphics::Renderer::TextureAtlas::Create(
+            "assets/textures/grass.jpg",
+            "assets/textures/dirt.png");
+        m_Material->SetTexture(0, m_TerrainAtlas->GetTexture());
+        m_Material->SetInt("u_Atlas", 0);
     }
 
     void VoxelScene::InitHighlightVAO()

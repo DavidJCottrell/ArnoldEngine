@@ -13,6 +13,7 @@
 #include "Arnold/Graphics/Renderer/Material.h"
 #include "Arnold/Graphics/Renderer/Mesh.h"
 #include "Arnold/Graphics/Renderer/Shader.h"
+#include "Arnold/Graphics/Renderer/TextureAtlas.h"
 #include "Arnold/Graphics/Renderer/VertexArray.h"
 
 #include <functional>
@@ -104,6 +105,7 @@ namespace AE
         World::World                                      m_World;
         Graphics::Renderer::FpsCameraController           m_CameraController;
         std::shared_ptr<Graphics::Renderer::Material>     m_Material;
+        std::shared_ptr<Graphics::Renderer::TextureAtlas> m_TerrainAtlas;
         std::shared_ptr<Graphics::Renderer::Material>     m_SkyMaterial;
         std::shared_ptr<Graphics::Renderer::Mesh>         m_SkyMesh;
         std::shared_ptr<Graphics::Renderer::Shader>       m_HighlightShader;
