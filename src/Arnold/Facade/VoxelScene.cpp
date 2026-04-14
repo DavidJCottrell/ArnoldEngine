@@ -69,7 +69,23 @@ namespace AE
         m_SkyMaterial->SetFloat3("u_SunColor",     s.sunColor);
         m_SkyMaterial->SetFloat ("u_SunSize",      s.sunSize);
 
-        m_SkyMesh = Graphics::Renderer::Mesh::CreateCube();
+        // Full-screen NDC quad — vertices in clip space, no VP transform needed.
+        // Avoids near-plane clipping artifacts from the cube-inside-camera approach on some GPUs.
+        float verts[] = { -1.0f, -1.0f,   1.0f, -1.0f,   1.0f,  1.0f,  -1.0f,  1.0f };
+        uint32_t idx[] = { 0, 1, 2,  2, 3, 0 };
+
+        Graphics::Renderer::BufferLayout ndcLayout = {
+            { Graphics::Renderer::ShaderDataType::Float2, "a_NDCPos" }
+        };
+        auto vb = std::shared_ptr<Graphics::Renderer::VertexBuffer>(
+            Graphics::Renderer::VertexBuffer::Create(verts, sizeof(verts)));
+        vb->SetLayout(ndcLayout);
+        auto ib = std::shared_ptr<Graphics::Renderer::IndexBuffer>(
+            Graphics::Renderer::IndexBuffer::Create(idx, 6));
+
+        m_SkyVAO.reset(Graphics::Renderer::VertexArray::Create());
+        m_SkyVAO->AddVertexBuffer(vb);
+        m_SkyVAO->SetIndexBuffer(ib);
     }
 
     void VoxelScene::InitMaterial()
@@ -189,26 +205,25 @@ namespace AE
 
     void VoxelScene::RenderSky()
     {
-        if (!m_SkyMaterial || !m_SkyMesh) return;
+        if (!m_SkyMaterial || !m_SkyVAO) return;
 
         const auto& cam = m_CameraController.GetCamera();
 
-        // Strip translation from the view matrix so the skybox stays centred on the camera
+        // Rotation-only VP (strips translation so sky stays centred on camera)
         glm::mat4 skyVP = cam.GetProjectionMatrix()
                         * glm::mat4(glm::mat3(cam.GetViewMatrix()));
-        m_SkyMaterial->SetMat4("u_ViewProjection", skyVP);
+        m_SkyMaterial->SetMat4("u_InvViewProjection", glm::inverse(skyVP));
 
-        glDepthMask(GL_FALSE);
-        glDepthFunc(GL_LEQUAL);  // sky vertices are forced to z=1.0 (far plane)
+        // Disable depth test — sky quad renders to every pixel first;
+        // terrain then overwrites with depth test re-enabled.
+        glDisable(GL_DEPTH_TEST);
 
         m_SkyMaterial->Bind();
-        auto& vao = m_SkyMesh->GetVertexArray();
-        vao->Bind();
-        Graphics::Renderer::RenderCommand::DrawIndexed(vao);
-        vao->UnBind();
+        m_SkyVAO->Bind();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        m_SkyVAO->UnBind();
 
-        glDepthFunc(GL_LESS);
-        glDepthMask(GL_TRUE);
+        glEnable(GL_DEPTH_TEST);
     }
 
     void VoxelScene::Render()

@@ -107,7 +107,7 @@ namespace AE
         std::shared_ptr<Graphics::Renderer::Material>     m_Material;
         std::shared_ptr<Graphics::Renderer::TextureAtlas> m_TerrainAtlas;
         std::shared_ptr<Graphics::Renderer::Material>     m_SkyMaterial;
-        std::shared_ptr<Graphics::Renderer::Mesh>         m_SkyMesh;
+        std::unique_ptr<Graphics::Renderer::VertexArray>  m_SkyVAO;
         std::shared_ptr<Graphics::Renderer::Shader>       m_HighlightShader;
         std::unique_ptr<Graphics::Renderer::VertexArray>  m_HighlightVAO;
 
